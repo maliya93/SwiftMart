@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Products — SwiftMart</title>
+<meta name="description" content="Browse all SwiftMart mobile accessories — power banks, cables, earbuds and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page-head{padding:56px 0 40px;}
+  .products-grid.full{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:800px){ .products-grid.full{grid-template-columns:1fr 1fr;} }
+  @media(max-width:520px){ .products-grid.full{grid-template-columns:1fr;} }
+  .back-link{color:var(--slate); font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px; margin-bottom:18px;}
+  .back-link:hover{color:var(--cream);}
+</style>
+</head>
+<body>
+
+<div id="chargebar"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Swift<span>Mart</span></div>
+    <div class="navlinks">
+      <a href="products.html">Products</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#reviews">Reviews</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Order Now</a>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <a href="index.html" class="back-link">← Back to Home</a>
+    <div class="kicker">FULL RANGE</div>
+    <h2 class="section-title" style="margin-bottom:14px;">All Products</h2>
+    <p class="section-desc" style="margin-bottom:0;">Every accessory currently in stock. Prices include COD island-wide. Message us to confirm live availability.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:24px;">
+  <div class="wrap">
+    <div class="products-grid full">
+
+      <div class="card">
+        <div class="card-img">🔋<span class="card-tag">Best Seller</span></div>
+        <div class="card-body">
+          <h3>20000mAh Power Bank</h3>
+          <p>Fast charging, dual USB + Type-C output</p>
+          <div class="card-foot"><span class="price">Rs. 2,500</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">⚡<span class="card-tag">New</span></div>
+        <div class="card-body">
+          <h3>66W Super Fast Power Bank</h3>
+          <p>20000mAh, A-grade cells, 6-month warranty</p>
+          <div class="card-foot"><span class="price">Rs. 4,990</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">🔌</div>
+        <div class="card-body">
+          <h3>Type-C Fast Cable (1m)</h3>
+          <p>Braided, tangle-free, 3A fast charge</p>
+          <div class="card-foot"><span class="price">Rs. 650</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">🔌</div>
+        <div class="card-body">
+          <h3>Lightning Fast Cable (1m)</h3>
+          <p>iPhone compatible, durable braided cover</p>
+          <div class="card-foot"><span class="price">Rs. 750</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">🎧</div>
+        <div class="card-body">
+          <h3>Wireless Earbuds</h3>
+          <p>Bluetooth 5.0, 20hr battery with case</p>
+          <div class="card-foot"><span class="price">Rs. 3,200</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">🔋</div>
+        <div class="card-body">
+          <h3>10000mAh Slim Power Bank</h3>
+          <p>Pocket-size, single USB + Type-C</p>
+          <div class="card-foot"><span class="price">Rs. 1,800</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">🔲</div>
+        <div class="card-body">
+          <h3>20W Wall Charger (PD)</h3>
+          <p>Compact fast-charge adapter, USB-C port</p>
+          <div class="card-foot"><span class="price">Rs. 1,200</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">📱</div>
+        <div class="card-body">
+          <h3>Magnetic Car Mount</h3>
+          <p>360° rotation, strong magnetic grip</p>
+          <div class="card-foot"><span class="price">Rs. 950</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img">🛡️</div>
+        <div class="card-body">
+          <h3>Tempered Glass Screen Protector</h3>
+          <p>9H hardness, anti-scratch, easy-fit kit</p>
+          <div class="card-foot"><span class="price">Rs. 450</span><a href="index.html#contact" class="order-link">Order →</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
+    <div class="logo" style="font-size:16px;">Swift<span>Mart</span></div>
+    <p>© 2026 SwiftMart. Mobile accessories, delivered island-wide.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    document.getElementById('chargebar').style.width = pct + '%';
+  });
+</script>
+
+</body>
+</html>
