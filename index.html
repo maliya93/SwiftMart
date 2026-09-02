@@ -8,21 +8,255 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* Smooth Scrolling for Navigation Links */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  /* 1. Modern Windows Glassmorphism Header */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(18, 24, 16, 0.75) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  body {
+    padding-top: 70px;
+  }
+
+  /* 2. Buttons Styling */
+  .order-link-btn {
+    background: #25D366;
+    color: #000 !important;
+    padding: 7px 14px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13px;
+    border: none !important;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .order-link-btn:hover {
+    background: #1eb956;
+    transform: translateY(-1px);
+  }
+  .add-cart-btn {
+    background: var(--copper);
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .add-cart-btn:hover {
+    background: var(--copper-dim);
+  }
+
+  /* 3. Multi-Image Gallery Styling */
+  .card-img {
+    position: relative;
+    height: 280px;
+    background: #111;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+  .card-img img.main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .thumb-bar {
+    display: flex;
+    gap: 6px;
+    padding: 8px 10px;
+    background: #121810;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: var(--copper) var(--bg-alt);
+  }
+  .thumb-bar::-webkit-scrollbar { height: 4px; }
+  .thumb-bar::-webkit-scrollbar-thumb { background: var(--copper); border-radius: 2px; }
+  .thumb-bar img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.5;
+    border: 1px solid transparent;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .thumb-bar img:hover, .thumb-bar img.active {
+    opacity: 1;
+    border-color: var(--copper);
+  }
+
+  /* 4. Lightbox Modal (Popup Viewer) */
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 25px;
+    color: #fff; font-size: 35px;
+    font-weight: bold; cursor: pointer;
+  }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    color: white; border: none;
+    padding: 16px; cursor: pointer;
+    font-size: 24px; border-radius: 50%;
+    user-select: none; transition: background 0.2s;
+  }
+  .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+
+  /* 5. Floating Cart Widget & Drawer */
+  .cart-float-btn {
+    position: fixed;
+    bottom: 25px; right: 25px;
+    background: #25D366; color: #000;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    cursor: pointer; z-index: 99; transition: transform 0.2s;
+  }
+  .cart-float-btn:hover { transform: scale(1.08); }
+  .cart-badge {
+    position: absolute; top: -2px; right: -2px;
+    background: #ff3b30; color: white;
+    font-size: 12px; font-weight: bold;
+    padding: 2px 7px; border-radius: 10px;
+  }
+
+  .cart-drawer {
+    position: fixed;
+    top: 0; right: -400px;
+    width: 360px; height: 100%;
+    background: #121810;
+    border-left: 1px solid var(--line);
+    z-index: 1001;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.7);
+    transition: right 0.3s ease;
+    display: flex; flex-direction: column;
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-header {
+    padding: 20px; background: rgba(255,255,255,0.03);
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .cart-body { padding: 20px; flex: 1; overflow-y: auto; }
+  .cart-item {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 15px; padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .cart-footer {
+    padding: 20px; border-top: 1px solid var(--line);
+    background: rgba(0,0,0,0.2);
+  }
+  .cart-checkout-btn {
+    width: 100%; padding: 12px;
+    background: #25D366; color: #000;
+    font-weight: bold; border: none;
+    border-radius: 6px; cursor: pointer;
+    font-size: 15px;
+  }
+
+  /* 6. WhatsApp Floating Chat Popup Widget */
+  .wa-chat-float {
+    position: fixed;
+    bottom: 25px; left: 25px;
+    z-index: 99;
+  }
+  .wa-chat-btn {
+    background: #25D366; color: #fff;
+    padding: 12px 18px; border-radius: 30px;
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 600; font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    cursor: pointer; border: none; transition: transform 0.2s;
+  }
+  .wa-chat-btn:hover { transform: scale(1.05); }
+  .wa-chat-box {
+    display: none;
+    position: absolute; bottom: 60px; left: 0;
+    width: 280px; background: #121810;
+    border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .wa-chat-box.open { display: block; }
+  .wa-chat-header {
+    background: #075e54; color: #fff;
+    padding: 12px 15px; font-weight: bold;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .wa-chat-body {
+    padding: 15px; color: var(--slate); font-size: 13px;
+  }
+  .wa-chat-start-btn {
+    display: block; width: 100%; text-align: center;
+    background: #25D366; color: #000; font-weight: bold;
+    padding: 10px; border-radius: 6px; text-decoration: none; margin-top: 10px;
+  }
+</style>
 </head>
 <body>
 
 <div id="chargebar"></div>
 
+<!-- Windows Glassmorphism Navbar -->
 <nav>
   <div class="wrap">
     <div class="logo">Swift<span>Mart</span></div>
     <div class="navlinks">
-      <a href="products.html">Products</a>
+      <a href="#products">Products</a>
       <a href="#about">About</a>
       <a href="#reviews">Reviews</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="#contact" class="nav-cta">Order Now</a>
+    <a href="javascript:void(0)" onclick="toggleCart()" class="nav-cta">🛒 Cart (<span id="cart-count-nav">0</span>)</a>
   </div>
 </nav>
 
@@ -33,18 +267,12 @@
     <p class="sub">SwiftMart brings you reliable power banks, cables, and mobile accessories — built for everyday use, priced fair, delivered fast.</p>
     <div class="hero-actions">
       <a href="#products" class="btn btn-primary">Browse Products →</a>
-      <a href="#contact" class="btn btn-outline">Message Us</a>
-    </div>
-    <div class="battery-strip">
-      <div class="cells">
-        <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
-        <div class="cell on"></div><div class="cell"></div>
-      </div>
-      Trusted by growing customers on Facebook — new stock added weekly
+      <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-outline">Message Us</a>
     </div>
   </div>
 </header>
 
+<!-- ABOUT SECTION -->
 <section class="section" id="about">
   <div class="wrap about-grid">
     <div>
@@ -63,37 +291,72 @@
   </div>
 </section>
 
+<!-- PRODUCTS SECTION -->
 <section class="section section-alt" id="products">
   <div class="wrap">
     <div class="kicker">WHAT WE SELL</div>
     <h2 class="section-title">Featured Products</h2>
-    <p class="section-desc">A few of our current best-sellers. <a href="products.html" style="color:var(--copper); font-weight:700; border-bottom:1px solid var(--copper-dim);">View all products →</a></p>
     <div class="products-grid">
 
+      <!-- Product 1: 9-Image Power Bank -->
       <div class="card">
-        <div class="card-img">🔋<span class="card-tag">Best Seller</span></div>
+        <div class="card-img" onclick="openLightbox(0)">
+          <img id="main-pb1" class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
+          <span class="card-tag">Hot Item</span>
+        </div>
+        
+        <div class="thumb-bar">
+          <img src="images/powerbank1.jpg" class="active" onclick="changeImage('main-pb1', this.src, this, 0)">
+          <img src="images/powerbank2.jpg" onclick="changeImage('main-pb1', this.src, this, 1)">
+          <img src="images/powerbank3.jpg" onclick="changeImage('main-pb1', this.src, this, 2)">
+          <img src="images/powerbank4.jpg" onclick="changeImage('main-pb1', this.src, this, 3)">
+          <img src="images/powerbank5.jpg" onclick="changeImage('main-pb1', this.src, this, 4)">
+          <img src="images/powerbank6.jpg" onclick="changeImage('main-pb1', this.src, this, 5)">
+          <img src="images/powerbank7.jpg" onclick="changeImage('main-pb1', this.src, this, 6)">
+          <img src="images/powerbank8.jpg" onclick="changeImage('main-pb1', this.src, this, 7)">
+          <img src="images/powerbank9.jpg" onclick="changeImage('main-pb1', this.src, this, 8)">
+        </div>
+
         <div class="card-body">
-          <h3>20000mAh Power Bank</h3>
-          <p>Fast charging, dual USB + Type-C output</p>
-          <div class="card-foot"><span class="price">Rs. 2,500</span><a href="#contact" class="order-link">Order →</a></div>
+          <h3>20000mAh 66W Power Bank</h3>
+          <p>Transparent design, digital display, built-in cables</p>
+          <div class="card-foot">
+            <span class="price">Rs. 4,500</span>
+            <button onclick="addToCart('20000mAh 66W Power Bank', 4500)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%2020000mAh%2066W%20Power%20Bank" target="_blank" class="order-link-btn">Buy Now</a>
+          </div>
         </div>
       </div>
 
+      <!-- Product 2 -->
       <div class="card">
-        <div class="card-img">🔌<span class="card-tag">New</span></div>
+        <div class="card-img">
+          <img src="images/cable1.jpg" class="main-img" alt="Type-C Cable" onerror="this.onerror=null; this.parentElement.innerHTML='🔌';">
+        </div>
         <div class="card-body">
           <h3>Type-C Fast Cable (1m)</h3>
-          <p>Braided, tangle-free, 3A fast charge</p>
-          <div class="card-foot"><span class="price">Rs. 650</span><a href="#contact" class="order-link">Order →</a></div>
+          <p>Braided, tangle-free, 65W fast charge support</p>
+          <div class="card-foot">
+            <span class="price">Rs. 650</span>
+            <button onclick="addToCart('Type-C Fast Cable', 650)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Type-C%20Fast%20Cable" target="_blank" class="order-link-btn">Buy Now</a>
+          </div>
         </div>
       </div>
 
+      <!-- Product 3 -->
       <div class="card">
-        <div class="card-img">🎧</div>
+        <div class="card-img">
+          <img src="images/earbuds1.jpg" class="main-img" alt="Wireless Earbuds" onerror="this.onerror=null; this.parentElement.innerHTML='🎧';">
+        </div>
         <div class="card-body">
           <h3>Wireless Earbuds</h3>
-          <p>Bluetooth 5.0, 20hr battery with case</p>
-          <div class="card-foot"><span class="price">Rs. 3,200</span><a href="#contact" class="order-link">Order →</a></div>
+          <p>Bluetooth 5.0, 20hr battery with charging case</p>
+          <div class="card-foot">
+            <span class="price">Rs. 3,200</span>
+            <button onclick="addToCart('Wireless Earbuds', 3200)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Wireless%20Earbuds" target="_blank" class="order-link-btn">Buy Now</a>
+          </div>
         </div>
       </div>
 
@@ -101,6 +364,7 @@
   </div>
 </section>
 
+<!-- REVIEWS SECTION -->
 <section class="section" id="reviews">
   <div class="wrap">
     <div class="kicker">CUSTOMER REVIEWS</div>
@@ -119,13 +383,14 @@
       </div>
       <div class="testi">
         <div class="stars">★★★★★</div>
-        <p>"Quick replies on Messenger and COD option made it super easy to order."</p>
+        <p>"Quick replies on WhatsApp and COD option made it super easy to order."</p>
         <div class="testi-name">— Verified Customer</div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- CONTACT SECTION -->
 <section class="section section-alt" id="contact">
   <div class="wrap">
     <div class="contact-box">
@@ -135,36 +400,182 @@
         <p style="color:var(--slate); font-size:16px;">Message us your product and we'll confirm price, stock, and delivery — usually within minutes.</p>
       </div>
       <div class="contact-methods">
-        <a href="#" class="contact-method">
-          <div class="contact-icon">💬</div>
-          <div><b>Facebook Messenger</b><span>Fastest way to reach us</span></div>
-        </a>
-        <a href="#" class="contact-method">
+        <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order" target="_blank" class="contact-method">
           <div class="contact-icon">📱</div>
-          <div><b>WhatsApp</b><span>Message anytime</span></div>
+          <div><b>WhatsApp Direct</b><span>Instant reply & fast ordering</span></div>
         </a>
-        <a href="#" class="contact-method">
-          <div class="contact-icon">📸</div>
-          <div><b>Instagram</b><span>See our latest posts</span></div>
+        <a href="https://www.facebook.com/profile.php?id=61578484391080" target="_blank" class="contact-method">
+          <div class="contact-icon">💬</div>
+          <div><b>Facebook Page</b><span>Visit & message on Facebook</span></div>
         </a>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Lightbox Modal Viewer -->
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">&#10094;</button>
+  <img id="lightbox-img" class="lightbox-content" src="" alt="Popup View">
+  <button class="lightbox-nav lightbox-next" onclick="changeLightboxImg(1)">&#10095;</button>
+</div>
+
+<!-- WhatsApp Floating Chat Widget (Bottom Left) -->
+<div class="wa-chat-float">
+  <div id="wa-chat-box" class="wa-chat-box">
+    <div class="wa-chat-header">
+      <span>💬 SwiftMart Support</span>
+      <span style="cursor:pointer;" onclick="toggleWAChat()">&times;</span>
+    </div>
+    <div class="wa-chat-body">
+      <p style="margin-bottom:8px; color:#fff;">Hi there! 👋</p>
+      <p>Need help finding a product or placing an order? Chat with us directly on WhatsApp!</p>
+      <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20need%20some%20help" target="_blank" class="wa-chat-start-btn">Start WhatsApp Chat</a>
+    </div>
+  </div>
+  <button class="wa-chat-btn" onclick="toggleWAChat()">
+    💬 Chat with us
+  </button>
+</div>
+
+<!-- Floating Cart Button (Bottom Right) -->
+<div class="cart-float-btn" onclick="toggleCart()">
+  🛒 <span id="cart-badge" class="cart-badge">0</span>
+</div>
+
+<!-- Cart Drawer -->
+<div id="cart-drawer" class="cart-drawer">
+  <div class="cart-header">
+    <h3>Your Shopping Cart</h3>
+    <span style="cursor:pointer; font-size:24px;" onclick="toggleCart()">&times;</span>
+  </div>
+  <div id="cart-body" class="cart-body">
+    <p style="color:var(--slate);">Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold;">
+      <span>Total:</span>
+      <span id="cart-total">Rs. 0</span>
+    </div>
+    <button onclick="checkoutWhatsApp()" class="cart-checkout-btn">Send Order to WhatsApp →</button>
+  </div>
+</div>
+
 <footer>
-  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
-    <div class="logo" style="font-size:16px;">Swift<span>Mart</span></div>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between;">
+    <div class="logo">Swift<span>Mart</span></div>
     <p>© 2026 SwiftMart. Mobile accessories, delivered island-wide.</p>
   </div>
 </footer>
 
 <script>
-  window.addEventListener('scroll', function(){
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = h > 0 ? (window.scrollY / h) * 100 : 0;
-    document.getElementById('chargebar').style.width = pct + '%';
-  });
+  /* 1. Image Switcher & Gallery Data */
+  const pbImages = [
+    'images/powerbank1.jpg', 'images/powerbank2.jpg', 'images/powerbank3.jpg',
+    'images/powerbank4.jpg', 'images/powerbank5.jpg', 'images/powerbank6.jpg',
+    'images/powerbank7.jpg', 'images/powerbank8.jpg', 'images/powerbank9.jpg'
+  ];
+  let currentImgIndex = 0;
+
+  function changeImage(mainImgId, newSrc, element, index) {
+    var mainImg = document.getElementById(mainImgId);
+    mainImg.src = newSrc;
+    currentImgIndex = index;
+
+    var siblings = element.parentElement.children;
+    for(var i = 0; i < siblings.length; i++) siblings[i].classList.remove('active');
+    element.classList.add('active');
+  }
+
+  /* 2. Lightbox Popup Viewer */
+  function openLightbox(index) {
+    currentImgIndex = index;
+    document.getElementById('lightbox-img').src = pbImages[currentImgIndex];
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+  function changeLightboxImg(step) {
+    currentImgIndex = (currentImgIndex + step + pbImages.length) % pbImages.length;
+    document.getElementById('lightbox-img').src = pbImages[currentImgIndex];
+  }
+
+  /* 3. WhatsApp Floating Chat Widget Toggle */
+  function toggleWAChat() {
+    document.getElementById('wa-chat-box').classList.toggle('open');
+  }
+
+  /* 4. Dynamic Shopping Cart & WhatsApp Checkout */
+  let cart = [];
+
+  function addToCart(title, price) {
+    let existing = cart.find(item => item.title === title);
+    if(existing) {
+      existing.qty++;
+    } else {
+      cart.push({ title, price, qty: 1 });
+    }
+    updateCartUI();
+    toggleCart(true);
+  }
+
+  function updateCartUI() {
+    let cartBody = document.getElementById('cart-body');
+    let totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+    let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+    document.getElementById('cart-badge').innerText = totalCount;
+    document.getElementById('cart-count-nav').innerText = totalCount;
+    document.getElementById('cart-total').innerText = 'Rs. ' + totalPrice.toLocaleString();
+
+    if(cart.length === 0) {
+      cartBody.innerHTML = '<p style="color:var(--slate);">Your cart is empty.</p>';
+      return;
+    }
+
+    cartBody.innerHTML = cart.map((item, i) => `
+      <div class="cart-item">
+        <div>
+          <b>${item.title}</b><br>
+          <small style="color:var(--slate);">Rs. ${item.price} x ${item.qty}</small>
+        </div>
+        <div>
+          <button onclick="changeQty(${i}, -1)" style="padding:2px 8px;">-</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${i}, 1)" style="padding:2px 8px;">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function changeQty(index, delta) {
+    cart[index].qty += delta;
+    if(cart[index].qty <= 0) cart.splice(index, 1);
+    updateCartUI();
+  }
+
+  function toggleCart(forceOpen = false) {
+    let drawer = document.getElementById('cart-drawer');
+    if(forceOpen) drawer.classList.add('open');
+    else drawer.classList.toggle('open');
+  }
+
+  function checkoutWhatsApp() {
+    if(cart.length === 0) { alert('Your cart is empty!'); return; }
+    
+    let text = "Hi SwiftMart,%0A%0AI want to order the following items:%0A";
+    let totalPrice = 0;
+
+    cart.forEach((item, index) => {
+      text += `${index + 1}. ${item.title} x ${item.qty} - Rs. ${item.price * item.qty}%0A`;
+      totalPrice += item.price * item.qty;
+    });
+
+    text += `%0A*Total Amount:* Rs. ${totalPrice.toLocaleString()}%0A%0APlease confirm stock & delivery!`;
+    window.open(`https://wa.me/94776465923?text=${text}`, '_blank');
+  }
 </script>
 
 </body>
