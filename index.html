@@ -48,6 +48,21 @@
     padding-top: 70px;
   }
 
+  /* Logo Clickable Style */
+  .logo-link {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Active Nav Link Highlighting (Turns Yellow when section is in view) */
+  .navlinks a {
+    color: #fff;
+    transition: color 0.2s;
+  }
+  .navlinks a.active-nav, .navlinks a:hover {
+    color: #ffcc00 !important;
+  }
+
   /* Nav Menu Cart Custom Styling (Capital, Bold, Yellow) */
   .navlinks a.cart-nav-link {
     text-transform: uppercase;
@@ -259,41 +274,85 @@
   }
   .cart-checkout-btn:hover { background: #1eb956; transform: translateY(-1px); }
 
-  /* 6. WhatsApp Floating Chat Popup Widget */
-  .wa-chat-float {
-    position: fixed;
-    bottom: 25px; left: 25px;
-    z-index: 99;
-  }
+  /* WhatsApp Chat Floating Box Styles */
   .wa-chat-btn {
-    background: #25D366; color: #fff;
-    padding: 12px 18px; border-radius: 30px;
-    display: flex; align-items: center; gap: 8px;
-    font-weight: 600; font-size: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    cursor: pointer; border: none; transition: transform 0.2s;
+    background: #25D366; color: #000; width: 50px; height: 50px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; border: none; transition: transform 0.2s;
   }
   .wa-chat-btn:hover { transform: scale(1.05); }
   .wa-chat-box {
-    display: none;
-    position: absolute; bottom: 60px; left: 0;
-    width: 280px; background: #121810;
+    position: fixed; bottom: 95px; right: 25px; width: 280px; background: #121810;
     border: 1px solid var(--line); border-radius: 12px;
-    overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 98;
+    display: none;
   }
   .wa-chat-box.open { display: block; }
   .wa-chat-header {
-    background: #075e54; color: #fff;
-    padding: 12px 15px; font-weight: bold;
+    background: #075e54; color: #fff; padding: 12px 15px; font-weight: bold;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .wa-chat-body {
-    padding: 15px; color: var(--slate); font-size: 13px;
+  .wa-chat-body { padding: 15px; color: var(--slate); font-size: 13px; }
+
+  /* Reviews Expandable Styles */
+  .review-card {
+    background: rgba(255,255,255,0.03); 
+    padding: 22px; 
+    border-radius: 10px; 
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-  .wa-chat-start-btn {
-    display: block; width: 100%; text-align: center;
-    background: #25D366; color: #000; font-weight: bold;
-    padding: 10px; border-radius: 6px; text-decoration: none; margin-top: 10px;
+  .review-hidden {
+    display: none;
+  }
+  .review-hidden.show {
+    display: flex;
+  }
+
+  /* Professional Footer Styles */
+  footer {
+    background: #0d120a;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: var(--slate);
+    padding: 40px 0 25px 0;
+    font-size: 14px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  .footer-col h4 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-col ul li {
+    margin-bottom: 8px;
+  }
+  .footer-col ul li a {
+    color: var(--slate);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover {
+    color: #ffcc00;
+  }
+  .footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
   }
 </style>
 </head>
@@ -303,22 +362,39 @@
 
 <nav>
   <div class="wrap">
-    <div class="logo">Swift<span>Mart</span></div>
+    <a href="#" class="logo-link"><div class="logo">Swift<span>Mart</span></div></a>
     <div class="navlinks">
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#contact">Contact</a>
+      <a href="#products" id="nav-products">Products</a>
+      <a href="#about" id="nav-about">About</a>
+      <a href="#reviews" id="nav-reviews">Reviews</a>
+      <a href="#contact" id="nav-contact">Contact</a>
       <a href="javascript:void(0)" onclick="toggleCart()" class="cart-nav-link">CART (<span id="cart-count-nav">0</span>)</a>
     </div>
     <a href="javascript:void(0)" onclick="toggleCart()" class="nav-cta">🛒 Cart (<span id="cart-count-nav-top">0</span>)</a>
   </div>
 </nav>
 
-<!-- Floating Glassmorphism Cart Button (Draggable / Movable) -->
-<div class="cart-float-btn" id="floatingCartBtn" onclick="toggleCart()" title="Open Cart">
+<!-- Floating Glassmorphism Cart Button -->
+<div class="cart-float-btn" id="floatingCartBtn" onclick="toggleCart()" title="Open Cart" style="bottom: 95px;">
   🛒
   <span class="cart-badge" id="cart-badge-float">0</span>
+</div>
+
+<!-- Floating WhatsApp Chat Widget -->
+<div style="position: fixed; bottom: 25px; right: 25px; z-index: 99; display: flex; flex-direction: column; align-items: flex-end;">
+  <div class="wa-chat-box" id="waChatBox">
+    <div class="wa-chat-header">
+      <span>💬 SwiftMart Support</span>
+      <span style="cursor: pointer; font-size: 18px;" onclick="toggleWaChat()">&times;</span>
+    </div>
+    <div class="wa-chat-body">
+      <p style="margin-bottom: 12px; color: #fff;">Hi there! 👋 How can we help you with SwiftMart accessories today?</p>
+      <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-primary" style="display: block; text-align: center; padding: 10px; font-size: 13px;">Start WhatsApp Chat →</a>
+    </div>
+  </div>
+  <button class="wa-chat-btn" onclick="toggleWaChat()" title="Chat on WhatsApp">
+    💬
+  </button>
 </div>
 
 <!-- Glassmorphism Cart Drawer Panel -->
@@ -461,16 +537,72 @@
     <div class="kicker">CUSTOMER FEEDBACK</div>
     <h2 class="section-title">What Our Customers Say</h2>
     <p class="section-desc">Real reviews from people across Sri Lanka who shop with SwiftMart.</p>
-    <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-      <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid var(--line);">
-        <p style="color: var(--slate); font-style: italic; margin-bottom: 15px;">"Super fast delivery to Badulla! Got my items safely in a few days. Excellent quality."</p>
-        <b style="color: #fff;">- Chamara D.</b>
+    
+    <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;" id="reviewsGrid">
+      
+      <!-- Real Review from Darshana Sampath -->
+      <div class="review-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Darshana Sampath</b>
+            <span style="font-size: 12px; color: var(--slate);">30 August 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Super service and fast delivery! Item එක ගොඩක් හොද quality එකට තියෙනවා. Trusted seller එකක්. Thank you SwiftMart! ❤️"</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
       </div>
-      <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid var(--line);">
-        <p style="color: var(--slate); font-style: italic; margin-bottom: 15px;">"The touch screen earbuds and accessories are amazing. Genuine product and great customer support on WhatsApp."</p>
-        <b style="color: #fff;">- Tharindu P.</b>
+
+      <div class="review-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Chamara D.</b>
+            <span style="font-size: 12px; color: var(--slate);">14 August 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Super fast delivery to Badulla! Got my items safely in a few days. Excellent quality."</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
       </div>
+
+      <div class="review-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Tharindu P.</b>
+            <span style="font-size: 12px; color: var(--slate);">02 July 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"The touch screen earbuds and accessories are amazing. Genuine product and great customer support on WhatsApp."</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
+      <!-- Hidden Extra Reviews (Shown on "Show More" click) -->
+      <div class="review-card review-hidden extra-review">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Kasun R.</b>
+            <span style="font-size: 12px; color: var(--slate);">20 June 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Best power bank collection in Sri Lanka. Very helpful service and solid warranty support."</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
+      <div class="review-card review-hidden extra-review">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Nuwan K.</b>
+            <span style="font-size: 12px; color: var(--slate);">05 May 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Smooth transaction. Ordered via WhatsApp and got it delivered right to my doorstep. Highly recommended!"</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
     </div>
+
+    <div style="text-align: center; margin-top: 30px;" id="showMoreContainer">
+      <button onclick="toggleMoreReviews()" id="showMoreBtn" class="btn btn-outline" style="cursor: pointer;">Show More Reviews ↓</button>
+    </div>
+
   </div>
 </section>
 
@@ -483,12 +615,47 @@
     <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
       <p style="color: var(--slate);">📍 <b>Location:</b> Badulla, Sri Lanka</p>
       <p style="color: var(--slate);">📞 <b>WhatsApp / Phone:</b> +94 77 646 5923</p>
-      <div>
-        <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-primary" style="display: inline-block; margin-top: 10px;">Chat on WhatsApp →</a>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px;">
+        <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-primary">Chat on WhatsApp →</a>
+        <a href="https://facebook.com" target="_blank" class="btn btn-outline" style="border-color: #1877F2; color: #1877F2;">Visit Facebook Page</a>
       </div>
     </div>
   </div>
 </section>
+
+<!-- PROFESSIONAL FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom: 12px;">Swift<span>Mart</span></div>
+        <p style="font-size: 13px; color: var(--slate); line-height: 1.6;">
+          Fast Deals. Smart Shopping.<br>Your trusted destination for premium mobile accessories and smart gadgets in Sri Lanka.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#reviews">Customer Reviews</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <ul>
+          <li><a href="https://wa.me/94776465923" target="_blank">WhatsApp Support</a></li>
+          <li><a href="https://facebook.com" target="_blank">Facebook Page</a></li>
+          <li><a href="#contact">Badulla, Sri Lanka</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 SwiftMart. All rights reserved. Designed for smart shoppers across Sri Lanka.</p>
+    </div>
+  </div>
+</footer>
 
 <div id="lightbox" class="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
@@ -498,6 +665,12 @@
 </div>
 
 <script>
+  // Toggle WhatsApp Chat Box Popup
+  function toggleWaChat() {
+    const box = document.getElementById('waChatBox');
+    box.classList.toggle('open');
+  }
+
   // Power Bank Images
   const pbImages = [
     "images/powerbank1.jpg",
@@ -731,6 +904,40 @@
     
     window.open(whatsappUrl, '_blank');
   }
+
+  // Show More Reviews Functionality
+  function toggleMoreReviews() {
+    const hiddenReviews = document.querySelectorAll('.extra-review');
+    const btn = document.getElementById('showMoreBtn');
+    
+    hiddenReviews.forEach(rev => rev.classList.toggle('show'));
+    
+    if(btn.innerText.includes('Show More')) {
+      btn.innerText = 'Show Less Reviews ↑';
+    } else {
+      btn.innerText = 'Show More Reviews ↓';
+    }
+  }
+
+  // Scrollspy to highlight active Navigation link
+  window.addEventListener('scroll', () => {
+    const sections = ['products', 'about', 'reviews', 'contact'];
+    const scrollPos = window.scrollY + 150;
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      const navLink = document.getElementById('nav-' + id);
+      if(el && navLink) {
+        const top = el.offsetTop;
+        const height = el.offsetHeight;
+        if(scrollPos >= top && scrollPos < top + height) {
+          navLink.classList.add('active-nav');
+        } else {
+          navLink.classList.remove('active-nav');
+        }
+      }
+    });
+  });
 
   // Draggable Floating Cart Button Feature (Desktop & Mobile Touch Support)
   const floatBtn = document.getElementById('floatingCartBtn');
