@@ -169,18 +169,23 @@
   .lightbox-prev { left: 20px; }
   .lightbox-next { right: 20px; }
 
-  /* 5. Floating Cart Widget & Drawer */
+  /* 5. Floating Glassmorphism Cart Widget & Drawer */
   .cart-float-btn {
     position: fixed;
     bottom: 25px; right: 25px;
-    background: #25D366; color: #000;
+    background: rgba(37, 211, 102, 0.85);
+    color: #000;
     width: 60px; height: 60px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 26px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    cursor: pointer; z-index: 99; transition: transform 0.2s;
+    font-size: 26px; 
+    box-shadow: 0 8px 32px 0 rgba(0, 30, 10, 0.37);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer; z-index: 99; transition: transform 0.2s, background 0.2s;
   }
-  .cart-float-btn:hover { transform: scale(1.08); }
+  .cart-float-btn:hover { transform: scale(1.08); background: rgba(37, 211, 102, 1); }
   .cart-badge {
     position: absolute; top: -2px; right: -2px;
     background: #ff3b30; color: white;
@@ -188,40 +193,60 @@
     padding: 2px 7px; border-radius: 10px;
   }
 
+  /* Glassmorphism Cart Drawer */
   .cart-drawer {
     position: fixed;
-    top: 0; right: -400px;
-    width: 360px; height: 100%;
-    background: #121810;
-    border-left: 1px solid var(--line);
+    top: 0; right: -420px;
+    width: 380px; height: 100%;
+    background: rgba(18, 24, 16, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
     z-index: 1001;
-    box-shadow: -5px 0 25px rgba(0,0,0,0.7);
-    transition: right 0.3s ease;
+    box-shadow: -10px 0 40px rgba(0,0,0,0.7);
+    transition: right 0.35s cubic-bezier(0.1, 1, 0.1, 1);
     display: flex; flex-direction: column;
   }
   .cart-drawer.open { right: 0; }
   .cart-header {
-    padding: 20px; background: rgba(255,255,255,0.03);
+    padding: 22px; background: rgba(255,255,255,0.04);
     display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .cart-header h3 { color: #fff; font-size: 18px; margin: 0; }
+  .cart-close-x {
+    background: none; border: none; color: #fff; font-size: 24px; cursor: pointer;
   }
   .cart-body { padding: 20px; flex: 1; overflow-y: auto; }
   .cart-item {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 15px; padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
+  .cart-item-info h4 { color: #fff; font-size: 14px; margin: 0 0 5px 0; }
+  .cart-item-info p { color: #25D366; font-size: 13px; margin: 0; font-weight: 650; }
+  .cart-item-controls { display: flex; align-items: center; gap: 8px; }
+  .cart-item-controls button {
+    background: rgba(255,255,255,0.1); color: #fff; border: none;
+    width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold;
+  }
+  .cart-item-controls button:hover { background: rgba(255,255,255,0.25); }
   .cart-footer {
-    padding: 20px; border-top: 1px solid var(--line);
-    background: rgba(0,0,0,0.2);
+    padding: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.25);
+  }
+  .cart-total-row {
+    display: flex; justify-content: space-between; color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px;
   }
   .cart-checkout-btn {
-    width: 100%; padding: 12px;
+    width: 100%; padding: 13px;
     background: #25D366; color: #000;
     font-weight: bold; border: none;
     border-radius: 6px; cursor: pointer;
-    font-size: 15px;
+    font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s;
   }
+  .cart-checkout-btn:hover { background: #1eb956; transform: translateY(-1px); }
 
   /* 6. WhatsApp Floating Chat Popup Widget */
   .wa-chat-float {
@@ -277,6 +302,32 @@
     <a href="javascript:void(0)" onclick="toggleCart()" class="nav-cta">🛒 Cart (<span id="cart-count-nav">0</span>)</a>
   </div>
 </nav>
+
+<!-- Floating Glassmorphism Cart Button (Draggable / Movable) -->
+<div class="cart-float-btn" id="floatingCartBtn" onclick="toggleCart()" title="Open Cart">
+  🛒
+  <span class="cart-badge" id="cart-badge-float">0</span>
+</div>
+
+<!-- Glassmorphism Cart Drawer Panel -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Shopping Cart</h3>
+    <button class="cart-close-x" onclick="toggleCart()">&times;</button>
+  </div>
+  <div class="cart-body" id="cartItemsContainer">
+    <p style="color: var(--slate); text-align: center; margin-top: 40px;">Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Total:</span>
+      <span id="cartTotalPrice">Rs. 0</span>
+    </div>
+    <button class="cart-checkout-btn" onclick="sendCartToWhatsApp()">
+      📲 Send Order via WhatsApp
+    </button>
+  </div>
+</div>
 
 <header class="hero">
   <div class="wrap">
@@ -392,6 +443,7 @@
   </div>
 </section>
 
+<!-- REVIEWS SECTION -->
 <section class="section" id="reviews">
   <div class="wrap">
     <div class="kicker">CUSTOMER FEEDBACK</div>
@@ -410,6 +462,7 @@
   </div>
 </section>
 
+<!-- CONTACT SECTION -->
 <section class="section section-alt" id="contact">
   <div class="wrap">
     <div class="kicker">GET IN TOUCH</div>
@@ -574,13 +627,146 @@
     }, {passive: true});
   }
 
-  let cartCount = 0;
-  function addToCart(itemName, price) {
-    cartCount++;
-    document.getElementById('cart-count-nav').innerText = cartCount;
-    alert(itemName + " added to cart!");
+  // Shopping Cart & WhatsApp Order Logic
+  let cart = [];
+
+  function addToCart(name, price) {
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+      existingItem.qty += 1;
+    } else {
+      cart.push({ name: name, price: price, qty: 1 });
+    }
+    updateCartUI();
+    // Automatically slide/open the cart drawer so user sees item added
+    document.getElementById('cartDrawer').classList.add('open');
   }
-  function toggleCart() {}
+
+  function updateQuantity(name, change) {
+    const item = cart.find(i => i.name === name);
+    if (item) {
+      item.qty += change;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.name !== name);
+      }
+    }
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const container = document.getElementById('cartItemsContainer');
+    const navCount = document.getElementById('cart-count-nav');
+    const floatBadge = document.getElementById('cart-badge-float');
+    const totalPriceEl = document.getElementById('cartTotalPrice');
+
+    let totalCount = 0;
+    let totalPrice = 0;
+
+    if (cart.length === 0) {
+      container.innerHTML = `<p style="color: var(--slate); text-align: center; margin-top: 40px;">Your cart is empty.</p>`;
+    } else {
+      container.innerHTML = '';
+      cart.forEach(item => {
+        totalCount += item.qty;
+        totalPrice += item.price * item.qty;
+
+        container.innerHTML += `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <h4>${item.name}</h4>
+              <p>Rs. ${item.price.toLocaleString()} x ${item.qty}</p>
+            </div>
+            <div class="cart-item-controls">
+              <button onclick="updateQuantity('${item.name}', -1)">-</button>
+              <span style="color:#fff; font-size:13px; font-weight:bold;">${item.qty}</span>
+              <button onclick="updateQuantity('${item.name}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    navCount.innerText = totalCount;
+    floatBadge.innerText = totalCount;
+    totalPriceEl.innerText = 'Rs. ' + totalPrice.toLocaleString();
+  }
+
+  function toggleCart() {
+    const drawer = document.getElementById('cartDrawer');
+    drawer.classList.toggle('open');
+  }
+
+  function sendCartToWhatsApp() {
+    if (cart.length === 0) {
+      alert("Your cart is empty! Please add some items first.");
+      return;
+    }
+
+    let message = "Hi SwiftMart, I would like to place an order for the following items:\n\n";
+    let grandTotal = 0;
+
+    cart.forEach((item, index) => {
+      let itemTotal = item.price * item.qty;
+      grandTotal += itemTotal;
+      message += `${index + 1}. ${item.name} - Qty: ${item.qty} - Rs. ${itemTotal.toLocaleString()}\n`;
+    });
+
+    message += `\n*Total Amount: Rs. ${grandTotal.toLocaleString()}*\n\nPlease confirm availability and delivery details. Thank you!`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/94776465923?text=${encodedMessage}`;
+    
+    window.open(whatsappUrl, '_blank');
+  }
+
+  // Draggable Floating Cart Button Feature (Desktop & Mobile Touch Support)
+  const floatBtn = document.getElementById('floatingCartBtn');
+  let isDragging = false;
+  let dragStartX, dragStartY;
+  let initialX, initialY;
+
+  floatBtn.addEventListener('mousedown', dragStart);
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', dragEnd);
+
+  floatBtn.addEventListener('touchstart', dragStart, {passive: true});
+  document.addEventListener('touchmove', drag, {passive: true});
+  document.addEventListener('touchend', dragEnd);
+
+  function dragStart(e) {
+    isDragging = false; // We use this to distinguish a click from a drag
+    dragStartX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    dragStartY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+    
+    const rect = floatBtn.getBoundingClientRect();
+    initialX = rect.left;
+    initialY = rect.top;
+  }
+
+  function drag(e) {
+    if (!dragStartX) return;
+    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+    const dx = clientX - dragStartX;
+    const dy = clientY - dragStartY;
+
+    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+      isDragging = true;
+      floatBtn.style.bottom = 'auto';
+      floatBtn.style.right = 'auto';
+      floatBtn.style.left = (initialX + dx) + 'px';
+      floatBtn.style.top = (initialY + dy) + 'px';
+    }
+  }
+
+  function dragEnd(e) {
+    dragStartX = null;
+    if (isDragging) {
+      // Prevent click event firing right after drag release
+      e.stopPropagation();
+    }
+  }
 </script>
 </body>
 </html>
