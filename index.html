@@ -89,11 +89,7 @@
     height: 280px;
     background: #111;
     overflow: hidden;
-    cursor: grab;
-    touch-action: pan-y;
-  }
-  .card-img:active {
-    cursor: grabbing;
+    cursor: pointer;
   }
   .card-img img.main-img {
     width: 100%;
@@ -102,7 +98,6 @@
     object-position: center;
     display: block;
     transition: opacity 0.2s ease-in-out;
-    pointer-events: none;
   }
   .thumb-bar {
     display: flex;
@@ -152,7 +147,6 @@
     max-height: 80vh;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    pointer-events: none;
   }
   .lightbox-close {
     position: absolute;
@@ -320,8 +314,9 @@
     <h2 class="section-title">Featured Products</h2>
     <div class="products-grid">
 
+      <!-- Power Bank Card -->
       <div class="card">
-        <div class="card-img" id="pb1-container" onclick="openLightboxFromContainer(event, 'main-pb1')">
+        <div class="card-img" id="pb1-container" onclick="openLightboxFromContainer('main-pb1')">
           <img id="main-pb1" class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
           <span class="card-tag">Special Offer</span>
         </div>
@@ -352,6 +347,7 @@
         </div>
       </div>
 
+      <!-- Type-C Cable Card -->
       <div class="card">
         <div class="card-img" onclick="openSimpleLightbox('images/cable1.jpg')">
           <img src="images/cable1.jpg" class="main-img" alt="Type-C Cable" onerror="this.onerror=null; this.src='assets/placeholder.jpg';">
@@ -367,6 +363,7 @@
         </div>
       </div>
 
+      <!-- Wireless Earbuds Card -->
       <div class="card">
         <div class="card-img" onclick="openSimpleLightbox('images/earbuds1.jpg')">
           <img src="images/earbuds1.jpg" class="main-img" alt="Wireless Earbuds" onerror="this.onerror=null; this.src='assets/placeholder.jpg';">
@@ -386,6 +383,7 @@
   </div>
 </section>
 
+<!-- Lightbox Modal -->
 <div id="lightbox" class="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
   <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">&#10094;</button>
@@ -394,7 +392,6 @@
 </div>
 
 <script>
-  // Power Bank Images List for Swiping / Lightbox
   const pbImages = [
     "images/powerbank1.jpg",
     "images/powerbank2.jpg",
@@ -406,4 +403,90 @@
     "images/powerbank8.jpg",
     "images/powerbank9.jpg"
   ];
-  let
+  let currentImageIndex = 0;
+
+  function changeImage(mainImgId, src, thumbElement, index) {
+    const mainImg = document.getElementById(mainImgId);
+    mainImg.src = src;
+    currentImageIndex = index;
+
+    const thumbBar = thumbElement.parentElement;
+    const thumbs = thumbBar.querySelectorAll('img');
+    thumbs.forEach(t => t.classList.remove('active'));
+    thumbElement.classList.add('active');
+  }
+
+  function openLightboxFromContainer(mainImgId) {
+    const mainImg = document.getElementById(mainImgId);
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    
+    lightboxImg.src = mainImg.src;
+    lightbox.classList.add('active');
+  }
+
+  function openSimpleLightbox(imgSrc) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = imgSrc;
+    lightbox.classList.add('active');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+
+  function changeLightboxImg(direction) {
+    currentImageIndex += direction;
+    if (currentImageIndex < 0) currentImageIndex = pbImages.length - 1;
+    if (currentImageIndex >= pbImages.length) currentImageIndex = 0;
+
+    const newSrc = pbImages[currentImageIndex];
+    document.getElementById('lightbox-img').src = newSrc;
+    document.getElementById('main-pb1').src = newSrc;
+
+    const thumbs = document.querySelectorAll('#pb1-thumbs img');
+    thumbs.forEach((t, idx) => {
+      if (idx === currentImageIndex) {
+        t.classList.add('active');
+      } else {
+        t.classList.remove('active');
+      }
+    });
+  }
+
+  // Touch Swipe Logic for Mobile (Without breaking click/lightbox)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const pbContainer = document.getElementById('pb1-container');
+
+  if(pbContainer) {
+    pbContainer.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    pbContainer.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+  }
+
+  function handleSwipe() {
+    if (touchEndX < touchStartX - 40) {
+      changeLightboxImg(1); // Swipe Left -> Next Image
+    }
+    if (touchEndX > touchStartX + 40) {
+      changeLightboxImg(-1); // Swipe Right -> Prev Image
+    }
+  }
+
+  let cartCount = 0;
+  function addToCart(itemName, price) {
+    cartCount++;
+    document.getElementById('cart-count-nav').innerText = cartCount;
+    alert(itemName + " added to cart!");
+  }
+  function toggleCart() {}
+</script>
+</body>
+</html>
