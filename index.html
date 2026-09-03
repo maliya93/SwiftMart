@@ -321,7 +321,7 @@
     <div class="products-grid">
 
       <div class="card">
-        <div class="card-img" id="pb1-container" onclick="openLightbox(0)">
+        <div class="card-img" id="pb1-container" onclick="openLightboxFromContainer(event, 'main-pb1')">
           <img id="main-pb1" class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
           <span class="card-tag">Special Offer</span>
         </div>
@@ -353,8 +353,8 @@
       </div>
 
       <div class="card">
-        <div class="card-img">
-          <img src="images/cable1.jpg" class="main-img" alt="Type-C Cable" onerror="this.onerror=null; this.parentElement.innerHTML='🔌';">
+        <div class="card-img" onclick="openSimpleLightbox('images/cable1.jpg')">
+          <img src="images/cable1.jpg" class="main-img" alt="Type-C Cable" onerror="this.onerror=null; this.src='assets/placeholder.jpg';">
         </div>
         <div class="card-body">
           <h3>Type-C Fast Cable (1m)</h3>
@@ -368,8 +368,8 @@
       </div>
 
       <div class="card">
-        <div class="card-img">
-          <img src="images/earbuds1.jpg" class="main-img" alt="Wireless Earbuds" onerror="this.onerror=null; this.parentElement.innerHTML='🎧';">
+        <div class="card-img" onclick="openSimpleLightbox('images/earbuds1.jpg')">
+          <img src="images/earbuds1.jpg" class="main-img" alt="Wireless Earbuds" onerror="this.onerror=null; this.src='assets/placeholder.jpg';">
         </div>
         <div class="card-body">
           <h3>Wireless Earbuds</h3>
@@ -386,53 +386,6 @@
   </div>
 </section>
 
-<section class="section" id="reviews">
-  <div class="wrap">
-    <div class="kicker">CUSTOMER REVIEWS</div>
-    <h2 class="section-title">What people are saying</h2>
-    <p class="section-desc">Real feedback from SwiftMart customers.</p>
-    <div class="testi-grid">
-      <div class="testi">
-        <div class="stars">★★★★★</div>
-        <p>"Power bank eka hodata charge wenawa, delivery eka fast. Godak santhosai!"</p>
-        <div class="testi-name">— Verified Customer</div>
-      </div>
-      <div class="testi">
-        <div class="stars">★★★★★</div>
-        <p>"Ordered a cable, arrived in 2 days, quality is genuinely good for the price."</p>
-        <div class="testi-name">— Verified Customer</div>
-      </div>
-      <div class="testi">
-        <div class="stars">★★★★★</div>
-        <p>"Quick replies on WhatsApp and COD option made it super easy to order."</p>
-        <div class="testi-name">— Verified Customer</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section-alt" id="contact">
-  <div class="wrap">
-    <div class="contact-box">
-      <div>
-        <div class="kicker">GET IN TOUCH</div>
-        <h2 class="section-title" style="margin-bottom:12px;">Ready to order?</h2>
-        <p style="color:var(--slate); font-size:16px;">Message us your product and we'll confirm price, stock, and delivery — usually within minutes.</p>
-      </div>
-      <div class="contact-methods">
-        <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order" target="_blank" class="contact-method">
-          <div class="contact-icon">📱</div>
-          <div><b>WhatsApp Direct</b><span>Instant reply & fast ordering</span></div>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61578484391080" target="_blank" class="contact-method">
-          <div class="contact-icon">💬</div>
-          <div><b>Facebook Page</b><span>Visit & message on Facebook</span></div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <div id="lightbox" class="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
   <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">&#10094;</button>
@@ -440,13 +393,17 @@
   <button class="lightbox-nav lightbox-next" onclick="changeLightboxImg(1)">&#10095;</button>
 </div>
 
-<div class="wa-chat-float">
-  <div id="wa-chat-box" class="wa-chat-box">
-    <div class="wa-chat-header">
-      <span>💬 SwiftMart Support</span>
-      <span style="cursor:pointer;" onclick="toggleWAChat()">&times;</span>
-    </div>
-    <div class="wa-chat-body">
-      <p style="margin-bottom:8px; color:#fff;">Hi there! 👋</p>
-      <p>Need help finding a product or placing an order? Chat with us directly on WhatsApp!</p>
-      <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%
+<script>
+  // Power Bank Images List for Swiping / Lightbox
+  const pbImages = [
+    "images/powerbank1.jpg",
+    "images/powerbank2.jpg",
+    "images/powerbank3.jpg",
+    "images/powerbank4.jpg",
+    "images/powerbank5.jpg",
+    "images/powerbank6.jpg",
+    "images/powerbank7.jpg",
+    "images/powerbank8.jpg",
+    "images/powerbank9.jpg"
+  ];
+  let
