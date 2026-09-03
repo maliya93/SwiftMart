@@ -395,18 +395,16 @@
   </div>
 </nav>
 
-<!-- Floating Glassmorphism Cart Button -->
 <div class="cart-float-btn" id="floatingCartBtn" onclick="toggleCart()" title="Open Cart" style="bottom: 95px;">
   🛒
   <span class="cart-badge" id="cart-badge-float">0</span>
 </div>
 
-<!-- Floating WhatsApp Chat Widget -->
 <div style="position: fixed; bottom: 25px; right: 25px; z-index: 99; display: flex; flex-direction: column; align-items: flex-end;">
   <div class="wa-chat-box" id="waChatBox">
     <div class="wa-chat-header">
       <span>💬 SwiftMart Support</span>
-      <span style="cursor: pointer; font-size: 18px;" onclick="toggleWaChat()">&times;</span>
+      <span style="cursor: pointer; font-size: 18px;" onclick="toggleWaChat()">×</span>
     </div>
     <div class="wa-chat-body">
       <p style="margin-bottom: 12px; color: #fff;">Hi there! 👋 How can we help you with SwiftMart accessories today?</p>
@@ -418,11 +416,10 @@
   </button>
 </div>
 
-<!-- Glassmorphism Cart Drawer Panel -->
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-header">
     <h3>Your Shopping Cart</h3>
-    <button class="cart-close-x" onclick="toggleCart()">&times;</button>
+    <button class="cart-close-x" onclick="toggleCart()">×</button>
   </div>
   <div class="cart-body" id="cartItemsContainer">
     <p style="color: var(--slate); text-align: center; margin-top: 40px;">Your cart is empty.</p>
@@ -552,7 +549,6 @@
   </div>
 </section>
 
-<!-- REVIEWS SECTION -->
 <section class="section" id="reviews">
   <div class="wrap">
     <div class="kicker">CUSTOMER FEEDBACK</div>
@@ -561,7 +557,6 @@
     
     <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;" id="reviewsGrid">
       
-      <!-- Real Review from Darshana Sampath -->
       <div class="review-card">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -595,7 +590,6 @@
         <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
       </div>
 
-      <!-- Hidden Extra Reviews (Shown on "Show More" click) -->
       <div class="review-card review-hidden extra-review">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -627,7 +621,6 @@
   </div>
 </section>
 
-<!-- CONTACT SECTION -->
 <section class="section section-alt" id="contact">
   <div class="wrap">
     <div class="kicker">GET IN TOUCH</div>
@@ -644,16 +637,14 @@
         </div>
       </div>
       
-      <!-- Embedded Shop Map Location (Badulla) -->
-      <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--line); height: 220px; background: #121810;">
-        <iframe title="SwiftMart Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798485299479!2d81.05281147587843!3d6.993400518494883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae4715ac14c2f67%3A0x6a2624d7759decc!2sBadulla!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--line); height: 260px; background: #121810;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d320.3430775183844!2d81.05117933911423!3d6.993193341477941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae46321a0bab985%3A0x6abe489e54181c65!2sSwiftMart!5e1!3m2!1sen!2slk!4v1788463164120!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- PROFESSIONAL FOOTER -->
 <footer>
   <div class="wrap">
     <div class="footer-grid">
@@ -682,16 +673,16 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 SwiftMart. All rights reserved. Designed for smart shoppers across Sri Lanka.</p>
+      <p>© 2026 SwiftMart. All rights reserved. Designed for smart shoppers across Sri Lanka.</p>
     </div>
   </div>
 </footer>
 
 <div id="lightbox" class="lightbox">
-  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-  <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">&#10094;</button>
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">❮</button>
   <img id="lightbox-img" class="lightbox-content" src="" alt="Popup View">
-  <button class="lightbox-nav lightbox-next" onclick="changeLightboxImg(1)">&#10095;</button>
+  <button class="lightbox-nav lightbox-next" onclick="changeLightboxImg(1)">❯</button>
 </div>
 
 <script>
