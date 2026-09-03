@@ -311,6 +311,27 @@
     display: flex;
   }
 
+  /* Glassmorphism Show More Button Style */
+  .glass-btn {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+  .glass-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
   /* Professional Footer Styles */
   footer {
     background: #0d120a;
@@ -555,7 +576,7 @@
       <div class="review-card">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <b style="color: #fff; font-size: 15px;">Chamara D.</b>
+            <b style="color: #fff; font-size: 15px;">Chamara Dinitha</b>
             <span style="font-size: 12px; color: var(--slate);">14 August 2026</span>
           </div>
           <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Super fast delivery to Badulla! Got my items safely in a few days. Excellent quality."</p>
@@ -566,7 +587,7 @@
       <div class="review-card">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <b style="color: #fff; font-size: 15px;">Tharindu P.</b>
+            <b style="color: #fff; font-size: 15px;">Tharindu Pushpakumara</b>
             <span style="font-size: 12px; color: var(--slate);">02 July 2026</span>
           </div>
           <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"The touch screen earbuds and accessories are amazing. Genuine product and great customer support on WhatsApp."</p>
@@ -578,7 +599,7 @@
       <div class="review-card review-hidden extra-review">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <b style="color: #fff; font-size: 15px;">Kasun R.</b>
+            <b style="color: #fff; font-size: 15px;">Kasun Rathnayake</b>
             <span style="font-size: 12px; color: var(--slate);">20 June 2026</span>
           </div>
           <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Best power bank collection in Sri Lanka. Very helpful service and solid warranty support."</p>
@@ -589,7 +610,7 @@
       <div class="review-card review-hidden extra-review">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <b style="color: #fff; font-size: 15px;">Nuwan K.</b>
+            <b style="color: #fff; font-size: 15px;">Nuwan Pradeep</b>
             <span style="font-size: 12px; color: var(--slate);">05 May 2026</span>
           </div>
           <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Smooth transaction. Ordered via WhatsApp and got it delivered right to my doorstep. Highly recommended!"</p>
@@ -600,7 +621,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 30px;" id="showMoreContainer">
-      <button onclick="toggleMoreReviews()" id="showMoreBtn" class="btn btn-outline" style="cursor: pointer;">Show More Reviews ↓</button>
+      <button onclick="toggleMoreReviews()" id="showMoreBtn" class="glass-btn">Show More Reviews ↓</button>
     </div>
 
   </div>
@@ -612,14 +633,23 @@
     <div class="kicker">GET IN TOUCH</div>
     <h2 class="section-title">Contact Us</h2>
     <p class="section-desc">Have questions about our mobile accessories or need help with an order? Reach out to us anytime.</p>
-    <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
-      <p style="color: var(--slate);">📍 <b>Location:</b> Badulla, Sri Lanka</p>
-      <p style="color: var(--slate);">📞 <b>WhatsApp / Phone:</b> +94 77 646 5923</p>
-      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px;">
-        <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-primary">Chat on WhatsApp →</a>
-        <a href="https://facebook.com" target="_blank" class="btn btn-outline" style="border-color: #1877F2; color: #1877F2;">Visit Facebook Page</a>
+    
+    <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; align-items: start;">
+      <div>
+        <p style="color: var(--slate); margin-bottom: 10px;">📍 <b>Location:</b> Badulla, Sri Lanka</p>
+        <p style="color: var(--slate); margin-bottom: 15px;">📞 <b>WhatsApp / Phone:</b> +94 77 646 5923</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 15px;">
+          <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-primary">Chat on WhatsApp →</a>
+          <a href="https://www.facebook.com/profile.php?id=61578484391080" target="_blank" class="btn btn-outline" style="border-color: #1877F2; color: #1877F2;">Visit Facebook Page</a>
+        </div>
+      </div>
+      
+      <!-- Embedded Shop Map Location (Badulla) -->
+      <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--line); height: 220px; background: #121810;">
+        <iframe title="SwiftMart Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798485299479!2d81.05281147587843!3d6.993400518494883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae4715ac14c2f67%3A0x6a2624d7759decc!2sBadulla!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -646,7 +676,7 @@
         <h4>Connect With Us</h4>
         <ul>
           <li><a href="https://wa.me/94776465923" target="_blank">WhatsApp Support</a></li>
-          <li><a href="https://facebook.com" target="_blank">Facebook Page</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61578484391080" target="_blank">Facebook Page</a></li>
           <li><a href="#contact">Badulla, Sri Lanka</a></li>
         </ul>
       </div>
@@ -669,6 +699,26 @@
   function toggleWaChat() {
     const box = document.getElementById('waChatBox');
     box.classList.toggle('open');
+  }
+
+  // Toggle More Reviews
+  function toggleMoreReviews() {
+    const hiddenReviews = document.querySelectorAll('.extra-review');
+    const btn = document.getElementById('showMoreBtn');
+    let isHidden = false;
+
+    hiddenReviews.forEach(rev => {
+      rev.classList.toggle('show');
+      if(rev.classList.contains('show')) {
+        isHidden = true;
+      }
+    });
+
+    if(isHidden) {
+      btn.innerText = 'Show Less Reviews ↑';
+    } else {
+      btn.innerText = 'Show More Reviews ↓';
+    }
   }
 
   // Power Bank Images
@@ -812,22 +862,27 @@
     }, {passive: true});
   }
 
-  // Shopping Cart & WhatsApp Order Logic
+  // Simple Cart State & Functions
   let cart = [];
+
+  function toggleCart() {
+    const drawer = document.getElementById('cartDrawer');
+    drawer.classList.toggle('open');
+  }
 
   function addToCart(name, price) {
     const existingItem = cart.find(item => item.name === name);
     if (existingItem) {
       existingItem.qty += 1;
     } else {
-      cart.push({ name: name, price: price, qty: 1 });
+      cart.push({ name, price, qty: 1 });
     }
     updateCartUI();
-    document.getElementById('cartDrawer').classList.add('open');
+    toggleCart();
   }
 
-  function updateQuantity(name, change) {
-    const item = cart.find(i => i.name === name);
+  function updateQty(name, change) {
+    const item = cart.find(item => item.name === name);
     if (item) {
       item.qty += change;
       if (item.qty <= 0) {
@@ -839,16 +894,16 @@
 
   function updateCartUI() {
     const container = document.getElementById('cartItemsContainer');
-    const navCount = document.getElementById('cart-count-nav');
-    const navTopCount = document.getElementById('cart-count-nav-top');
-    const floatBadge = document.getElementById('cart-badge-float');
+    const countNav = document.getElementById('cart-count-nav');
+    const countNavTop = document.getElementById('cart-count-nav-top');
+    const badgeFloat = document.getElementById('cart-badge-float');
     const totalPriceEl = document.getElementById('cartTotalPrice');
 
     let totalCount = 0;
     let totalPrice = 0;
 
     if (cart.length === 0) {
-      container.innerHTML = `<p style="color: var(--slate); text-align: center; margin-top: 40px;">Your cart is empty.</p>`;
+      container.innerHTML = '<p style="color: var(--slate); text-align: center; margin-top: 40px;">Your cart is empty.</p>';
     } else {
       container.innerHTML = '';
       cart.forEach(item => {
@@ -859,133 +914,43 @@
           <div class="cart-item">
             <div class="cart-item-info">
               <h4>${item.name}</h4>
-              <p>Rs. ${item.price.toLocaleString()} x ${item.qty}</p>
+              <p>Rs. ${(item.price * item.qty).toLocaleString()}</p>
             </div>
             <div class="cart-item-controls">
-              <button onclick="updateQuantity('${item.name}', -1)">-</button>
-              <span style="color:#fff; font-size:13px; font-weight:bold;">${item.qty}</span>
-              <button onclick="updateQuantity('${item.name}', 1)">+</button>
+              <button onclick="updateQty('${item.name}', -1)">-</button>
+              <span style="color: #fff; font-size: 13px; font-weight: bold;">${item.qty}</span>
+              <button onclick="updateQty('${item.name}', 1)">+</button>
             </div>
           </div>
         `;
       });
     }
 
-    navCount.innerText = totalCount;
-    if(navTopCount) navTopCount.innerText = totalCount;
-    floatBadge.innerText = totalCount;
+    countNav.innerText = totalCount;
+    countNavTop.innerText = totalCount;
+    badgeFloat.innerText = totalCount;
     totalPriceEl.innerText = 'Rs. ' + totalPrice.toLocaleString();
-  }
-
-  function toggleCart() {
-    const drawer = document.getElementById('cartDrawer');
-    drawer.classList.toggle('open');
   }
 
   function sendCartToWhatsApp() {
     if (cart.length === 0) {
-      alert("Your cart is empty! Please add some items first.");
+      alert('Your cart is empty!');
       return;
     }
 
-    let message = "Hi SwiftMart, I would like to place an order for the following items:\n\n";
-    let grandTotal = 0;
+    let message = 'Hi SwiftMart, I would like to place an order:%0A';
+    let total = 0;
 
-    cart.forEach((item, index) => {
-      let itemTotal = item.price * item.qty;
-      grandTotal += itemTotal;
-      message += `${index + 1}. ${item.name} - Qty: ${item.qty} - Rs. ${itemTotal.toLocaleString()}\n`;
+    cart.forEach(item => {
+      let sub = item.price * item.qty;
+      total += sub;
+      message += `- ${item.name} (x${item.qty}) - Rs. ${sub.toLocaleString()}%0A`;
     });
 
-    message += `\n*Total Amount: Rs. ${grandTotal.toLocaleString()}*\n\nPlease confirm availability and delivery details. Thank you!`;
-
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/94776465923?text=${encodedMessage}`;
-    
-    window.open(whatsappUrl, '_blank');
-  }
-
-  // Show More Reviews Functionality
-  function toggleMoreReviews() {
-    const hiddenReviews = document.querySelectorAll('.extra-review');
-    const btn = document.getElementById('showMoreBtn');
-    
-    hiddenReviews.forEach(rev => rev.classList.toggle('show'));
-    
-    if(btn.innerText.includes('Show More')) {
-      btn.innerText = 'Show Less Reviews ↑';
-    } else {
-      btn.innerText = 'Show More Reviews ↓';
-    }
-  }
-
-  // Scrollspy to highlight active Navigation link
-  window.addEventListener('scroll', () => {
-    const sections = ['products', 'about', 'reviews', 'contact'];
-    const scrollPos = window.scrollY + 150;
-
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      const navLink = document.getElementById('nav-' + id);
-      if(el && navLink) {
-        const top = el.offsetTop;
-        const height = el.offsetHeight;
-        if(scrollPos >= top && scrollPos < top + height) {
-          navLink.classList.add('active-nav');
-        } else {
-          navLink.classList.remove('active-nav');
-        }
-      }
-    });
-  });
-
-  // Draggable Floating Cart Button Feature (Desktop & Mobile Touch Support)
-  const floatBtn = document.getElementById('floatingCartBtn');
-  let isDragging = false;
-  let dragStartX, dragStartY;
-  let initialX, initialY;
-
-  floatBtn.addEventListener('mousedown', dragStart);
-  document.addEventListener('mousemove', drag);
-  document.addEventListener('mouseup', dragEnd);
-
-  floatBtn.addEventListener('touchstart', dragStart, {passive: true});
-  document.addEventListener('touchmove', drag, {passive: true});
-  document.addEventListener('touchend', dragEnd);
-
-  function dragStart(e) {
-    isDragging = false;
-    dragStartX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-    dragStartY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-    
-    const rect = floatBtn.getBoundingClientRect();
-    initialX = rect.left;
-    initialY = rect.top;
-  }
-
-  function drag(e) {
-    if (!dragStartX) return;
-    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-
-    const dx = clientX - dragStartX;
-    const dy = clientY - dragStartY;
-
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-      isDragging = true;
-      floatBtn.style.bottom = 'auto';
-      floatBtn.style.right = 'auto';
-      floatBtn.style.left = (initialX + dx) + 'px';
-      floatBtn.style.top = (initialY + dy) + 'px';
-    }
-  }
-
-  function dragEnd(e) {
-    dragStartX = null;
-    if (isDragging) {
-      e.stopPropagation();
-    }
+    message += `%0ATotal: Rs. ${total.toLocaleString()}%0APlease confirm my order.`;
+    window.open(`https://wa.me/94776465923?text=${message}`, '_blank');
   }
 </script>
+
 </body>
 </html>
