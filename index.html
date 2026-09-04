@@ -381,6 +381,7 @@
   header.hero {
     position: relative;
     background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01.jpg') no-repeat center center/cover !important;
+    transition: background 0.8s ease-in-out;
   }
 </style>
 </head>
@@ -783,6 +784,28 @@
 </div>
 
 <script>
+  // ----------------------------------------------------
+  // Hero Background Auto-Slider (Every 10 Seconds)
+  // ----------------------------------------------------
+  const heroImages = [
+    "images/BG01.jpg",
+    "images/BG02.jpg"
+    // P Passewthawa images add karanna puluwan mehema: , "images/BG03.jpg"
+  ];
+  let currentHeroIndex = 0;
+
+  function rotateHeroBackground() {
+    currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+    const heroEl = document.querySelector('header.hero');
+    if (heroEl) {
+      heroEl.style.setProperty('background', `linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('${heroImages[currentHeroIndex]}') no-repeat center center/cover`, 'important');
+    }
+  }
+
+  // Set interval to 10 seconds (10000 ms)
+  setInterval(rotateHeroBackground, 10000);
+
+
   // Toggle WhatsApp Chat Box Popup
   function toggleWaChat() {
     const box = document.getElementById('waChatBox');
