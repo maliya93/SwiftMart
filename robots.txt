@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maliya93.github.io/SwiftMart/sitemap.xml
