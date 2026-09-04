@@ -379,30 +379,30 @@
 </head>
 <body>
 
-<!-- SwiftMart Stats & Trust Bar -->
+<!-- SwiftMart Optimized Stats & Trust Bar with Icons -->
 <section class="swift-stats-bar">
     <div class="stats-container">
         
         <div class="stat-item">
-            <i class="fas fa-smile-beam"></i>
+            <i class="fas fa-handshake-simple"></i> <!-- FontAwesome hand-shake icon -->
             <h3>500+</h3>
             <p>Happy Customers</p>
         </div>
 
         <div class="stat-item">
-            <i class="fas fa-box-open"></i>
+            <i class="fas fa-boxes-stacked"></i> <!-- FontAwesome boxes icon -->
             <h3>100+</h3>
             <p>Gadget Varieties</p>
         </div>
 
         <div class="stat-item">
-            <i class="fas fa-shipping-fast"></i>
+            <i class="fas fa-truck-fast"></i> <!-- FontAwesome fast-truck icon -->
             <h3>Islandwide</h3>
             <p>Fast Delivery</p>
         </div>
 
         <div class="stat-item">
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i> <!-- FontAwesome star icon -->
             <h3>5.0</h3>
             <p>Trusted Reviews</p>
         </div>
@@ -417,6 +417,7 @@
     padding: 30px 20px;
     border-top: 1px solid #222;
     border-bottom: 1px solid #222;
+    font-family: 'Inter', sans-serif; /* Match site font */
 }
 .stats-container {
     max-width: 1100px;
@@ -431,24 +432,29 @@
     text-align: center;
     flex: 1;
     min-width: 150px;
+    transition: transform 0.3s ease;
+}
+.stat-item:hover {
+    transform: translateY(-5px); /* Small hover effect */
 }
 .stat-item i {
-    font-size: 24px;
+    font-size: 28px; /* Icon size */
     color: #00ff88; /* SwiftMart accent green */
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 .stat-item h3 {
-    font-size: 24px;
+    font-size: 28px; /* Main number/text size */
     font-weight: 700;
     margin: 0 0 5px 0;
     color: #ffffff;
 }
 .stat-item p {
-    font-size: 13px;
+    font-size: 13px; /* Subtext size */
     color: #aaaaaa;
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 600;
 }
 </style>
 
