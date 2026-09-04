@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   /* Smooth Scrolling for Navigation Links */
   html {
@@ -379,85 +380,6 @@
 </head>
 <body>
 
-<!-- SwiftMart Optimized Stats & Trust Bar with Icons -->
-<section class="swift-stats-bar">
-    <div class="stats-container">
-        
-        <div class="stat-item">
-            <i class="fas fa-handshake-simple"></i> <!-- FontAwesome hand-shake icon -->
-            <h3>500+</h3>
-            <p>Happy Customers</p>
-        </div>
-
-        <div class="stat-item">
-            <i class="fas fa-boxes-stacked"></i> <!-- FontAwesome boxes icon -->
-            <h3>100+</h3>
-            <p>Gadget Varieties</p>
-        </div>
-
-        <div class="stat-item">
-            <i class="fas fa-truck-fast"></i> <!-- FontAwesome fast-truck icon -->
-            <h3>Islandwide</h3>
-            <p>Fast Delivery</p>
-        </div>
-
-        <div class="stat-item">
-            <i class="fas fa-star"></i> <!-- FontAwesome star icon -->
-            <h3>5.0</h3>
-            <p>Trusted Reviews</p>
-        </div>
-
-    </div>
-</section>
-
-<style>
-.swift-stats-bar {
-    background-color: #121212; /* Dark charcoal theme */
-    color: #ffffff;
-    padding: 30px 20px;
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
-    font-family: 'Inter', sans-serif; /* Match site font */
-}
-.stats-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
-}
-.stat-item {
-    text-align: center;
-    flex: 1;
-    min-width: 150px;
-    transition: transform 0.3s ease;
-}
-.stat-item:hover {
-    transform: translateY(-5px); /* Small hover effect */
-}
-.stat-item i {
-    font-size: 28px; /* Icon size */
-    color: #00ff88; /* SwiftMart accent green */
-    margin-bottom: 12px;
-}
-.stat-item h3 {
-    font-size: 28px; /* Main number/text size */
-    font-weight: 700;
-    margin: 0 0 5px 0;
-    color: #ffffff;
-}
-.stat-item p {
-    font-size: 13px; /* Subtext size */
-    color: #aaaaaa;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-</style>
-
 <div id="chargebar"></div>
 
 <nav>
@@ -523,6 +445,98 @@
       <a href="#products" class="btn btn-primary">Browse Products →</a>
       <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-outline">Message Us</a>
     </div>
+
+    <!-- SwiftMart Glassmorphism Stats & Trust Bar (Placed right below buttons) -->
+    <section class="swift-stats-bar">
+        <div class="stats-container">
+            
+            <div class="stat-item">
+                <i class="fas fa-handshake-simple"></i>
+                <h3>500+</h3>
+                <p>Happy Customers</p>
+            </div>
+
+            <div class="stat-item">
+                <i class="fas fa-boxes-stacked"></i>
+                <h3>100+</h3>
+                <p>Gadget Varieties</p>
+            </div>
+
+            <div class="stat-item">
+                <i class="fas fa-truck-fast"></i>
+                <h3>Islandwide</h3>
+                <p>Fast Delivery</p>
+            </div>
+
+            <div class="stat-item">
+                <i class="fas fa-star"></i>
+                <h3>5.0</h3>
+                <p>Trusted Reviews</p>
+            </div>
+
+        </div>
+    </section>
+
+    <style>
+    .swift-stats-bar {
+        /* Glassmorphism Effect */
+        background: rgba(25, 30, 25, 0.65);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        
+        max-width: 1050px;
+        margin: 40px auto 10px auto;
+        padding: 25px 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .stats-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        gap: 20px;
+    }
+    .stat-item {
+        text-align: center;
+        flex: 1;
+        min-width: 150px;
+        transition: transform 0.3s ease;
+    }
+    .stat-item:hover {
+        transform: translateY(-4px);
+    }
+    .stat-item i {
+        font-size: 26px;
+        color: #00ff88;
+        margin-bottom: 10px;
+    }
+    .stat-item h3 {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        color: #ffffff;
+    }
+    .stat-item p {
+        font-size: 12px;
+        color: #b0b0b0;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    /* Mobile Responsive adjustment */
+    @media (max-width: 768px) {
+        .swift-stats-bar {
+            margin: 20px 10px;
+            padding: 20px 10px;
+        }
+    }
+    </style>
+
   </div>
 </header>
 
