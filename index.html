@@ -377,11 +377,18 @@
     color: rgba(255,255,255,0.5);
   }
 
-  /* Custom Hero Background with BG01.jpg and Dark Overlay (Fixed URL path to images folder) */
+  /* Custom Hero Background with Mobile-Optimized Images and Responsive sizing */
   header.hero {
     position: relative;
-    background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01.jpg') no-repeat center center/cover !important;
+    background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01-Mobi.jpg') no-repeat center center/cover !important;
     transition: background 0.8s ease-in-out;
+  }
+
+  @media (max-width: 768px) {
+    header.hero {
+      background-size: cover !important;
+      background-position: center center !important;
+    }
   }
 </style>
 </head>
@@ -797,11 +804,11 @@
 
 <script>
   // ----------------------------------------------------
-  // Hero Background Auto-Slider (Every 10 Seconds)
+  // Hero Background Auto-Slider (Using Mobile-Optimized Images)
   // ----------------------------------------------------
   const heroImages = [
-    "images/BG01.jpg",
-    "images/BG02.jpg"
+    "images/BG01-Mobi.jpg",
+    "images/BG02-Mobi.jpg"
   ];
   let currentHeroIndex = 0;
 
