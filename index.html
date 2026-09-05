@@ -377,15 +377,16 @@
     color: rgba(255,255,255,0.5);
   }
 
-  /* Custom Hero Background with Mobile-Optimized Images and Responsive sizing */
+  /* Custom Hero Background with Web & Mobile-Optimized Images */
   header.hero {
     position: relative;
-    background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01-Mobi.jpg') no-repeat center center/cover !important;
+    background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01.jpg') no-repeat center center/cover !important;
     transition: background 0.8s ease-in-out;
   }
 
   @media (max-width: 768px) {
     header.hero {
+      background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01 - Mobi.jpg') no-repeat center center/cover !important;
       background-size: cover !important;
       background-position: center center !important;
     }
@@ -804,15 +805,26 @@
 
 <script>
   // ----------------------------------------------------
-  // Hero Background Auto-Slider (Using Mobile-Optimized Images)
+  // Hero Background Auto-Slider (Switching Web & Mobile Images based on screen size)
   // ----------------------------------------------------
-  const heroImages = [
-    "images/BG01-Mobi.jpg",
-    "images/BG02-Mobi.jpg"
-  ];
+  function getHeroImages() {
+    if (window.innerWidth <= 768) {
+      return [
+        "images/BG01 - Mobi.jpg",
+        "images/BG02 - Mobi.jpg"
+      ];
+    } else {
+      return [
+        "images/BG01.jpg",
+        "images/BG02.jpg"
+      ];
+    }
+  }
+
   let currentHeroIndex = 0;
 
   function rotateHeroBackground() {
+    const heroImages = getHeroImages();
     currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
     const heroEl = document.querySelector('header.hero');
     if (heroEl) {
