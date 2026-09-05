@@ -631,16 +631,28 @@
       </div>
 
       <div class="card">
-        <div class="card-img" onclick="openSimpleLightbox('images/earbuds1.jpg')">
-          <img src="images/earbuds1.jpg" class="main-img" alt="Wireless Earbuds" onerror="this.onerror=null; this.src='assets/placeholder.jpg';">
+        <div class="card-img" id="airpods-container" onclick="openLightboxFromContainer('main-airpods', airpodsImages, currentAirpodsIndex)">
+          <img id="main-airpods" class="main-img" src="images/AirPods Pro 2nd 01.jpg" alt="AirPods Pro 2nd Gen">
+          <span class="card-tag">Special Offer</span>
         </div>
+        
+        <div class="thumb-bar" id="airpods-thumbs">
+          <img src="images/AirPods Pro 2nd 01.jpg" class="active" onclick="changeImage('main-airpods', this.src, this, 0, 'airpods')">
+          <img src="images/AirPods Pro 2nd 02.jpg" onclick="changeImage('main-airpods', this.src, this, 1, 'airpods')">
+          <img src="images/AirPods Pro 2nd 03.jpg" onclick="changeImage('main-airpods', this.src, this, 2, 'airpods')">
+          <img src="images/AirPods Pro 2nd 04.jpg" onclick="changeImage('main-airpods', this.src, this, 3, 'airpods')">
+        </div>
+
         <div class="card-body">
-          <h3>Wireless Earbuds</h3>
-          <p>Bluetooth 5.0, 20hr battery with charging case</p>
+          <h3>AirPods Pro 2nd Gen</h3>
+          <p>Designed by in california , Made in California (USA Version ) ANC Support</p>
           <div class="card-foot">
-            <span class="price">Rs. 3,200</span>
-            <button onclick="addToCart('Wireless Earbuds', 3200)" class="add-cart-btn">+ Cart</button>
-            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20Wireless%20Earbuds" target="_blank" class="order-link-btn">Buy Now</a>
+            <div class="price-box">
+              <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 4,990</span>
+              <span class="price" style="color: #25D366; font-size: 18px;">Rs. 3,490</span>
+            </div>
+            <button onclick="addToCart('AirPods Pro 2nd Gen', 3490)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20AirPods%20Pro%202nd%20Gen%20at%20Special%20Offer%20Rs.%203490" target="_blank" class="order-link-btn">Buy Now</a>
           </div>
         </div>
       </div>
@@ -790,7 +802,6 @@
   const heroImages = [
     "images/BG01.jpg",
     "images/BG02.jpg"
-    // P Passewthawa images add karanna puluwan mehema: , "images/BG03.jpg"
   ];
   let currentHeroIndex = 0;
 
@@ -876,6 +887,15 @@
   ];
   let currentEarbudIndex = 0;
 
+  // AirPods Pro 2nd Gen Images
+  const airpodsImages = [
+    "images/AirPods Pro 2nd 01.jpg",
+    "images/AirPods Pro 2nd 02.jpg",
+    "images/AirPods Pro 2nd 03.jpg",
+    "images/AirPods Pro 2nd 04.jpg"
+  ];
+  let currentAirpodsIndex = 0;
+
   // Active gallery tracking for Lightbox
   let activeGalleryImages = pbImages;
   let activeIndexRef = 0;
@@ -890,6 +910,8 @@
       currentImageIndex = index;
     } else if(type === 'earbud') {
       currentEarbudIndex = index;
+    } else if(type === 'airpods') {
+      currentAirpodsIndex = index;
     }
 
     const thumbBar = thumbElement.parentElement;
@@ -906,19 +928,19 @@
     activeGalleryImages = imageArray;
     activeIndexRef = currentIndex;
     activeMainImgId = mainImgId;
-    activeThumbContainerId = (mainImgId === 'main-pb1') ? 'pb1-thumbs' : 'earbud-thumbs';
-
-    if(mainImgId === 'main-pb1') activeIndexRef = currentImageIndex;
-    if(mainImgId === 'main-earbud') activeIndexRef = currentEarbudIndex;
+    
+    if(mainImgId === 'main-pb1') {
+      activeThumbContainerId = 'pb1-thumbs';
+      activeIndexRef = currentImageIndex;
+    } else if(mainImgId === 'main-earbud') {
+      activeThumbContainerId = 'earbud-thumbs';
+      activeIndexRef = currentEarbudIndex;
+    } else if(mainImgId === 'main-airpods') {
+      activeThumbContainerId = 'airpods-thumbs';
+      activeIndexRef = currentAirpodsIndex;
+    }
 
     lightboxImg.src = mainImg.src;
-    lightbox.classList.add('active');
-  }
-
-  function openSimpleLightbox(imgSrc) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightboxImg.src = imgSrc;
     lightbox.classList.add('active');
   }
 
@@ -933,6 +955,7 @@
 
     if(activeMainImgId === 'main-pb1') currentImageIndex = activeIndexRef;
     if(activeMainImgId === 'main-earbud') currentEarbudIndex = activeIndexRef;
+    if(activeMainImgId === 'main-airpods') currentAirpodsIndex = activeIndexRef;
 
     const newSrc = activeGalleryImages[activeIndexRef];
     document.getElementById('lightbox-img').src = newSrc;
@@ -990,6 +1013,29 @@
       if (earbudTouchEndX > earbudTouchStartX + 40) {
         currentEarbudIndex = (currentEarbudIndex - 1 + earbudImages.length) % earbudImages.length;
         changeImage('main-earbud', earbudImages[currentEarbudIndex], document.querySelectorAll('#earbud-thumbs img')[currentEarbudIndex], currentEarbudIndex, 'earbud');
+      }
+    }, {passive: true});
+  }
+
+  // Touch Swipe Logic for AirPods Mobile Container
+  let airpodsTouchStartX = 0;
+  let airpodsTouchEndX = 0;
+  const airpodsContainer = document.getElementById('airpods-container');
+
+  if(airpodsContainer) {
+    airpodsContainer.addEventListener('touchstart', e => {
+      airpodsTouchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    airpodsContainer.addEventListener('touchend', e => {
+      airpodsTouchEndX = e.changedTouches[0].screenX;
+      if (airpodsTouchEndX < airpodsTouchStartX - 40) {
+        currentAirpodsIndex = (currentAirpodsIndex + 1) % airpodsImages.length;
+        changeImage('main-airpods', airpodsImages[currentAirpodsIndex], document.querySelectorAll('#airpods-thumbs img')[currentAirpodsIndex], currentAirpodsIndex, 'airpods');
+      }
+      if (airpodsTouchEndX > airpodsTouchStartX + 40) {
+        currentAirpodsIndex = (currentAirpodsIndex - 1 + airpodsImages.length) % airpodsImages.length;
+        changeImage('main-airpods', airpodsImages[currentAirpodsIndex], document.querySelectorAll('#airpods-thumbs img')[currentAirpodsIndex], currentAirpodsIndex, 'airpods');
       }
     }, {passive: true});
   }
