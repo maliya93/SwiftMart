@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SwiftMart - Invoice & Warranty Generator</title>
+    <!-- Include Google Font for Handwriting Signature -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ===== SECURE LOGIN MODAL ===== */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 27, 42, 0.88);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 16px;
+        }
+        .login-box {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .login-box h2 {
+            font-size: 20px;
+            color: #0d1b2a;
+            margin-bottom: 6px;
+        }
+        .login-box p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .login-field {
+            text-align: left;
+            margin-bottom: 14px;
+        }
+        .login-field label {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #444;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .login-field input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .login-field input:focus { border-color: #0d1b2a; }
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background: #0d1b2a;
+            color: #e0a96d;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-error {
+            color: #dc3545;
+            font-size: 12.5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* ===== INPUT FORM ===== */
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .form-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 16px;
+        }
+        .form-card h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0d1b2a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-card { padding: 16px; border-radius: 12px; }
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .field label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+        .field input, .field select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            background: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .field input:focus, .field select:focus {
+            outline: none;
+            border-color: #0d1b2a;
+            box-shadow: 0 0 0 3px rgba(13,27,42,0.1);
+        }
+        .btn-generate {
+            width: 100%;
+            margin-top: 16px;
+            padding: 14px;
+            background: #0d1b2a;
+            color: #e0a96d;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.2s;
+        }
+        .btn-generate:active { transform: scale(0.98); }
+        .btn-print {
+            width: 100%;
+            margin-top: 12px;
+            padding: 14px;
+            background: #1b4332;
+            color: #e0a96d;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-export-jpg {
+            width: 100%;
+            margin-top: 12px;
+            padding: 14px;
+            background: #e0a96d;
+            color: #0d1b2a;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ===== INVOICE STYLES (COMPACT HEADER MATCHED) ===== */
+        .invoice-wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px 24px;
+        }
+        .invoice {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .inv-header {
+            background: linear-gradient(135deg, #05130d 0%, #0d2319 50%, #030b07 100%);
+            color: #fff;
+            padding: 14px 20px;
+            border-bottom: 4px solid #e0a96d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .inv-header img {
+            height: 52px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 2px;
+        }
+        .inv-header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin: 2px 0 8px 0;
+        }
+        .store-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+        .store-sub {
+            font-size: 9.5px;
+            letter-spacing: 1.5px;
+            color: #e0a96d;
+            text-transform: uppercase;
+        }
+        .inv-title-pill {
+            display: inline-block;
+            background: rgba(40, 50, 48, 0.75);
+            color: #ffffff;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 6px 18px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .inv-body { padding: 24px; }
+        @media (max-width: 600px) { 
+            .inv-body { padding: 14px; }
+            .inv-header { padding: 12px 10px; }
+            .store-title { font-size: 18px; letter-spacing: 2px; }
+            .store-sub { font-size: 8.5px; letter-spacing: 1px; }
+            .inv-title-pill { font-size: 10px; padding: 6px 10px; }
+            .inv-header img { height: 42px; }
+        }
+
+        .inv-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 600px) { .inv-two-col { grid-template-columns: 1fr; } }
+
+        .inv-card {
+            background: #f0f2f5;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .inv-card h4 {
+            font-size: 12px;
+            color: #0d1b2a;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 6px;
+        }
+        .inv-card p {
+            margin: 6px 0;
+            font-size: 13.5px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+        }
+        .inv-card p span.label-side { color: #555; font-weight: 500; }
+        .inv-card p span.val-side { font-weight: 600; color: #0d1b2a; text-align: right; }
+        
+        .paid-badge {
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0d1b2a;
+            margin: 20px 0 10px 0;
+            padding-left: 10px;
+            border-left: 3px solid #e0a96d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .inv-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+        .inv-table th {
+            background: #0d1b2a !important;
+            color: #fff !important;
+            padding: 10px 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11.5px;
+            letter-spacing: 0.5px;
+        }
+        .inv-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        .inv-table tr:last-child td { border-bottom: none; }
+        .total-row {
+            background: #f0f2f5 !important;
+            font-weight: 700;
+        }
+        .total-row td {
+            border-top: 2px solid #0d1b2a !important;
+            font-size: 14.5px;
+        }
+
+        .tc-box {
+            background: #fffdf0 !important;
+            border: 1px solid #fce8a6 !important;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .tc-box strong { color: #0d1b2a; }
+        .tc-box ol { margin: 6px 0 0 0; padding-left: 18px; }
+        .tc-box li { margin-bottom: 5px; }
+        .tc-box ul { margin-top: 4px; padding-left: 16px; }
+
+        .sign-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 0 10px;
+        }
+        .sign-box {
+            text-align: center;
+            width: 180px;
+        }
+        .handwriting-sig {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            color: #1b4332;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+        .sign-line {
+            border-top: 1px solid #444;
+            padding-top: 6px;
+            font-size: 11px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .inv-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 14px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 11.5px;
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        /* ===== PRINT SETTINGS (LEGAL SIZE) ===== */
+        @page {
+            size: legal portrait;
+            margin: 10mm;
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            body { background: #fff !important; }
+            .no-print { display: none !important; }
+            .login-overlay { display: none !important; }
+            .invoice-wrap { padding: 0; max-width: 100%; margin: 0; }
+            .invoice { box-shadow: none; border-radius: 0; border: none; }
+            .inv-header { background: linear-gradient(135deg, #05130d 0%, #0d2319 50%, #030b07 100%) !important; border-bottom: 4px solid #e0a96d !important; }
+            .inv-table th { background: #0d1b2a !important; color: #fff !important; }
+            .total-row { background: #f0f2f5 !important; }
+            .tc-box { background: #fffdf0 !important; border: 1px solid #fce8a6 !important; }
+            .paid-badge { background: #28a745 !important; color: #fff !important; }
+            .inv-card { background: #f0f2f5 !important; }
+        }
+    </style>
+    <!-- Include html2canvas for JPG export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- ===== SECURE LOGIN MODAL ===== -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>🔒 SwiftMart Admin</h2>
+            <p>Enter credentials to access invoice generator</p>
+            <div class="login-field">
+                <label>Username</label>
+                <input type="text" id="authUsername" placeholder="Enter username">
+            </div>
+            <div class="login-field">
+                <label>Password</label>
+                <input type="password" id="authPassword" placeholder="Enter password" onkeypress="checkEnter(event)">
+            </div>
+            <button class="btn-login" onclick="handleLogin()">Login</button>
+            <div class="login-error" id="loginError">Invalid username or password!</div>
+        </div>
+    </div>
+
+    <!-- ===== INPUT FORM ===== -->
+    <div class="form-container no-print">
+        <div class="form-card">
+            <h2>
+                <span>📝 SwiftMart Invoice Control Panel</span>
+                <button class="logout-btn" onclick="handleLogout()">🔒 Logout</button>
+            </h2>
+            <div class="form-grid">
+                <div class="field">
+                    <label>Customer Name</label>
+                    <input type="text" id="custName" value="Rasika">
+                </div>
+                <div class="field">
+                    <label>Contact Number</label>
+                    <input type="text" id="custPhone" value="075 049 2550">
+                </div>
+                <div class="field">
+                    <label>Address / City</label>
+                    <input type="text" id="custAddress" value="Sliverland / Badulla">
+                </div>
+                <div class="field">
+                    <label>Product Select</label>
+                    <select id="productSelect" onchange="updateProductInfo()">
+                        <option value="20000mAh 66W Super Fast Charging Power Bank" data-price="4000" data-specs="Transparent Design | Digital Display | Built-in 4 Cables">20000mAh 66W Super Fast Charging Power Bank</option>
+                        <option value="10000mAh 22.5W Fast Charging Power Bank" data-price="2500" data-specs="Slim Design | LED Indicator | Dual Output">10000mAh 22.5W Fast Charging Power Bank</option>
+                        <option value="TWS Wireless Bluetooth Earbuds" data-price="3500" data-specs="Touch Control | Noise Cancellation | 30H Battery">TWS Wireless Bluetooth Earbuds</option>
+                        <option value="Premium Silicone Phone Case" data-price="1500" data-specs="Shockproof | Camera Protection | Matte Finish">Premium Silicone Phone Case</option>
+                        <option value="Braided USB-C Fast Charging Cable (1M)" data-price="800" data-specs="Nylon Braided | 3A Fast Charge | Data Sync">Braided USB-C Fast Charging Cable (1M)</option>
+                        <option value="Dual Port Car Charger 48W" data-price="1200" data-specs="QC 3.0 | PD 30W | LED Indicator">Dual Port Car Charger 48W</option>
+                        <option value="Portable Bluetooth Speaker 20W" data-price="5500" data-specs="Waterproof IPX7 | 12H Playtime | TWS Pairing">Portable Bluetooth Speaker 20W</option>
+                        <option value="Tempered Glass Screen Protector" data-price="600" data-specs="9H Hardness | Anti-Fingerprint | Easy Install">Tempered Glass Screen Protector</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Selling Price (LKR)</label>
+                    <input type="number" id="sellPrice" value="4000">
+                </div>
+                <div class="field">
+                    <label>Warranty Period</label>
+                    <select id="warrantyPeriod" onchange="calculateDates()">
+                        <option value="none">None - Just Invoice</option>
+                        <option value="1">1 Month</option>
+                        <option value="3">3 Months</option>
+                        <option value="6" selected>6 Months</option>
+                        <option value="12">1 Year (12 Months)</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Purchase Date</label>
+                    <input type="date" id="purchaseDate" onchange="calculateDates()">
+                </div>
+                <div class="field">
+                    <label>T&C Language</label>
+                    <select id="tcLanguage" onchange="generateInvoice()">
+                        <option value="si" selected>Sinhala (සිංහල)</option>
+                        <option value="ta">Tamil (தமிழ்)</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-generate" onclick="generateInvoice()">🚀 Update Invoice View</button>
+            <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF (Legal Size)</button>
+            <button class="btn-export-jpg" onclick="exportAsJPG()">📷 Download as JPG</button>
+        </div>
+    </div>
+
+    <!-- ===== INVOICE ===== -->
+    <div class="invoice-wrap">
+        <div class="invoice" id="invoice">
+            <div class="inv-header">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD6AAAA+gCAYAAADuf+MCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAG7VNJREFUeNrswQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgNmDAwEAAAAAQf7WKwxQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8CQAe/fh585dGHh/5g8IveZILuRCPx33uuMkd0nuLgH3XnAlr+cFOZ6AcdcIDKbc3fM8dyS4G/eCC8clQCDGI/eOTe/NpnfuD9hnRhppR9KMNNJqd1Xe7xf7W0kz2t+u9B3kp/j32S8AAAAAAAAAAAAAAAAAAAC0hR4CAAAAAAAAAHbK9z/zrij9lH6sV++0nv1vE9vb+4zjYA8j9jM/31e1zZ7V9ffb+/7vf/O82/e939s9v29e/ftvf/9f7b6+93tvvf+7fvfv3f+vd99v/9ref9+/n3t/tf//e/v29//vfe39v39f3fv3f+8+/3vfe93t9e99u//79339v9+/v3fevfb7bvfve99rffve7tvvfv7vfe99rffve7fvvffvffvffffe9vffffe7vffvfffffvffvfffvffvffvfffvffvffvffffffffvfffffvffffffffvfffffvfffffvfffffvffffffffvfffffffvffffffffvffffffffvffffffffvffffffffvfffffffvffffffffvffffffffvffffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffvfffffffv`" alt="SwiftMart Logo">
+                <div class="inv-header-center">
+                    <div class="store-title">SWIFTMART</div>
+                    <div class="store-sub">MOBILE ACCESSORIES & DIGITAL GADGETS STORE</div>
+                </div>
+                <div class="inv-title-pill" id="outHeaderTitle">INVOICE & 6-MONTH WARRANTY CERTIFICATE</div>
+            </div>
+
+            <div class="inv-body">
+                <div class="inv-two-col">
+                    <div class="inv-card">
+                        <h4>Customer Details</h4>
+                        <p><span class="label-side">Customer Name:</span> <span class="val-side" id="outName">Rasika</span></p>
+                        <p><span class="label-side">Contact No:</span> <span class="val-side" id="outPhone">075 049 2550</span></p>
+                        <p><span class="label-side">Address/City:</span> <span class="val-side" id="outAddress">Sliverland / Badulla</span></p>
+                    </div>
+                    <div class="inv-card">
+                        <h4>Invoice Details</h4>
+                        <p><span class="label-side">Invoice No:</span> <span class="val-side" id="invNumber">#SM-2026-001</span></p>
+                        <p><span class="label-side">Purchase Date:</span> <span class="val-side" id="outPurchaseDate">-</span></p>
+                        <p><span class="label-side">Warranty Until:</span> <span class="val-side" id="outWarrantyUntil">-</span></p>
+                        <p><span class="label-side">Payment Status:</span> <span class="val-side"><span class="paid-badge">PAID</span></span></p>
+                        <p><span class="label-side">Issued By:</span> <span class="val-side">Admin</span></p>
+                    </div>
+                </div>
+
+                <div class="section-title">Item & Warranty Summary</div>
+                <table class="inv-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px; text-align: center;">#</th>
+                            <th>Item Description</th>
+                            <th style="width: 50px; text-align: center;">Qty</th>
+                            <th style="width: 100px; text-align: center;">Warranty</th>
+                            <th style="width: 110px; text-align: right;">Amount (LKR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td>
+                                <strong id="outProduct">20000mAh 66W Super Fast Charging Power Bank</strong><br>
+                                <span style="font-size: 12px; color: #666;" id="outSpecs">Transparent Design | Digital Display | Built-in 4 Cables</span>
+                            </td>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;" id="outWarrantyText">6 Months</td>
+                            <td style="text-align: right;" id="outPrice">4000.00</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="4" style="text-align: right;">Total Amount Paid:</td>
+                            <td style="text-align: right;" id="outTotal">4000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="tc-box" id="tcBoxContainer">
+                    <strong id="tcTitle">Warranty Terms & Conditions (T&C):</strong>
+                    <div id="tcContent"></div>
+                </div>
+
+                <div class="sign-area">
+                    <div class="sign-box">
+                        <div class="sign-line">Customer Signature</div>
+                    </div>
+                    <div class="sign-box">
+                        <div class="handwriting-sig">SwiftMart</div>
+                        <div class="sign-line">Authorized Signature<br><strong>SwiftMart Sri Lanka</strong></div>
+                    </div>
+                </div>
+
+                <div class="inv-footer">
+                    Thank you for shopping with SwiftMart! ⚡<br>
+                    For any support, Contact: +94 77 646 5923 | Badulla, Sri Lanka
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ADMIN LOGIN CREDENTIALS ---
+        const ADMIN_USER = "malith";
+        const ADMIN_PASS = "swiftmart2026";
+
+        function checkLoginStatus() {
+            if (sessionStorage.getItem('swiftmart_logged') === 'true') {
+                document.getElementById('loginOverlay').style.display = 'none';
+            } else {
+                document.getElementById('loginOverlay').style.display = 'flex';
+            }
+        }
+
+        function handleLogin() {
+            const u = document.getElementById('authUsername').value.trim();
+            const p = document.getElementById('authPassword').value.trim();
+            const errDiv = document.getElementById('loginError');
+
+            if (u === ADMIN_USER && p === ADMIN_PASS) {
+                sessionStorage.setItem('swiftmart_logged', 'true');
+                document.getElementById('loginOverlay').style.display = 'none';
+                errDiv.style.display = 'none';
+                document.getElementById('authUsername').value = '';
+                document.getElementById('authPassword').value = '';
+            } else {
+                errDiv.style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('swiftmart_logged');
+            location.reload();
+        }
+
+        function checkEnter(e) {
+            if (e.key === 'Enter') handleLogin();
+        }
+
+        // --- AUTO SET TODAY'S DATE ON LOAD ---
+        window.onload = function() {
+            checkLoginStatus();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('purchaseDate').value = today;
+            generateInvoice();
+        };
+
+        function updateProductInfo() {
+            const select = document.getElementById('productSelect');
+            const opt = select.options[select.selectedIndex];
+            document.getElementById('sellPrice').value = opt.getAttribute('data-price');
+        }
+
+        function formatDate(dateObj) {
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const year = dateObj.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        function calculateDates() {
+            const pDateVal = document.getElementById('purchaseDate').value;
+            const wPeriod = document.getElementById('warrantyPeriod').value;
+            
+            if (pDateVal) {
+                const pDate = new Date(pDateVal);
+                document.getElementById('outPurchaseDate').innerText = formatDate(pDate);
+
+                if (wPeriod === 'none') {
+                    document.getElementById('outWarrantyUntil').innerText = 'No Warranty';
+                } else if (wPeriod === '1') {
+                    const wDate = new Date(pDate);
+                    wDate.setMonth(wDate.getMonth() + 1);
+                    document.getElementById('outWarrantyUntil').innerText = formatDate(wDate);
+                } else if (wPeriod === '3') {
+                    const wDate = new Date(pDate);
+                    wDate.setMonth(wDate.getMonth() + 3);
+                    document.getElementById('outWarrantyUntil').innerText = formatDate(wDate);
+                } else if (wPeriod === '6') {
+                    const wDate = new Date(pDate);
+                    wDate.setMonth(wDate.getMonth() + 6);
+                    document.getElementById('outWarrantyUntil').innerText = formatDate(wDate);
+                } else if (wPeriod === '12') {
+                    const wDate = new Date(pDate);
+                    wDate.setMonth(wDate.getMonth() + 12);
+                    document.getElementById('outWarrantyUntil').innerText = formatDate(wDate);
+                }
+            }
+        }
+
+        function generateInvoice() {
+            document.getElementById('outName').innerText = document.getElementById('custName').value || 'Valued Customer';
+            document.getElementById('outPhone').innerText = document.getElementById('custPhone').value || '-';
+            document.getElementById('outAddress').innerText = document.getElementById('custAddress').value || '-';
+
+            const select = document.getElementById('productSelect');
+            const opt = select.options[select.selectedIndex];
+            document.getElementById('outProduct').innerText = opt.value;
+            document.getElementById('outSpecs').innerText = opt.getAttribute('data-specs');
+
+            const price = parseFloat(document.getElementById('sellPrice').value) || 0;
+            document.getElementById('outPrice').innerText = price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('outTotal').innerText = price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            const wPeriod = document.getElementById('warrantyPeriod').value;
+            const lang = document.getElementById('tcLanguage').value;
+
+            if (wPeriod === 'none') {
+                document.getElementById('outWarrantyText').innerText = 'No Warranty';
+                document.getElementById('outHeaderTitle').innerText = `INVOICE (WITHOUT WARRANTY)`;
+            } else if (wPeriod === '1') {
+                document.getElementById('outWarrantyText').innerText = '1 Month';
+                document.getElementById('outHeaderTitle').innerText = `INVOICE & 1-MONTH WARRANTY CERTIFICATE`;
+            } else if (wPeriod === '3') {
+                document.getElementById('outWarrantyText').innerText = '3 Months';
+                document.getElementById('outHeaderTitle').innerText = `INVOICE & 3-MONTH WARRANTY CERTIFICATE`;
+            } else if (wPeriod === '6') {
+                document.getElementById('outWarrantyText').innerText = '6 Months';
+                document.getElementById('outHeaderTitle').innerText = `INVOICE & 6-MONTH WARRANTY CERTIFICATE`;
+            } else if (wPeriod === '12') {
+                document.getElementById('outWarrantyText').innerText = '1 Year';
+                document.getElementById('outHeaderTitle').innerText = `INVOICE & 1-YEAR WARRANTY CERTIFICATE`;
+            }
+
+            // T&C Language Translations
+            const tcContainer = document.getElementById('tcBoxContainer');
+            if (wPeriod === 'none') {
+                tcContainer.style.display = 'none';
+            } else {
+                tcContainer.style.display = 'block';
+                let monthsText = wPeriod === '1' ? '1' : wPeriod === '3' ? '3' : wPeriod === '6' ? '6' : '12';
+                renderTC(monthsText, lang);
+            }
+
+            calculateDates();
+        }
+
+        function renderTC(months, lang) {
+            const titleEl = document.getElementById('tcTitle');
+            const contentEl = document.getElementById('tcContent');
+
+            if (lang === 'si') {
+                titleEl.innerText = "Warranty Terms & Conditions (T&C):";
+                contentEl.innerHTML = `
+                    <ol>
+                        <li><strong>Warranty Period:</strong> මෙහි Item එක සඳහා මිලදී ගත් දින සිට මාස ${months} ක (Months ${months}) කාලයක් සඳහා පූර්ණ නිෂ්පාදන දෝෂ (Manufacturing Defects) වෙනුවෙන් Warranty හිමිවේ.</li>
+                        <li><strong>Covered Under Warranty:</strong> නිෂ්පාදනයේ ක්‍රියා විරහිත වීම් සහ Internal Circuitry සම්බන්ධ නිෂ්පාදකයාගේ දෝෂ සඳහා Warranty අදාළ වේ.</li>
+                        <li><strong>Warranty Claim Procedure:</strong> Warranty क्ලේම් එකක් ලබාදීමට මෙම Digital බිල් පත (PDF/Image) ඉදිරිපත් කළ යුතු යුතුවෙයි.</li>
+                        <li><strong>Void Warranty (Warranty අහෝසි වන අවස්ථා):</strong>
+                            <ul>
+                                <li>භාවිතය බිම වැටීමෙන්, තදින් තොරමෙන් හෝ පිරිමැදීම් සිදුවී බිඳීම් (Physical Damage).</li>
+                                <li>ජලය, තෙතමනය හෝ වෙනත් දරශ ඇතුළු වීමෙන් සිදු වන හානි (Water/Liquid Damage).</li>
+                                <li>වැරදි/High voltage Charger හෝ බාල වූ Cable භාවිතයෙන් සිදුවන දෝෂ (Over-voltage / Short Circuit Damage).</li>
+                                <li>භාවිතය වෙනත් පාර්ශ්වයක් ලවා ගැලවීමට හෝ අලුත්වැඩියා කිරීමට උත්සාහ කර බිඳීම (Unauthorized Repairs).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Replacement Policy:</strong> Warranty කාලසීමාව ඇතුළත නිෂ්පාදන දෝෂයක් තහවුරු වුවහොත්, එම ඩැಮೇජ් එක අලුත්වැඩියා කර දීම හෝ අලුත් එකක් ලබා දීම සිදු කෙරේ (Stock පවතින පරිදි).</li>
+                    </ol>
+                `;
+            } else if (lang === 'ta') {
+                titleEl.innerText = "Warranty Terms & Conditions (T&C) / உத்தரவாத நிபந்தனைகள்:";
+                contentEl.innerHTML = `
+                    <ol>
+                        <li><strong>Warranty Period:</strong> வாங்கிய நாளपासून ${months} மாதங்களுக்கு (Months ${months}) உற்பத்தி குறைபாடுகளுக்கு (Manufacturing Defects) உத்தரவாதம் பொருந்தும்.</li>
+                        <li><strong>Covered UnderWarranty:</strong> தயாரிப்பின் உள்செயலிழப்புகள் மற்றும் நிறுவனத்தின் தொழிற்சாலை குறைபாடுகளுக்கு உத்தரவாதம் உண்டு.</li>
+                        <li><strong>Warranty Claim Procedure:</strong> உத்தரவாதம் கோர இந்த டிஜிட்டல் பில் (PDF/Image) கட்டாயம் சமர்ப்பிக்க வேண்டும்.</li>
+                        <li><strong>Void Warranty (உத்தரவாதம் ரத்தாகும் சந்தர்ப்பங்கள்):</strong>
+                            <ul>
+                                <li>பயன்பாட்டின் போது கீழே விழுதல், அடிபடுதல் அல்லது உடல் சேதம் (Physical Damage).</li>
+                                <li>நீர், ஈரப்பதம் அல்லது பிற திரவங்கள் உள்ளே புகுவதால் ஏற்படும் சேதம் (Water/Liquid Damage).</li>
+                                <li>தவறான சார்ஜர் அல்லது தரம் குறைந்த கேபிள் பயன்படுத்துவதால் ஏற்படும் பழுது (Over-voltage / Short Circuit Damage).</li>
+                                <li>அங்கீகரிக்கப்படாத நபர்களைக் கொண்டு பழுதுபார்க்க முயற்சித்தல் (Unauthorized Repairs).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Replacement Policy:</strong> உத்தரவாத காலத்தில் குறைபாடு உறுதிசெய்யப்பட்டால், பழுதுபார்த்து அல்லது புதியது வழங்கப்படும் (இருப்புக்கு ஏற்ப).</li>
+                    </ol>
+                `;
+            } else {
+                titleEl.innerText = "Warranty Terms & Conditions (T&C):";
+                contentEl.innerHTML = `
+                    <ol>
+                        <li><strong>Warranty Period:</strong> This product comes with a ${months}-month warranty from the date of purchase covering manufacturing defects.</li>
+                        <li><strong>Covered Under Warranty:</strong> Covers internal circuitry and core functional defects by the manufacturer.</li>
+                        <li><strong>Warranty Claim Procedure:</strong> Please present this digital bill (PDF/Image) to claim warranty services.</li>
+                        <li><strong>Void Warranty:</strong>
+                            <ul>
+                                <li>Physical damage caused by drops, impacts, or mishandling.</li>
+                                <li>Water or liquid damage.</li>
+                                <li>Damage caused by high-voltage chargers or low-quality cables.</li>
+                                <li>Unauthorized repairs or modifications.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Replacement Policy:</strong> Defective items within the warranty period will be repaired or replaced subject to stock availability.</li>
+                    </ol>
+                `;
+            }
+        }
+
+        function exportAsJPG() {
+            const formContainer = document.querySelector('.form-container');
+            formContainer.style.display = 'none';
+
+            const invoiceElement = document.getElementById('invoice');
+
+            html2canvas(invoiceElement, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+                formContainer.style.display = 'block';
+                const link = document.createElement('a');
+                link.download = 'SwiftMart_Invoice_' + (document.getElementById('custName').value || 'invoice') + '.jpg';
+                link.href = canvas.toDataURL('image/jpeg', 0.95);
+                link.click();
+            }).catch(err => {
+                formContainer.style.display = 'block';
+                console.error('JPG Export fails:', err);
+                alert('Could not export JPG. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
