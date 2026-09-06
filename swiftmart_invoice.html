@@ -459,15 +459,15 @@
             <div class="form-grid">
                 <div class="field">
                     <label>Customer Name</label>
-                    <input type="text" id="custName" value="Rasika">
+                    <input type="text" id="custName" value="" placeholder="Name">
                 </div>
                 <div class="field">
                     <label>Contact Number</label>
-                    <input type="text" id="custPhone" value="075 049 2550">
+                    <input type="text" id="custPhone" value="" placeholder="07* ** ***">
                 </div>
                 <div class="field">
                     <label>Address / City</label>
-                    <input type="text" id="custAddress" value="Sliverland / Badulla">
+                    <input type="text" id="custAddress" value="" placeholder="location">
                 </div>
                 <div class="field">
                     <label>Product Select</label>
@@ -531,9 +531,9 @@
                 <div class="inv-two-col">
                     <div class="inv-card">
                         <h4>Customer Details</h4>
-                        <p><span class="label-side">Customer Name:</span> <span class="val-side" id="outName">Rasika</span></p>
-                        <p><span class="label-side">Contact No:</span> <span class="val-side" id="outPhone">075 049 2550</span></p>
-                        <p><span class="label-side">Address/City:</span> <span class="val-side" id="outAddress">Sliverland / Badulla</span></p>
+                        <p><span class="label-side">Customer Name:</span> <span class="val-side" id="outName">Name</span></p>
+                        <p><span class="label-side">Contact No:</span> <span class="val-side" id="outPhone">07* ** ***</span></p>
+                        <p><span class="label-side">Address/City:</span> <span class="val-side" id="outAddress">location</span></p>
                     </div>
                     <div class="inv-card">
                         <h4>Invoice Details</h4>
@@ -687,9 +687,9 @@
         }
 
         function generateInvoice() {
-            document.getElementById('outName').innerText = document.getElementById('custName').value || 'Valued Customer';
-            document.getElementById('outPhone').innerText = document.getElementById('custPhone').value || '-';
-            document.getElementById('outAddress').innerText = document.getElementById('custAddress').value || '-';
+            document.getElementById('outName').innerText = document.getElementById('custName').value || 'Name';
+            document.getElementById('outPhone').innerText = document.getElementById('custPhone').value || '07* ** ***';
+            document.getElementById('outAddress').innerText = document.getElementById('custAddress').value || 'location';
 
             const select = document.getElementById('productSelect');
             const opt = select.options[select.selectedIndex];
@@ -760,7 +760,7 @@
                 contentEl.innerHTML = `
                     <ol>
                         <li><strong>Warranty Period:</strong> வாங்கிய நாளपासून ${months} மாதங்களுக்கு (Months ${months}) உற்பத்தி குறைபாடுகளுக்கு (Manufacturing Defects) உத்தரவாதம் பொருந்தும்.</li>
-                        <li><strong>Covered UnderWarranty:</strong> தயாரிப்பின் உள்செயலிழப்புகள் மற்றும் நிறுவனத்தின் தொழிற்சாலை குறைபாடுகளுக்கு உத்தரவாதம் உண்டு.</li>
+                        <li><strong>Covered UnderWarranty:</strong> தயாரிப்பின் உள்செயலிழப்புகள் සහ நிறுவனத்தின் தொழிற்சாலை குறைபாடுகளுக்கு உத்தரவாதம் உண்டு.</li>
                         <li><strong>Warranty Claim Procedure:</strong> உத்தரவாதம் கோர இந்த டிஜிட்டல் பில் (PDF/Image) கட்டாயம் சமர்ப்பிக்க வேண்டும்.</li>
                         <li><strong>Void Warranty (உத்தரவாதம் ரத்தாகும் சந்தர்ப்பங்கள்):</strong>
                             <ul>
