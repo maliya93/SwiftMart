@@ -377,39 +377,19 @@
     color: rgba(255,255,255,0.5);
   }
 
-  /* Custom Hero Background with Alternating Video Backgrounds (BGV1 & BGV2) */
+  /* Custom Hero Background with Web & Mobile-Optimized Images */
   header.hero {
     position: relative;
-    background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)) !important;
-    overflow: hidden;
+    background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01.jpg') no-repeat center center/cover !important;
+    transition: background 0.8s ease-in-out;
   }
 
-  header.hero .hero-bg-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    z-index: 0;
-    pointer-events: none;
-    transition: opacity 1s ease-in-out;
-  }
-
-  #bgVideo1 {
-    opacity: 0.25;
-  }
-
-  #bgVideo2 {
-    opacity: 0;
-  }
-
-  header.hero .wrap {
-    position: relative;
-    z-index: 1;
+  @media (max-width: 768px) {
+    header.hero {
+      background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01 - Mobi.jpg') no-repeat center center/cover !important;
+      background-size: cover !important;
+      background-position: center center !important;
+    }
   }
 </style>
 </head>
@@ -472,12 +452,6 @@
 </div>
 
 <header class="hero">
-  <video class="hero-bg-video" autoplay muted loop playsinline id="bgVideo1">
-    <source src="images/BGV1.mp4" type="video/mp4">
-  </video>
-  <video class="hero-bg-video" autoplay muted loop playsinline id="bgVideo2">
-    <source src="images/BGV2.mp4" type="video/mp4">
-  </video>
   <div class="wrap">
     <div class="eyebrow"><span class="pulse-dot"></span> Fast Deals. Smart Shopping.</div>
     <h1 class="headline">Smart Tech That <span class="accent">Powers</span><br>Your Everyday Life.</h1>
@@ -812,7 +786,7 @@
         <ul>
           <li><a href="https://wa.me/94776465923" target="_blank">WhatsApp Support</a></li>
           <li><a href="https://www.facebook.com/profile.php?id=61578484391080" target="_blank">Facebook Page</a></li>
-          <li><a href="#contact">Data, Sri Lanka</a></li>
+          <li><a href="#contact">Badulla, Sri Lanka</a></li>
         </ul>
       </div>
     </div>
@@ -830,6 +804,38 @@
 </div>
 
 <script>
+  // ----------------------------------------------------
+  // Hero Background Auto-Slider (Switching Web & Mobile Images based on screen size)
+  // ----------------------------------------------------
+  function getHeroImages() {
+    if (window.innerWidth <= 768) {
+      return [
+        "images/BG01 - Mobi.jpg",
+        "images/BG02 - Mobi.jpg"
+      ];
+    } else {
+      return [
+        "images/BG01.jpg",
+        "images/BG02.jpg"
+      ];
+    }
+  }
+
+  let currentHeroIndex = 0;
+
+  function rotateHeroBackground() {
+    const heroImages = getHeroImages();
+    currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+    const heroEl = document.querySelector('header.hero');
+    if (heroEl) {
+      heroEl.style.setProperty('background', `linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('${heroImages[currentHeroIndex]}') no-repeat center center/cover`, 'important');
+    }
+  }
+
+  // Set interval to 10 seconds (10000 ms)
+  setInterval(rotateHeroBackground, 10000);
+
+
   // Toggle WhatsApp Chat Box Popup
   function toggleWaChat() {
     const box = document.getElementById('waChatBox');
@@ -876,23 +882,6 @@
       }
     });
   });
-
-  // Background Videos Alternator (Every 10 seconds)
-  const vid1 = document.getElementById('bgVideo1');
-  const vid2 = document.getElementById('bgVideo2');
-  let activeVideo = 1;
-
-  setInterval(() => {
-    if (activeVideo === 1) {
-      vid1.style.opacity = '0';
-      vid2.style.opacity = '0.25';
-      activeVideo = 2;
-    } else {
-      vid1.style.opacity = '0.25';
-      vid2.style.opacity = '0';
-      activeVideo = 1;
-    }
-  }, 10000); // 10000ms = 10 seconds
 
   // Power Bank Images
   const pbImages = [
