@@ -18,496 +18,1119 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://maliya93.github.io/SwiftMart/">
 <meta property="og:title" content="SwiftMart | Fast Deals, Smart Shopping">
-<meta property="og:description" content="Shop the best mobile phone accessories, smart gadgets, chargers, and tech items in Badulla and across Sri Lanka with islandwide delivery and fast WhatsApp ordering. Fast Deals, Smart Shopping.">
-<meta property="og:image" content="https://maliya93.github.io/SwiftMart/images/BG02.jpg">
+<meta property="og:description" content="Explore top-quality mobile accessories and smart gadgets in Badulla with fast delivery across Sri Lanka.">
+<meta property="og:image" content="https://maliya93.github.io/SwiftMart/assets/preview.jpg">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  :root {
-    --primary: #f39c12;
-    --primary-dark: #d68910;
-    --bg-dark: #0f111a;
-    --bg-card: #1a1d29;
-    --text-light: #f5f6fa;
-    --text-muted: #a4b0be;
+  /* Smooth Scrolling for Navigation Links */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
   }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* 1. Modern Windows Glassmorphism Header */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(18, 24, 16, 0.75) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   body {
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-    line-height: 1.6;
+    padding-top: 70px;
   }
 
-  header {
-    background-color: var(--bg-card);
-    border-bottom: 1px solid #2f3542;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary);
+  /* Logo Clickable Style */
+  .logo-link {
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .cart-btn {
-    background-color: var(--primary);
-    color: #000;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    font-weight: bold;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.3s;
   }
 
-  .cart-btn:hover {
-    background-color: var(--primary-dark);
+  /* Active Nav Link Highlighting (Turns Yellow when section is in view) */
+  .navlinks a {
     color: #fff;
+    transition: color 0.2s;
+  }
+  .navlinks a.active-nav, .navlinks a:hover {
+    color: #ffcc00 !important;
   }
 
-  .hero {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 40px;
+  /* Nav Menu Cart Custom Styling (Capital, Bold, Yellow) */
+  .navlinks a.cart-nav-link {
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #ffcc00 !important;
+    transition: color 0.2s;
+  }
+  .navlinks a.cart-nav-link:hover {
+    color: #ffdd33 !important;
   }
 
-  .hero-text {
-    flex: 1;
-    min-width: 300px;
-  }
-
-  .hero-text h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: var(--text-light);
-  }
-
-  .hero-text h1 span {
-    color: var(--primary);
-  }
-
-  .hero-text p {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-  }
-
-  .hero-btn {
-    background-color: var(--primary);
-    color: #000;
-    padding: 0.8rem 2rem;
-    border-radius: 5px;
+  /* 2. Buttons Styling */
+  .order-link-btn {
+    background: #25D366;
+    color: #000 !important;
+    padding: 7px 14px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13px;
+    border: none !important;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: background 0.3s;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
   }
-
-  .hero-btn:hover {
-    background-color: var(--primary-dark);
+  .order-link-btn:hover {
+    background: #1eb956;
+    transform: translateY(-1px);
+  }
+  .add-cart-btn {
+    background: var(--copper);
     color: #fff;
+    padding: 7px 14px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .add-cart-btn:hover {
+    background: var(--copper-dim);
   }
 
-  .hero-media {
-    flex: 1;
-    min-width: 300px;
-    display: flex;
-    justify-content: center;
-  }
-
-  /* මෙතන තමයි BG02.jpg image tag එක වෙනුවට BGV2.mp4 video tag එක දාලා තියෙන්නේ */
-  .hero-media video {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border: 2px solid #2f3542;
-    object-fit: cover;
-  }
-
-  .products-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    border-bottom: 2px solid #2f3542;
-    padding-bottom: 0.5rem;
-  }
-
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-  }
-
-  .product-card {
-    background-color: var(--bg-card);
-    border-radius: 10px;
+  /* 3. Multi-Image Gallery Styling */
+  .card-img {
+    position: relative;
+    height: 280px;
+    background: #111;
     overflow: hidden;
-    border: 1px solid #2f3542;
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    cursor: pointer;
   }
-
-  .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-  }
-
-  .product-info {
-    padding: 1.5rem;
-  }
-
-  .product-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .product-price {
-    color: var(--primary);
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-
-  .product-desc {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .add-to-cart-btn {
+  .card-img img.main-img {
     width: 100%;
-    background-color: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    padding: 0.6rem;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .add-to-cart-btn:hover {
-    background-color: var(--primary);
-    color: #000;
-  }
-
-  /* Cart Drawer */
-  .cart-drawer {
-    position: fixed;
-    right: -400px;
-    top: 0;
-    width: 350px;
     height: 100%;
-    background-color: var(--bg-card);
-    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-    transition: right 0.3s ease;
-    z-index: 2000;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .thumb-bar {
     display: flex;
-    flex-direction: column;
-    border-left: 1px solid #2f3542;
+    gap: 6px;
+    padding: 8px 10px;
+    background: #121810;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: var(--copper) var(--bg-alt);
   }
-
-  .cart-drawer.open {
-    right: 0;
-  }
-
-  .cart-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid #2f3542;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .close-cart {
-    background: none;
-    border: none;
-    color: var(--text-light);
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-
-  .cart-items {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-  }
-
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #2f3542;
-  }
-
-  .cart-item-info h4 {
-    font-size: 1rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .cart-item-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .cart-item-controls button {
-    background: #2f3542;
-    color: white;
-    border: none;
-    width: 25px;
-    height: 25px;
+  .thumb-bar::-webkit-scrollbar { height: 4px; }
+  .thumb-bar::-webkit-scrollbar-thumb { background: var(--copper); border-radius: 2px; }
+  .thumb-bar img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    object-position: center;
     border-radius: 4px;
     cursor: pointer;
+    opacity: 0.5;
+    border: 1px solid transparent;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .thumb-bar img:hover, .thumb-bar img.active {
+    opacity: 1;
+    border-color: var(--copper);
   }
 
+  /* 4. Lightbox Modal (Popup Viewer) */
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 25px;
+    color: #fff; font-size: 35px;
+    font-weight: bold; cursor: pointer;
+    z-index: 1002;
+  }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    color: white; border: none;
+    padding: 16px; cursor: pointer;
+    font-size: 24px; border-radius: 50%;
+    user-select: none; transition: background 0.2s;
+    z-index: 1002;
+  }
+  .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+
+  /* 5. Floating Glassmorphism Cart Widget & Drawer */
+  .cart-float-btn {
+    position: fixed;
+    bottom: 25px; right: 25px;
+    background: rgba(37, 211, 102, 0.85);
+    color: #000;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; 
+    box-shadow: 0 8px 32px 0 rgba(0, 30, 10, 0.37);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer; z-index: 99; transition: transform 0.2s, background 0.2s;
+  }
+  .cart-float-btn:hover { transform: scale(1.08); background: rgba(37, 211, 102, 1); }
+  .cart-badge {
+    position: absolute; top: -2px; right: -2px;
+    background: #ff3b30; color: white;
+    font-size: 12px; font-weight: bold;
+    padding: 2px 7px; border-radius: 10px;
+  }
+
+  /* Glassmorphism Cart Drawer */
+  .cart-drawer {
+    position: fixed;
+    top: 0; right: -420px;
+    width: 380px; height: 100%;
+    background: rgba(18, 24, 16, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    z-index: 1001;
+    box-shadow: -10px 0 40px rgba(0,0,0,0.7);
+    transition: right 0.35s cubic-bezier(0.1, 1, 0.1, 1);
+    display: flex; flex-direction: column;
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-header {
+    padding: 22px; background: rgba(255,255,255,0.04);
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .cart-header h3 { color: #fff; font-size: 18px; margin: 0; }
+  .cart-close-x {
+    background: none; border: none; color: #fff; font-size: 24px; cursor: pointer;
+  }
+  .cart-body { padding: 20px; flex: 1; overflow-y: auto; }
+  .cart-item {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 15px; padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .cart-item-info h4 { color: #fff; font-size: 14px; margin: 0 0 5px 0; }
+  .cart-item-info p { color: #25D366; font-size: 13px; margin: 0; font-weight: 650; }
+  .cart-item-controls { display: flex; align-items: center; gap: 8px; }
+  .cart-item-controls button {
+    background: rgba(255,255,255,0.1); color: #fff; border: none;
+    width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold;
+  }
+  .cart-item-controls button:hover { background: rgba(255,255,255,0.25); }
   .cart-footer {
-    padding: 1.5rem;
-    border-top: 1px solid #2f3542;
-    background-color: #141722;
+    padding: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.25);
   }
+  .cart-total-row {
+    display: flex; justify-content: space-between; color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px;
+  }
+  .cart-checkout-btn {
+    width: 100%; padding: 13px;
+    background: #25D366; color: #000;
+    font-weight: bold; border: none;
+    border-radius: 6px; cursor: pointer;
+    font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .cart-checkout-btn:hover { background: #1eb956; transform: translateY(-1px); }
 
-  .cart-total {
+  /* WhatsApp Chat Floating Box Styles */
+  .wa-chat-btn {
+    background: #25D366; color: #000; width: 50px; height: 50px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; border: none; transition: transform 0.2s;
+  }
+  .wa-chat-btn:hover { transform: scale(1.05); }
+  .wa-chat-box {
+    position: fixed; bottom: 95px; right: 25px; width: 280px; background: #121810;
+    border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 98;
+    display: none;
+  }
+  .wa-chat-box.open { display: block; }
+  .wa-chat-header {
+    background: #075e54; color: #fff; padding: 12px 15px; font-weight: bold;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .wa-chat-body { padding: 15px; color: var(--slate); font-size: 13px; }
+
+  /* Reviews Expandable Styles */
+  .review-card {
+    background: rgba(255,255,255,0.03); 
+    padding: 22px; 
+    border-radius: 10px; 
+    border: 1px solid var(--line);
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    font-weight: bold;
+  }
+  .review-hidden {
+    display: none;
+  }
+  .review-hidden.show {
+    display: flex;
   }
 
-  .whatsapp-checkout {
-    width: 100%;
-    background-color: #25d366;
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 1rem;
+  /* Glassmorphism Show More Button Style */
+  .glass-btn {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+  .glass-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
   }
 
-  .whatsapp-checkout:hover {
-    background-color: #20ba5a;
-  }
-
+  /* Professional Footer Styles */
   footer {
+    background: #0d120a;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: var(--slate);
+    padding: 40px 0 25px 0;
+    font-size: 14px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  .footer-col h4 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-col ul li {
+    margin-bottom: 8px;
+  }
+  .footer-col ul li a {
+    color: var(--slate);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover {
+    color: #ffcc00;
+  }
+  .footer-bottom {
     text-align: center;
-    padding: 2rem;
-    color: var(--text-muted);
-    border-top: 1px solid #2f3542;
-    margin-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Custom Hero Background with Web & Mobile-Optimized Video Background */
+  header.hero {
+    position: relative;
+    background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)) !important;
+    overflow: hidden;
+  }
+
+  header.hero .hero-bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  header.hero .wrap {
+    position: relative;
+    z-index: 1;
   }
 </style>
 </head>
 <body>
 
-  <header>
-    <a href="#" class="logo">⚡ SwiftMart</a>
-    <div class="nav-right">
-      <button class="cart-btn" onclick="toggleCart()">
-        🛒 Cart (<span id="cart-count">0</span>)
-      </button>
-    </div>
-  </header>
+<div id="chargebar"></div>
 
-  <section class="hero">
-    <div class="hero-text">
-      <h1>Fast Deals, <span>Smart Shopping</span></h1>
-      <p>Discover top-tier mobile accessories, power banks, smart earbuds, and gadgets in Badulla with Islandwide COD delivery.</p>
-      <a href="#products" class="hero-btn">Shop Now</a>
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo-link"><div class="logo">Swift<span>Mart</span></div></a>
+    <div class="navlinks">
+      <a href="#products" id="nav-products">Products</a>
+      <a href="#about" id="nav-about">About</a>
+      <a href="#reviews" id="nav-reviews">Reviews</a>
+      <a href="#contact" id="nav-contact">Contact</a>
+      <a href="javascript:void(0)" onclick="toggleCart()" class="cart-nav-link">CART (<span id="cart-count-nav">0</span>)</a>
     </div>
-    <div class="hero-media">
-      <!-- මෙතන තමයි BG02.jpg වෙනුවට BGV2.mp4 video එක load වෙන්න හැදුවේ -->
-      <video autoplay muted loop playsinline>
-        <source src="images/BGV2.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-  </section>
+    <a href="javascript:void(0)" onclick="toggleCart()" class="nav-cta">🛒 Cart (<span id="cart-count-nav-top">0</span>)</a>
+  </div>
+</nav>
 
-  <section class="products-section" id="products">
-    <h2 class="section-title">Featured Gadgets</h2>
-    <div class="products-grid">
-      
-      <div class="product-card">
-        <div class="product-info">
-          <h3 class="product-title">20000mAh 66W Power Bank</h3>
-          <div class="product-price">Rs. 4,500/-</div>
-          <p class="product-desc">High capacity, super fast charging with 4 built-in cables and digital display.</p>
-        </div>
-        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
-          <button class="add-to-cart-btn" onclick="addToCart('20000mAh 66W Power Bank', 4500)">Add to Cart</button>
-        </div>
-      </div>
+<div class="cart-float-btn" id="floatingCartBtn" onclick="toggleCart()" title="Open Cart" style="bottom: 95px;">
+  🛒
+  <span class="cart-badge" id="cart-badge-float">0</span>
+</div>
 
-      <div class="product-card">
-        <div class="product-info">
-          <h3 class="product-title">AirPods Pro (ANC / Display)</h3>
-          <div class="product-price">Rs. 58,000/-</div>
-          <p class="product-desc">Pro-level Active Noise Cancellation with smart display case and high sound quality.</p>
-        </div>
-        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
-          <button class="add-to-cart-btn" onclick="addToCart('AirPods Pro', 58000)">Add to Cart</button>
-        </div>
-      </div>
-
+<div style="position: fixed; bottom: 25px; right: 25px; z-index: 99; display: flex; flex-direction: column; align-items: flex-end;">
+  <div class="wa-chat-box" id="waChatBox">
+    <div class="wa-chat-header">
+      <span>💬 SwiftMart Support</span>
+      <span style="cursor: pointer; font-size: 18px;" onclick="toggleWaChat()">×</span>
     </div>
-  </section>
-
-  <!-- Cart Drawer -->
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3>Your Shopping Cart</h3>
-      <button class="close-cart" onclick="toggleCart()">&times;</button>
-    </div>
-    <div class="cart-items" id="cartItemsContainer">
-      <p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Your cart is empty.</p>
-    </div>
-    <div class="cart-footer">
-      <div class="cart-total">
-        <span>Total:</span>
-        <span id="cartTotalPrice">Rs. 0</span>
-      </div>
-      <button class="whatsapp-checkout" onclick="sendCartToWhatsApp()">Order via WhatsApp 📱</button>
+    <div class="wa-chat-body">
+      <p style="margin-bottom: 12px; color: #fff;">Hi there! 👋 How can we help you with SwiftMart accessories today?</p>
+      <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-primary" style="display: block; text-align: center; padding: 10px; font-size: 13px;">Start WhatsApp Chat →</a>
     </div>
   </div>
+  <button class="wa-chat-btn" onclick="toggleWaChat()" title="Chat on WhatsApp">
+    💬
+  </button>
+</div>
 
-  <footer>
-    <p>&copy; 2026 SwiftMart. All rights reserved. | Badulla, Sri Lanka</p>
-  </footer>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Shopping Cart</h3>
+    <button class="cart-close-x" onclick="toggleCart()">×</button>
+  </div>
+  <div class="cart-body" id="cartItemsContainer">
+    <p style="color: var(--slate); text-align: center; margin-top: 40px;">Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Total:</span>
+      <span id="cartTotalPrice">Rs. 0</span>
+    </div>
+    <button class="cart-checkout-btn" onclick="sendCartToWhatsApp()">
+      📲 Send Order via WhatsApp
+    </button>
+  </div>
+</div>
 
-  <script>
-    let cart = [];
+<header class="hero">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="images/BGV2.mp4" type="video/mp4">
+  </video>
+  <div class="wrap">
+    <div class="eyebrow"><span class="pulse-dot"></span> Fast Deals. Smart Shopping.</div>
+    <h1 class="headline">Smart Tech That <span class="accent">Powers</span><br>Your Everyday Life.</h1>
+    <p class="sub">SwiftMart brings you premium mobile accessories, high-speed power banks, smart earbuds, and reliable cables — built for everyday use, priced fair, delivered fast.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn btn-primary">Browse Products →</a>
+      <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-outline">Message Us</a>
+    </div>
 
-    function toggleCart() {
-      document.getElementById('cartDrawer').classList.toggle('open');
-    }
-
-    function addToCart(name, price) {
-      let existingItem = cart.find(item => item.name === name);
-      if (existingItem) {
-        existingItem.qty += 1;
-      } else {
-        cart.push({ name: name, price: price, qty: 1 });
-      }
-      updateCartUI();
-      toggleCart();
-    }
-
-    function updateQty(name, change) {
-      let item = cart.find(item => item.name === name);
-      if (item) {
-        item.qty += change;
-        if (item.qty <= 0) {
-          cart = cart.filter(i => i.name !== name);
-        }
-      }
-      updateCartUI();
-    }
-
-    function updateCartUI() {
-      let container = document.getElementById('cartItemsContainer');
-      let countNav = document.getElementById('cart-count');
-      let totalPriceEl = document.getElementById('cartTotalPrice');
-      
-      container.innerHTML = '';
-      let totalCount = 0;
-      let totalPrice = 0;
-
-      if (cart.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem;">Your cart is empty.</p>';
-      } else {
-        cart.forEach(item => {
-          totalCount += item.qty;
-          totalPrice += item.price * item.qty;
-
-          container.innerHTML += `
-            <div class="cart-item">
-              <div class="cart-item-info">
-                <h4>${item.name}</h4>
-                <p>Rs. ${(item.price * item.qty).toLocaleString()}</p>
-              </div>
-              <div class="cart-item-controls">
-                <button onclick="updateQty('${item.name}', -1)">-</button>
-                <span style="color: #fff; font-size: 13px; font-weight: bold;">${item.qty}</span>
-                <button onclick="updateQty('${item.name}', 1)">+</button>
-              </div>
+    <!-- SwiftMart Glassmorphism Stats & Trust Bar (Placed right below buttons) -->
+    <section class="swift-stats-bar">
+        <div class="stats-container">
+            
+            <div class="stat-item">
+                <i class="fas fa-handshake-simple"></i>
+                <h3>500+</h3>
+                <p>Happy Customers</p>
             </div>
-          `;
-        });
-      }
 
-      countNav.innerText = totalCount;
-      totalPriceEl.innerText = 'Rs. ' + totalPrice.toLocaleString();
+            <div class="stat-item">
+                <i class="fas fa-boxes-stacked"></i>
+                <h3>100+</h3>
+                <p>Gadget Varieties</p>
+            </div>
+
+            <div class="stat-item">
+                <i class="fas fa-truck-fast"></i>
+                <h3>Islandwide</h3>
+                <p>Fast Delivery</p>
+            </div>
+
+            <div class="stat-item">
+                <i class="fas fa-star"></i>
+                <h3>5.0</h3>
+                <p>Trusted Reviews</p>
+            </div>
+
+        </div>
+    </section>
+
+    <style>
+    .swift-stats-bar {
+        /* Glassmorphism Effect */
+        background: rgba(25, 30, 25, 0.65);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        
+        max-width: 1050px;
+        margin: 40px auto 10px auto;
+        padding: 25px 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .stats-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        gap: 20px;
+    }
+    .stat-item {
+        text-align: center;
+        flex: 1;
+        min-width: 150px;
+        transition: transform 0.3s ease;
+    }
+    .stat-item:hover {
+        transform: translateY(-4px);
+    }
+    .stat-item i {
+        font-size: 26px;
+        color: #00ff88;
+        margin-bottom: 10px;
+    }
+    .stat-item h3 {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        color: #ffffff;
+    }
+    .stat-item p {
+        font-size: 12px;
+        color: #b0b0b0;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
     }
 
-    function sendCartToWhatsApp() {
-      if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-      }
+    /* Mobile Responsive adjustment */
+    @media (max-width: 768px) {
+        .swift-stats-bar {
+            margin: 20px 10px;
+            padding: 20px 10px;
+        }
+    }
+    </style>
 
-      let message = 'Hi SwiftMart, I would like to place an order:%0A';
-      let total = 0;
+  </div>
+</header>
 
-      cart.forEach(item => {
-        let sub = item.price * item.qty;
-        total += sub;
-        message += `- ${item.name} (x${item.qty}) : Rs. ${sub.toLocaleString()}%0A`;
-      });
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="kicker">ABOUT SWIFTMART</div>
+      <h2 class="section-title">Started small.<br>Built to last.</h2>
+      <p class="section-desc" style="margin-bottom:0;">
+        SwiftMart is a Sri Lanka–based online tech shop specializing in top-quality mobile accessories and smart gadgets. We test every product thoroughly before it reaches you — ensuring zero guesswork and complete peace of mind.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat"><b>100%</b><span>Genuine stock</span></div>
+      <div class="stat"><b>1–5</b><span>Days delivery</span></div>
+      <div class="stat"><b>24/7</b><span>Message support</span></div>
+      <div class="stat"><b>COD</b><span>Cash on delivery</span></div>
+    </div>
+  </div>
+</section>
 
-      message += `%0ATotal: Rs. ${total.toLocaleString()}%0APlease confirm my order!`;
+<section class="section section-alt" id="products">
+  <div class="wrap">
+    <div class="kicker">WHAT WE SELL</div>
+    <h2 class="section-title">Featured Products</h2>
+    <div class="products-grid">
+
+      <div class="card">
+        <div class="card-img" id="pb1-container" onclick="openLightboxFromContainer('main-pb1', pbImages, currentImageIndex)">
+          <img id="main-pb1" class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
+          <span class="card-tag">Special Offer</span>
+        </div>
+        
+        <div class="thumb-bar" id="pb1-thumbs">
+          <img src="images/powerbank1.jpg" class="active" onclick="changeImage('main-pb1', this.src, this, 0, 'pb1')">
+          <img src="images/powerbank2.jpg" onclick="changeImage('main-pb1', this.src, this, 1, 'pb1')">
+          <img src="images/powerbank3.jpg" onclick="changeImage('main-pb1', this.src, this, 2, 'pb1')">
+          <img src="images/powerbank4.jpg" onclick="changeImage('main-pb1', this.src, this, 3, 'pb1')">
+          <img src="images/powerbank5.jpg" onclick="changeImage('main-pb1', this.src, this, 4, 'pb1')">
+          <img src="images/powerbank6.jpg" onclick="changeImage('main-pb1', this.src, this, 5, 'pb1')">
+          <img src="images/powerbank7.jpg" onclick="changeImage('main-pb1', this.src, this, 6, 'pb1')">
+          <img src="images/powerbank8.jpg" onclick="changeImage('main-pb1', this.src, this, 7, 'pb1')">
+          <img src="images/powerbank9.jpg" onclick="changeImage('main-pb1', this.src, this, 8, 'pb1')">
+        </div>
+
+        <div class="card-body">
+          <h3>20000mAh 66W Power Bank</h3>
+          <p>Transparent design, digital display, built-in cables</p>
+          <div class="card-foot">
+            <div class="price-box">
+              <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 4,990</span>
+              <span class="price" style="color: #25D366; font-size: 18px;">Rs. 4,500</span>
+            </div>
+            <button onclick="addToCart('20000mAh 66W Power Bank', 4500)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%2020000mAh%2066W%20Power%20Bank%20at%20Special%20Offer%20Rs.%204500" target="_blank" class="order-link-btn">Buy Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img" id="earbud-container" onclick="openLightboxFromContainer('main-earbud', earbudImages, currentEarbudIndex)">
+          <img id="main-earbud" class="main-img" src="images/ANC ENC Earbud1.jpg" alt="ANC/ENC Touch Screen Wireless Earbuds">
+          <span class="card-tag">Special Offer</span>
+        </div>
+        
+        <div class="thumb-bar" id="earbud-thumbs">
+          <img src="images/ANC ENC Earbud1.jpg" class="active" onclick="changeImage('main-earbud', this.src, this, 0, 'earbud')">
+          <img src="images/ANC ENC Earbud2.jpg" onclick="changeImage('main-earbud', this.src, this, 1, 'earbud')">
+          <img src="images/ANC ENC Earbud3.jpg" onclick="changeImage('main-earbud', this.src, this, 2, 'earbud')">
+          <img src="images/ANC ENC Earbud4.jpg" onclick="changeImage('main-earbud', this.src, this, 3, 'earbud')">
+        </div>
+
+        <div class="card-body">
+          <h3>ANC/ENC Touch Screen Wireless Earbuds</h3>
+          <p>Smart display case, Active Noise Cancellation, Premium sound quality</p>
+          <div class="card-foot">
+            <div class="price-box">
+              <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 3,500</span>
+              <span class="price" style="color: #25D366; font-size: 18px;">Rs. 3,000</span>
+            </div>
+            <button onclick="addToCart('ANC/ENC Touch Screen Wireless Earbuds', 3000)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20ANC/ENC%20Touch%20Screen%20Wireless%20Earbuds%20at%20Special%20Offer%20Rs.%203000" target="_blank" class="order-link-btn">Buy Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img" id="airpods-container" onclick="openLightboxFromContainer('main-airpods', airpodsImages, currentAirpodsIndex)">
+          <img id="main-airpods" class="main-img" src="images/AirPods Pro 2nd 01.jpg" alt="AirPods Pro 2nd Gen">
+          <span class="card-tag">Special Offer</span>
+        </div>
+        
+        <div class="thumb-bar" id="airpods-thumbs">
+          <img src="images/AirPods Pro 2nd 01.jpg" class="active" onclick="changeImage('main-airpods', this.src, this, 0, 'airpods')">
+          <img src="images/AirPods Pro 2nd 02.jpg" onclick="changeImage('main-airpods', this.src, this, 1, 'airpods')">
+          <img src="images/AirPods Pro 2nd 03.jpg" onclick="changeImage('main-airpods', this.src, this, 2, 'airpods')">
+          <img src="images/AirPods Pro 2nd 04.jpg" onclick="changeImage('main-airpods', this.src, this, 3, 'airpods')">
+        </div>
+
+        <div class="card-body">
+          <h3>AirPods Pro 2nd Gen</h3>
+          <p>Designed by in california , Made in California (USA Version ) ANC Support</p>
+          <div class="card-foot">
+            <div class="price-box">
+              <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 4,990</span>
+              <span class="price" style="color: #25D366; font-size: 18px;">Rs. 3,490</span>
+            </div>
+            <button onclick="addToCart('AirPods Pro 2nd Gen', 3490)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20AirPods%20Pro%202nd%20Gen%20at%20Special%20Offer%20Rs.%203490" target="_blank" class="order-link-btn">Buy Now</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="kicker">CUSTOMER FEEDBACK</div>
+    <h2 class="section-title">What Our Customers Say</h2>
+    <p class="section-desc">Real reviews from people across Sri Lanka who shop with SwiftMart.</p>
+    
+    <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;" id="reviewsGrid">
       
-      let whatsappNumber = '94776465923';
-      let url = `https://wa.me/${whatsappNumber}?text=${message}`;
-      window.open(url, '_blank');
+      <div class="review-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Darshana Sampath</b>
+            <span style="font-size: 12px; color: var(--slate);">30 August 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Super service and fast delivery! Item එක ගොඩක් හොද quality එකට තියෙනවා. Trusted seller එකක්. Thank you SwiftMart! ❤️"</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
+      <div class="review-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Chamara Dinitha</b>
+            <span style="font-size: 12px; color: var(--slate);">14 August 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Super fast delivery to Badulla! Got my items safely in a few days. Excellent quality."</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
+      <div class="review-card">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Tharindu Pushpakumara</b>
+            <span style="font-size: 12px; color: var(--slate);">02 July 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"The touch screen earbuds and accessories are amazing. Genuine product and great customer support on WhatsApp."</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
+      <div class="review-card review-hidden extra-review">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Kasun Rathnayake</b>
+            <span style="font-size: 12px; color: var(--slate);">20 June 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Best power bank collection in Sri Lanka. Very helpful service and solid warranty support."</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
+      <div class="review-card review-hidden extra-review">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <b style="color: #fff; font-size: 15px;">Nuwan Pradeep</b>
+            <span style="font-size: 12px; color: var(--slate);">05 May 2026</span>
+          </div>
+          <p style="color: var(--slate); font-style: italic; margin-bottom: 15px; line-height: 1.5;">"Smooth transaction. Ordered via WhatsApp and got it delivered right to my doorstep. Highly recommended!"</p>
+        </div>
+        <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
+      </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;" id="showMoreContainer">
+      <button onclick="toggleMoreReviews()" id="showMoreBtn" class="glass-btn">Show More Reviews ↓</button>
+    </div>
+
+  </div>
+</section>
+
+<section class="section section-alt" id="contact">
+  <div class="wrap">
+    <div class="kicker">GET IN TOUCH</div>
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-desc">Have questions about our mobile accessories or need help with an order? Reach out to us anytime.</p>
+    
+    <div style="margin-top: 30px;">
+      <p style="color: var(--slate); margin-bottom: 10px;">📍 <b>Location:</b> Badulla, Sri Lanka</p>
+      <p style="color: var(--slate); margin-bottom: 15px;">📞 <b>WhatsApp / Phone:</b> +94 77 646 5923</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 15px;">
+        <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-primary">Chat on WhatsApp →</a>
+        <a href="https://www.facebook.com/profile.php?id=61578484391080" target="_blank" class="btn btn-outline" style="border-color: #1877F2; color: #1877F2;">Visit Facebook Page</a>
+      </div>
+    </div>
+    
+    <div style="margin-top: 30px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); height: 400px; background: #121810;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d320.3430775183844!2d81.05117933911423!3d6.993193341477941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae46321a0bab985%3A0x6abe489e54181c65!2sSwiftMart!5e1!3m2!1sen!2slk!4v1788463587495!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom: 12px;">Swift<span>Mart</span></div>
+        <p style="font-size: 13px; color: var(--slate); line-height: 1.6;">
+          Fast Deals. Smart Shopping.<br>Your trusted destination for premium mobile accessories and smart gadgets in Sri Lanka.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#reviews">Customer Reviews</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <ul>
+          <li><a href="https://wa.me/94776465923" target="_blank">WhatsApp Support</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61578484391080" target="_blank">Facebook Page</a></li>
+          <li><a href="#contact">Data, Sri Lanka</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 SwiftMart. All rights reserved. Designed for smart shoppers across Sri Lanka.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">❮</button>
+  <img id="lightbox-img" class="lightbox-content" src="" alt="Popup View">
+  <button class="lightbox-nav lightbox-next" onclick="changeLightboxImg(1)">❯</button>
+</div>
+
+<script>
+  // Toggle WhatsApp Chat Box Popup
+  function toggleWaChat() {
+    const box = document.getElementById('waChatBox');
+    box.classList.toggle('open');
+  }
+
+  // Toggle More Reviews
+  function toggleMoreReviews() {
+    const hiddenReviews = document.querySelectorAll('.extra-review');
+    const btn = document.getElementById('showMoreBtn');
+    let isHidden = false;
+
+    hiddenReviews.forEach(rev => {
+      rev.classList.toggle('show');
+      if(rev.classList.contains('show')) {
+        isHidden = true;
+      }
+    });
+
+    if(isHidden) {
+      btn.innerText = 'Show Less Reviews ↑';
+    } else {
+      btn.innerText = 'Show More Reviews ↓';
     }
-  </script>
+  }
+
+  // Active Nav Link Highlighter on Scroll
+  window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.navlinks a[href^="#"]');
+    
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (window.scrollY >= (sectionTop - 120)) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active-nav');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active-nav');
+      }
+    });
+  });
+
+  // Power Bank Images
+  const pbImages = [
+    "images/powerbank1.jpg",
+    "images/powerbank2.jpg",
+    "images/powerbank3.jpg",
+    "images/powerbank4.jpg",
+    "images/powerbank5.jpg",
+    "images/powerbank6.jpg",
+    "images/powerbank7.jpg",
+    "images/powerbank8.jpg",
+    "images/powerbank9.jpg"
+  ];
+  let currentImageIndex = 0;
+
+  // Earbud Images
+  const earbudImages = [
+    "images/ANC ENC Earbud1.jpg",
+    "images/ANC ENC Earbud2.jpg",
+    "images/ANC ENC Earbud3.jpg",
+    "images/ANC ENC Earbud4.jpg"
+  ];
+  let currentEarbudIndex = 0;
+
+  // AirPods Pro 2nd Gen Images
+  const airpodsImages = [
+    "images/AirPods Pro 2nd 01.jpg",
+    "images/AirPods Pro 2nd 02.jpg",
+    "images/AirPods Pro 2nd 03.jpg",
+    "images/AirPods Pro 2nd 04.jpg"
+  ];
+  let currentAirpodsIndex = 0;
+
+  // Active gallery tracking for Lightbox
+  let activeGalleryImages = pbImages;
+  let activeIndexRef = 0;
+  let activeMainImgId = 'main-pb1';
+  let activeThumbContainerId = 'pb1-thumbs';
+
+  function changeImage(mainImgId, src, thumbElement, index, type) {
+    const mainImg = document.getElementById(mainImgId);
+    mainImg.src = src;
+    
+    if(type === 'pb1') {
+      currentImageIndex = index;
+    } else if(type === 'earbud') {
+      currentEarbudIndex = index;
+    } else if(type === 'airpods') {
+      currentAirpodsIndex = index;
+    }
+
+    const thumbBar = thumbElement.parentElement;
+    const thumbs = thumbBar.querySelectorAll('img');
+    thumbs.forEach(t => t.classList.remove('active'));
+    thumbElement.classList.add('active');
+  }
+
+  function openLightboxFromContainer(mainImgId, imageArray, currentIndex) {
+    const mainImg = document.getElementById(mainImgId);
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    
+    activeGalleryImages = imageArray;
+    activeIndexRef = currentIndex;
+    activeMainImgId = mainImgId;
+    
+    if(mainImgId === 'main-pb1') {
+      activeThumbContainerId = 'pb1-thumbs';
+      activeIndexRef = currentImageIndex;
+    } else if(mainImgId === 'main-earbud') {
+      activeThumbContainerId = 'earbud-thumbs';
+      activeIndexRef = currentEarbudIndex;
+    } else if(mainImgId === 'main-airpods') {
+      activeThumbContainerId = 'airpods-thumbs';
+      activeIndexRef = currentAirpodsIndex;
+    }
+
+    lightboxImg.src = mainImg.src;
+    lightbox.classList.add('active');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+
+  function changeLightboxImg(direction) {
+    activeIndexRef += direction;
+    if (activeIndexRef < 0) activeIndexRef = activeGalleryImages.length - 1;
+    if (activeIndexRef >= activeGalleryImages.length) activeIndexRef = 0;
+
+    if(activeMainImgId === 'main-pb1') currentImageIndex = activeIndexRef;
+    if(activeMainImgId === 'main-earbud') currentEarbudIndex = activeIndexRef;
+    if(activeMainImgId === 'main-airpods') currentAirpodsIndex = activeIndexRef;
+
+    const newSrc = activeGalleryImages[activeIndexRef];
+    document.getElementById('lightbox-img').src = newSrc;
+    document.getElementById(activeMainImgId).src = newSrc;
+
+    const thumbs = document.querySelectorAll(`#${activeThumbContainerId} img`);
+    thumbs.forEach((t, idx) => {
+      if (idx === activeIndexRef) {
+        t.classList.add('active');
+      } else {
+        t.classList.remove('active');
+      }
+    });
+  }
+
+  // Touch Swipe Logic for Power Bank Mobile Container
+  let pbTouchStartX = 0;
+  let pbTouchEndX = 0;
+  const pbContainer = document.getElementById('pb1-container');
+
+  if(pbContainer) {
+    pbContainer.addEventListener('touchstart', e => {
+      pbTouchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    pbContainer.addEventListener('touchend', e => {
+      pbTouchEndX = e.changedTouches[0].screenX;
+      if (pbTouchEndX < pbTouchStartX - 40) {
+        currentImageIndex = (currentImageIndex + 1) % pbImages.length;
+        changeImage('main-pb1', pbImages[currentImageIndex], document.querySelectorAll('#pb1-thumbs img')[currentImageIndex], currentImageIndex, 'pb1');
+      }
+      if (pbTouchEndX > pbTouchStartX + 40) {
+        currentImageIndex = (currentImageIndex - 1 + pbImages.length) % pbImages.length;
+        changeImage('main-pb1', pbImages[currentImageIndex], document.querySelectorAll('#pb1-thumbs img')[currentImageIndex], currentImageIndex, 'pb1');
+      }
+    }, {passive: true});
+  }
+
+  // Touch Swipe Logic for Earbud Mobile Container
+  let earbudTouchStartX = 0;
+  let earbudTouchEndX = 0;
+  const earbudContainer = document.getElementById('earbud-container');
+
+  if(earbudContainer) {
+    earbudContainer.addEventListener('touchstart', e => {
+      earbudTouchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    earbudContainer.addEventListener('touchend', e => {
+      earbudTouchEndX = e.changedTouches[0].screenX;
+      if (earbudTouchEndX < earbudTouchStartX - 40) {
+        currentEarbudIndex = (currentEarbudIndex + 1) % earbudImages.length;
+        changeImage('main-earbud', earbudImages[currentEarbudIndex], document.querySelectorAll('#earbud-thumbs img')[currentEarbudIndex], currentEarbudIndex, 'earbud');
+      }
+      if (earbudTouchEndX > earbudTouchStartX + 40) {
+        currentEarbudIndex = (currentEarbudIndex - 1 + earbudImages.length) % earbudImages.length;
+        changeImage('main-earbud', earbudImages[currentEarbudIndex], document.querySelectorAll('#earbud-thumbs img')[currentEarbudIndex], currentEarbudIndex, 'earbud');
+      }
+    }, {passive: true});
+  }
+
+  // Touch Swipe Logic for AirPods Mobile Container
+  let airpodsTouchStartX = 0;
+  let airpodsTouchEndX = 0;
+  const airpodsContainer = document.getElementById('airpods-container');
+
+  if(airpodsContainer) {
+    airpodsContainer.addEventListener('touchstart', e => {
+      airpodsTouchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    airpodsContainer.addEventListener('touchend', e => {
+      airpodsTouchEndX = e.changedTouches[0].screenX;
+      if (airpodsTouchEndX < airpodsTouchStartX - 40) {
+        currentAirpodsIndex = (currentAirpodsIndex + 1) % airpodsImages.length;
+        changeImage('main-airpods', airpodsImages[currentAirpodsIndex], document.querySelectorAll('#airpods-thumbs img')[currentAirpodsIndex], currentAirpodsIndex, 'airpods');
+      }
+      if (airpodsTouchEndX > airpodsTouchStartX + 40) {
+        currentAirpodsIndex = (currentAirpodsIndex - 1 + airpodsImages.length) % airpodsImages.length;
+        changeImage('main-airpods', airpodsImages[currentAirpodsIndex], document.querySelectorAll('#airpods-thumbs img')[currentAirpodsIndex], currentAirpodsIndex, 'airpods');
+      }
+    }, {passive: true});
+  }
+
+  // Simple Cart State & Functions
+  let cart = [];
+
+  function toggleCart() {
+    const drawer = document.getElementById('cartDrawer');
+    drawer.classList.toggle('open');
+  }
+
+  function addToCart(name, price) {
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+      existingItem.qty += 1;
+    } else {
+      cart.push({ name, price, qty: 1 });
+    }
+    updateCartUI();
+    toggleCart();
+  }
+
+  function updateQty(name, change) {
+    const item = cart.find(item => item.name === name);
+    if (item) {
+      item.qty += change;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.name !== name);
+      }
+    }
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const container = document.getElementById('cartItemsContainer');
+    const countNav = document.getElementById('cart-count-nav');
+    const countNavTop = document.getElementById('cart-count-nav-top');
+    const badgeFloat = document.getElementById('cart-badge-float');
+    const totalPriceEl = document.getElementById('cartTotalPrice');
+
+    let totalCount = 0;
+    let totalPrice = 0;
+
+    if (cart.length === 0) {
+      container.innerHTML = '<p style="color: var(--slate); text-align: center; margin-top: 40px;">Your cart is empty.</p>';
+    } else {
+      container.innerHTML = '';
+      cart.forEach(item => {
+        totalCount += item.qty;
+        totalPrice += item.price * item.qty;
+
+        container.innerHTML += `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <h4>${item.name}</h4>
+              <p>Rs. ${(item.price * item.qty).toLocaleString()}</p>
+            </div>
+            <div class="cart-item-controls">
+              <button onclick="updateQty('${item.name}', -1)">-</button>
+              <span style="color: #fff; font-size: 13px; font-weight: bold;">${item.qty}</span>
+              <button onclick="updateQty('${item.name}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    countNav.innerText = totalCount;
+    countNavTop.innerText = totalCount;
+    badgeFloat.innerText = totalCount;
+    totalPriceEl.innerText = 'Rs. ' + totalPrice.toLocaleString();
+  }
+
+  function sendCartToWhatsApp() {
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+
+    let message = 'Hi SwiftMart, I would like to place an order:%0A';
+    let total = 0;
+
+    cart.forEach(item => {
+      let sub = item.price * item.qty;
+      total += sub;
+      message += `- ${item.name} (x${item.qty}) - Rs. ${sub.toLocaleString()}%0A`;
+    });
+
+    message += `%0ATotal: Rs. ${total.toLocaleString()}%0APlease confirm my order.`;
+    window.open(`https://wa.me/94776465923?text=${message}`, '_blank');
+  }
+</script>
 
 </body>
 </html>
