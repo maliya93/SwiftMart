@@ -377,7 +377,7 @@
     color: rgba(255,255,255,0.5);
   }
 
-  /* Custom Hero Background with Web & Mobile-Optimized Video Background */
+  /* Custom Hero Background with Alternating Video Backgrounds (BGV1 & BGV2) */
   header.hero {
     position: relative;
     background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)) !important;
@@ -395,8 +395,16 @@
     transform: translate(-50%, -50%);
     object-fit: cover;
     z-index: 0;
-    opacity: 0.25;
     pointer-events: none;
+    transition: opacity 1s ease-in-out;
+  }
+
+  #bgVideo1 {
+    opacity: 0.25;
+  }
+
+  #bgVideo2 {
+    opacity: 0;
   }
 
   header.hero .wrap {
@@ -464,7 +472,10 @@
 </div>
 
 <header class="hero">
-  <video class="hero-bg-video" autoplay muted loop playsinline>
+  <video class="hero-bg-video" autoplay muted loop playsinline id="bgVideo1">
+    <source src="images/BGV1.mp4" type="video/mp4">
+  </video>
+  <video class="hero-bg-video" autoplay muted loop playsinline id="bgVideo2">
     <source src="images/BGV2.mp4" type="video/mp4">
   </video>
   <div class="wrap">
@@ -865,6 +876,23 @@
       }
     });
   });
+
+  // Background Videos Alternator (Every 10 seconds)
+  const vid1 = document.getElementById('bgVideo1');
+  const vid2 = document.getElementById('bgVideo2');
+  let activeVideo = 1;
+
+  setInterval(() => {
+    if (activeVideo === 1) {
+      vid1.style.opacity = '0';
+      vid2.style.opacity = '0.25';
+      activeVideo = 2;
+    } else {
+      vid1.style.opacity = '0.25';
+      vid2.style.opacity = '0';
+      activeVideo = 1;
+    }
+  }, 10000); // 10000ms = 10 seconds
 
   // Power Bank Images
   const pbImages = [
