@@ -416,31 +416,38 @@
     transform: translateY(-1px);
   }
 
-  /* Hot Deals Container & Deal Box Glass Styling */
+  /* Hot Deals Section - Updated with requested Glass & Embossed CSS */
   .hot-deals-container {
     display: flex;
     gap: 20px;
     justify-content: center;
+    align-items: center;
+    padding: 20px;
     flex-wrap: wrap;
     margin-top: 30px;
   }
   .deal-box {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Transparent Glass Look */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    /* Embossed & Shadow Effect */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    
     border-radius: 16px;
     padding: 20px;
     width: 280px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.5s ease-in-out;
     text-align: center;
     color: #fff;
   }
   .deal-box:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
-    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   footer {
@@ -659,7 +666,7 @@
     <h2 class="section-title">Special Offers 🎁✨</h2>
     <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below!</p>
     
-    <!-- Hot Deals Section Added Here -->
+    <!-- Hot Deals Section with 40s Rotation -->
     <div class="hot-deals-container" id="hotDealsContainer">
         <!-- Dynamic 3 Products will load here -->
     </div>
@@ -1000,7 +1007,7 @@
     return shuffled.slice(0, 3);
   }
 
-  // Render the 3 products into the DOM with glass boxes
+  // Render the 3 products into the DOM with the updated glass boxes
   function renderHotDeals() {
     const container = document.getElementById("hotDealsContainer");
     if(!container) return;
