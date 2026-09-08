@@ -215,35 +215,6 @@
     display: block;
     transition: opacity 0.2s ease-in-out;
   }
-  .thumb-bar {
-    display: flex;
-    gap: 6px;
-    padding: 8px 10px;
-    background: #121810;
-    border-bottom: 1px solid var(--line);
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: thin;
-    scrollbar-color: var(--copper) var(--bg-alt);
-  }
-  .thumb-bar::-webkit-scrollbar { height: 4px; }
-  .thumb-bar::-webkit-scrollbar-thumb { background: var(--copper); border-radius: 2px; }
-  .thumb-bar img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 4px;
-    cursor: pointer;
-    opacity: 0.5;
-    border: 1px solid transparent;
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-  .thumb-bar img:hover, .thumb-bar img.active {
-    opacity: 1;
-    border-color: var(--copper);
-  }
 
   .lightbox {
     display: none;
@@ -416,7 +387,7 @@
     transform: translateY(-1px);
   }
 
-  /* Hot Deals Section - Updated with requested Glass & Embossed CSS */
+  /* Hot Deals Section - Glass & Embossed CSS */
   .hot-deals-container {
     display: flex;
     gap: 20px;
@@ -427,16 +398,12 @@
     margin-top: 30px;
   }
   .deal-box {
-    /* Transparent Glass Look */
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    
-    /* Embossed & Shadow Effect */
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    
     border-radius: 16px;
     padding: 20px;
     width: 280px;
@@ -666,9 +633,8 @@
     <h2 class="section-title">Special Offers 🎁 ✨</h2>
     <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below!</p>
     
-    <!-- Hot Deals Section with 40s Rotation -->
     <div class="hot-deals-container" id="hotDealsContainer">
-        <!-- Dynamic 3 Products will load here -->
+        <!-- Dynamic Products will load here -->
     </div>
   </div>
 </section>
@@ -701,17 +667,8 @@
 
       <!-- Item 1: JBL R05 Wireless Headphone -->
       <div class="card">
-        <div class="card-img" id="jbl-container" onclick="openLightboxFromContainer('main-jbl', jblImages, currentJblIndex)">
-          <img id="main-jbl" class="main-img" src="images/JBL R05 01.jpg" alt="JBL R05 Wireless Headphone">
-          <span class="card-tag">Hot Deal</span>
-        </div>
-        
-        <div class="thumb-bar" id="jbl-thumbs">
-          <img src="images/JBL R05 01.jpg" class="active" onclick="changeImage('main-jbl', this.src, this, 0, 'jbl')">
-          <img src="images/JBL R05 02.jpg" onclick="changeImage('main-jbl', this.src, this, 1, 'jbl')">
-          <img src="images/JBL R05 03.jpg" onclick="changeImage('main-jbl', this.src, this, 2, 'jbl')">
-          <img src="images/JBL R05 04.jpg" onclick="changeImage('main-jbl', this.src, this, 3, 'jbl')">
-          <img src="images/JBL R05 05.jpg" onclick="changeImage('main-jbl', this.src, this, 4, 'jbl')">
+        <div class="card-img" onclick="openLightbox('images/JBL R05 01.jpg')">
+          <img class="main-img" src="images/JBL R05 01.jpg" alt="JBL R05 Wireless Headphone">
         </div>
 
         <div class="card-body">
@@ -733,21 +690,8 @@
 
       <!-- Item 2: Power Bank -->
       <div class="card">
-        <div class="card-img" id="pb1-container" onclick="openLightboxFromContainer('main-pb1', pbImages, currentImageIndex)">
-          <img id="main-pb1" class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
-          <span class="card-tag">Hot Deal</span>
-        </div>
-        
-        <div class="thumb-bar" id="pb1-thumbs">
-          <img src="images/powerbank1.jpg" class="active" onclick="changeImage('main-pb1', this.src, this, 0, 'pb1')">
-          <img src="images/powerbank2.jpg" onclick="changeImage('main-pb1', this.src, this, 1, 'pb1')">
-          <img src="images/powerbank3.jpg" onclick="changeImage('main-pb1', this.src, this, 2, 'pb1')">
-          <img src="images/powerbank4.jpg" onclick="changeImage('main-pb1', this.src, this, 3, 'pb1')">
-          <img src="images/powerbank5.jpg" onclick="changeImage('main-pb1', this.src, this, 4, 'pb1')">
-          <img src="images/powerbank6.jpg" onclick="changeImage('main-pb1', this.src, this, 5, 'pb1')">
-          <img src="images/powerbank7.jpg" onclick="changeImage('main-pb1', this.src, this, 6, 'pb1')">
-          <img src="images/powerbank8.jpg" onclick="changeImage('main-pb1', this.src, this, 7, 'pb1')">
-          <img src="images/powerbank9.jpg" onclick="changeImage('main-pb1', this.src, this, 8, 'pb1')">
+        <div class="card-img" onclick="openLightbox('images/powerbank1.jpg')">
+          <img class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
         </div>
 
         <div class="card-body">
@@ -769,16 +713,8 @@
 
       <!-- Item 3: Earbuds -->
       <div class="card">
-        <div class="card-img" id="earbud-container" onclick="openLightboxFromContainer('main-earbud', earbudImages, currentEarbudIndex)">
-          <img id="main-earbud" class="main-img" src="images/ANC ENC Earbud1.jpg" alt="ANC/ENC Earbuds">
-          <span class="card-tag">Hot Deal</span>
-        </div>
-        
-        <div class="thumb-bar" id="earbud-thumbs">
-          <img src="images/ANC ENC Earbud1.jpg" class="active" onclick="changeImage('main-earbud', this.src, this, 0, 'earbud')">
-          <img src="images/ANC ENC Earbud2.jpg" onclick="changeImage('main-earbud', this.src, this, 1, 'earbud')">
-          <img src="images/ANC ENC Earbud3.jpg" onclick="changeImage('main-earbud', this.src, this, 2, 'earbud')">
-          <img src="images/ANC ENC Earbud4.jpg" onclick="changeImage('main-earbud', this.src, this, 3, 'earbud')">
+        <div class="card-img" onclick="openLightbox('images/ANC ENC Earbud1.jpg')">
+          <img class="main-img" src="images/ANC ENC Earbud1.jpg" alt="ANC/ENC Earbuds">
         </div>
 
         <div class="card-body">
@@ -800,16 +736,8 @@
 
       <!-- Item 4: AirPods Pro 2nd Gen -->
       <div class="card">
-        <div class="card-img" id="airpods-container" onclick="openLightboxFromContainer('main-airpods', airpodsImages, currentAirpodsIndex)">
-          <img id="main-airpods" class="main-img" src="images/AirPods Pro 2nd 01.jpg" alt="AirPods Pro 2nd Gen">
-          <span class="card-tag">Hot Deal</span>
-        </div>
-        
-        <div class="thumb-bar" id="airpods-thumbs">
-          <img src="images/AirPods Pro 2nd 01.jpg" class="active" onclick="changeImage('main-airpods', this.src, this, 0, 'airpods')">
-          <img src="images/AirPods Pro 2nd 02.jpg" onclick="changeImage('main-airpods', this.src, this, 1, 'airpods')">
-          <img src="images/AirPods Pro 2nd 03.jpg" onclick="changeImage('main-airpods', this.src, this, 2, 'airpods')">
-          <img src="images/AirPods Pro 2nd 04.jpg" onclick="changeImage('main-airpods', this.src, this, 3, 'airpods')">
+        <div class="card-img" onclick="openLightbox('images/AirPods Pro 2nd 01.jpg')">
+          <img class="main-img" src="images/AirPods Pro 2nd 01.jpg" alt="AirPods Pro 2nd Gen">
         </div>
 
         <div class="card-body">
@@ -831,7 +759,6 @@
 
     </div>
 
-    <!-- View All Products Button Container -->
     <div style="text-align: center; margin-top: 40px;">
       <a href="products.html" class="glass-btn" style="text-decoration: none; display: inline-block;">View All Products →</a>
     </div>
@@ -978,13 +905,10 @@
 
 <div id="lightbox" class="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">×</span>
-  <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">❮</button>
   <img id="lightbox-img" class="lightbox-content" src="" alt="Popup View">
-  <button class="lightbox-nav lightbox-next" onclick="changeLightboxImg(1)">❯</button>
 </div>
 
 <script>
-  // Total products list for Special Offers section rotation
   const allProducts = [
     { id: 1, name: "Wireless Earbuds Pro", price: "Rs. 4,500", image: "images/earbuds.png" },
     { id: 2, name: "Fast Charging Adapter 20W", price: "Rs. 2,200", image: "images/adapter.png" },
@@ -994,7 +918,6 @@
     { id: 6, name: "Mini Power Bank 10000mAh", price: "Rs. 5,900", image: "images/powerbank.png" }
   ];
 
-  // Function to get a weekly consistent random set from all products
   function getWeeklyProducts() {
     const weekNumber = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 24 * 7));
     let seed = weekNumber;
@@ -1007,7 +930,6 @@
     return shuffled.slice(0, 3);
   }
 
-  // Render the 3 products into the DOM with the updated glass boxes
   function renderHotDeals() {
     const container = document.getElementById("hotDealsContainer");
     if(!container) return;
@@ -1025,9 +947,7 @@
     `).join('');
   }
 
-  // Initial load for Special Offers
   renderHotDeals();
-  // Change every 40 seconds (40000 milliseconds)
   setInterval(renderHotDeals, 40000);
 
   function getHeroImages() {
@@ -1130,122 +1050,15 @@
     });
   }
 
-  const jblImages = [
-    "images/JBL R05 01.jpg",
-    "images/JBL R05 02.jpg",
-    "images/JBL R05 03.jpg",
-    "images/JBL R05 04.jpg",
-    "images/JBL R05 05.jpg"
-  ];
-  let currentJblIndex = 0;
-
-  const pbImages = [
-    "images/powerbank1.jpg",
-    "images/powerbank2.jpg",
-    "images/powerbank3.jpg",
-    "images/powerbank4.jpg",
-    "images/powerbank5.jpg",
-    "images/powerbank6.jpg",
-    "images/powerbank7.jpg",
-    "images/powerbank8.jpg",
-    "images/powerbank9.jpg"
-  ];
-  let currentImageIndex = 0;
-
-  const earbudImages = [
-    "images/ANC ENC Earbud1.jpg",
-    "images/ANC ENC Earbud2.jpg",
-    "images/ANC ENC Earbud3.jpg",
-    "images/ANC ENC Earbud4.jpg"
-  ];
-  let currentEarbudIndex = 0;
-
-  const airpodsImages = [
-    "images/AirPods Pro 2nd 01.jpg",
-    "images/AirPods Pro 2nd 02.jpg",
-    "images/AirPods Pro 2nd 03.jpg",
-    "images/AirPods Pro 2nd 04.jpg"
-  ];
-  let currentAirpodsIndex = 0;
-
-  let activeGalleryImages = jblImages;
-  let activeIndexRef = 0;
-  let activeMainImgId = 'main-jbl';
-  let activeThumbContainerId = 'jbl-thumbs';
-
-  function changeImage(mainImgId, src, thumbElement, index, type) {
-    const mainImg = document.getElementById(mainImgId);
-    mainImg.src = src;
-    
-    if(type === 'jbl') {
-      currentJblIndex = index;
-    } else if(type === 'pb1') {
-      currentImageIndex = index;
-    } else if(type === 'earbud') {
-      currentEarbudIndex = index;
-    } else if(type === 'airpods') {
-      currentAirpodsIndex = index;
-    }
-
-    const thumbBar = thumbElement.parentElement;
-    const thumbs = thumbBar.querySelectorAll('img');
-    thumbs.forEach(t => t.classList.remove('active'));
-    thumbElement.classList.add('active');
-  }
-
-  function openLightboxFromContainer(mainImgId, imageArray, currentIndex) {
-    const mainImg = document.getElementById(mainImgId);
+  function openLightbox(imageSrc) {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
-    
-    activeGalleryImages = imageArray;
-    activeIndexRef = currentIndex;
-    activeMainImgId = mainImgId;
-    
-    if(mainImgId === 'main-jbl') {
-      activeThumbContainerId = 'jbl-thumbs';
-      activeIndexRef = currentJblIndex;
-    } else if(mainImgId === 'main-pb1') {
-      activeThumbContainerId = 'pb1-thumbs';
-      activeIndexRef = currentImageIndex;
-    } else if(mainImgId === 'main-earbud') {
-      activeThumbContainerId = 'earbud-thumbs';
-      activeIndexRef = currentEarbudIndex;
-    } else if(mainImgId === 'main-airpods') {
-      activeThumbContainerId = 'airpods-thumbs';
-      activeIndexRef = currentAirpodsIndex;
-    }
-
-    lightboxImg.src = mainImg.src;
+    lightboxImg.src = imageSrc;
     lightbox.classList.add('active');
   }
 
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
-  }
-
-  function changeLightboxImg(direction) {
-    activeIndexRef += direction;
-    if (activeIndexRef < 0) activeIndexRef = activeGalleryImages.length - 1;
-    if (activeIndexRef >= activeGalleryImages.length) activeIndexRef = 0;
-
-    if(activeMainImgId === 'main-jbl') currentJblIndex = activeIndexRef;
-    if(activeMainImgId === 'main-pb1') currentImageIndex = activeIndexRef;
-    if(activeMainImgId === 'main-earbud') currentEarbudIndex = activeIndexRef;
-    if(activeMainImgId === 'main-airpods') currentAirpodsIndex = activeIndexRef;
-
-    const newSrc = activeGalleryImages[activeIndexRef];
-    document.getElementById('lightbox-img').src = newSrc;
-    document.getElementById(activeMainImgId).src = newSrc;
-
-    const thumbs = document.querySelectorAll(`#${activeThumbContainerId} img`);
-    thumbs.forEach((t, idx) => {
-      if (idx === activeIndexRef) {
-        t.classList.add('active');
-      } else {
-        t.classList.remove('active');
-      }
-    });
   }
 
   let cart = [];
