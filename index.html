@@ -26,13 +26,11 @@
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  /* Smooth Scrolling for Navigation Links */
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
   }
 
-  /* 1. Modern Windows Glassmorphism Header */
   nav {
     position: fixed;
     top: 0;
@@ -49,13 +47,11 @@
     padding-top: 70px;
   }
 
-  /* Logo Clickable Style */
   .logo-link {
     text-decoration: none;
     cursor: pointer;
   }
 
-  /* Active Nav Link Highlighting (Turns Yellow when section is in view) */
   .navlinks a {
     color: #fff;
     transition: color 0.2s;
@@ -64,7 +60,6 @@
     color: #ffcc00 !important;
   }
 
-  /* Nav Menu Cart Custom Styling (Capital, Bold, Yellow) */
   .navlinks a.cart-nav-link {
     text-transform: uppercase;
     font-weight: 800;
@@ -75,7 +70,6 @@
     color: #ffdd33 !important;
   }
 
-  /* 2. Buttons Styling */
   .order-link-btn {
     background: #25D366;
     color: #000 !important;
@@ -110,7 +104,6 @@
     background: var(--copper-dim);
   }
 
-  /* Share Product Button Styling */
   .share-product-btn {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
@@ -129,7 +122,6 @@
     background: rgba(255, 255, 255, 0.2);
   }
 
-  /* Share Modal 30% Transparent Glassmorphism */
   .share-modal-backdrop {
     display: none;
     position: fixed;
@@ -144,7 +136,7 @@
     display: flex;
   }
   .share-modal-box {
-    background: rgba(18, 24, 16, 0.30); /* 30% Transparent background */
+    background: rgba(18, 24, 16, 0.30);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -208,7 +200,6 @@
     background: rgba(255,255,255,0.25);
   }
 
-  /* 3. Multi-Image Gallery Styling */
   .card-img {
     position: relative;
     height: 280px;
@@ -254,7 +245,6 @@
     border-color: var(--copper);
   }
 
-  /* 4. Lightbox Modal (Popup Viewer) */
   .lightbox {
     display: none;
     position: fixed;
@@ -294,7 +284,6 @@
   .lightbox-prev { left: 20px; }
   .lightbox-next { right: 20px; }
 
-  /* 5. Floating Glassmorphism Cart Widget & Drawer */
   .cart-float-btn {
     position: fixed;
     bottom: 25px; right: 25px;
@@ -318,7 +307,6 @@
     padding: 2px 7px; border-radius: 10px;
   }
 
-  /* Glassmorphism Cart Drawer */
   .cart-drawer {
     position: fixed;
     top: 0; right: -420px;
@@ -373,7 +361,6 @@
   }
   .cart-checkout-btn:hover { background: #1eb956; transform: translateY(-1px); }
 
-  /* WhatsApp Chat Floating Box Styles */
   .wa-chat-btn {
     background: #25D366; color: #000; width: 50px; height: 50px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; font-size: 24px;
@@ -393,7 +380,6 @@
   }
   .wa-chat-body { padding: 15px; color: var(--slate); font-size: 13px; }
 
-  /* Reviews Expandable Styles */
   .review-card {
     background: rgba(255,255,255,0.03); 
     padding: 22px; 
@@ -410,7 +396,6 @@
     display: flex;
   }
 
-  /* Glassmorphism Show More Button Style */
   .glass-btn {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
@@ -431,7 +416,6 @@
     transform: translateY(-1px);
   }
 
-  /* Professional Footer Styles */
   footer {
     background: #0d120a;
     border-top: 1px solid rgba(255,255,255,0.08);
@@ -475,7 +459,6 @@
     color: rgba(255,255,255,0.5);
   }
 
-  /* Custom Hero Background with Web & Mobile-Optimized Images */
   header.hero {
     position: relative;
     background: linear-gradient(rgba(12, 16, 10, 0.82), rgba(12, 16, 10, 0.88)), url('images/BG01.jpg') no-repeat center center/cover !important;
@@ -500,7 +483,7 @@
     <a href="#" class="logo-link"><div class="logo">Swift<span>Mart</span></div></a>
     <div class="navlinks">
       <a href="#special-offers" id="nav-special-offers">Special Offers 🔥</a>
-      <a href="#products" id="nav-products">Products</a>
+      <a href="products.html" id="nav-products">Products</a>
       <a href="#about" id="nav-about">About</a>
       <a href="#reviews" id="nav-reviews">Reviews</a>
       <a href="#contact" id="nav-contact">Contact</a>
@@ -560,47 +543,38 @@
       <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20have%20an%20inquiry" target="_blank" class="btn btn-outline">Message Us</a>
     </div>
 
-    <!-- SwiftMart Glassmorphism Stats & Trust Bar (Placed right below buttons) -->
     <section class="swift-stats-bar">
         <div class="stats-container">
-            
             <div class="stat-item">
                 <i class="fas fa-handshake-simple"></i>
                 <h3>500+</h3>
                 <p>Happy Customers</p>
             </div>
-
             <div class="stat-item">
                 <i class="fas fa-boxes-stacked"></i>
                 <h3>100+</h3>
                 <p>Gadget Varieties</p>
             </div>
-
             <div class="stat-item">
                 <i class="fas fa-truck-fast"></i>
                 <h3>Islandwide</h3>
                 <p>Fast Delivery</p>
             </div>
-
             <div class="stat-item">
                 <i class="fas fa-star"></i>
                 <h3>5.0</h3>
                 <p>Trusted Reviews</p>
             </div>
-
         </div>
     </section>
 
     <style>
     .swift-stats-bar {
-        /* Glassmorphism Effect */
         background: rgba(25, 30, 25, 0.65);
         backdrop-filter: blur(16px) saturate(180%);
         -webkit-backdrop-filter: blur(16px) saturate(180%);
-        
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
-        
         max-width: 1050px;
         margin: 40px auto 10px auto;
         padding: 25px 20px;
@@ -641,8 +615,6 @@
         letter-spacing: 1px;
         font-weight: 600;
     }
-
-    /* Mobile Responsive adjustment */
     @media (max-width: 768px) {
         .swift-stats-bar {
             margin: 20px 10px;
@@ -689,15 +661,17 @@
 
 <section class="section section-alt" id="products">
   <div class="wrap">
-    <div class="kicker">WHAT WE SELL</div>
-    <h2 class="section-title">Featured Products</h2>
+    <div class="kicker">HOT DEALS</div>
+    <h2 class="section-title">Featured Hot Deals 🔥</h2>
+    <p class="section-desc">Grab our top-selling items at special limited-time prices!</p>
+    
     <div class="products-grid">
 
-      <!-- New Item: JBL R05 Wireless Headphone -->
+      <!-- Item 1: JBL R05 Wireless Headphone -->
       <div class="card">
         <div class="card-img" id="jbl-container" onclick="openLightboxFromContainer('main-jbl', jblImages, currentJblIndex)">
           <img id="main-jbl" class="main-img" src="images/JBL R05 01.jpg" alt="JBL R05 Wireless Headphone">
-          <span class="card-tag">Special Offer</span>
+          <span class="card-tag">Hot Deal</span>
         </div>
         
         <div class="thumb-bar" id="jbl-thumbs">
@@ -711,7 +685,7 @@
         <div class="card-body">
           <h3>JBL R05 Wireless Headphone</h3>
           <p>Free Silicone Case, Lanyard Hole, premium sound quality & deep bass</p>
-          <div style="margin-top: 10px; margin-bottom: 12px;">
+          <div style="margin: 10px 0 12px 0;">
             <button onclick="openShareModal('JBL R05 Wireless Headphone', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
           </div>
           <div class="card-foot">
@@ -720,15 +694,16 @@
               <span class="price" style="color: #25D366; font-size: 18px;">Rs. 1,490</span>
             </div>
             <button onclick="addToCart('JBL R05 Wireless Headphone', 1490)" class="add-cart-btn">+ Cart</button>
-            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20JBL%20R05%20Wireless%20Headphone%20at%20Special%20Offer%20Rs.%201490" target="_blank" class="order-link-btn">Buy Now</a>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20JBL%20R05%20Wireless%20Headphone%20at%20Hot%20Deal%20Rs.%201490" target="_blank" class="order-link-btn">Buy Now</a>
           </div>
         </div>
       </div>
 
+      <!-- Item 2: Power Bank -->
       <div class="card">
         <div class="card-img" id="pb1-container" onclick="openLightboxFromContainer('main-pb1', pbImages, currentImageIndex)">
           <img id="main-pb1" class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
-          <span class="card-tag">Special Offer</span>
+          <span class="card-tag">Hot Deal</span>
         </div>
         
         <div class="thumb-bar" id="pb1-thumbs">
@@ -746,7 +721,7 @@
         <div class="card-body">
           <h3>20000mAh 66W Power Bank</h3>
           <p>Transparent design, digital display, built-in cables</p>
-          <div style="margin-top: 10px; margin-bottom: 12px;">
+          <div style="margin: 10px 0 12px 0;">
             <button onclick="openShareModal('20000mAh 66W Power Bank', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
           </div>
           <div class="card-foot">
@@ -755,15 +730,16 @@
               <span class="price" style="color: #25D366; font-size: 18px;">Rs. 4,500</span>
             </div>
             <button onclick="addToCart('20000mAh 66W Power Bank', 4500)" class="add-cart-btn">+ Cart</button>
-            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%2020000mAh%2066W%20Power%20Bank%20at%20Special%20Offer%20Rs.%204500" target="_blank" class="order-link-btn">Buy Now</a>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%2020000mAh%2066W%20Power%20Bank%20at%20Hot%20Deal%20Rs.%204500" target="_blank" class="order-link-btn">Buy Now</a>
           </div>
         </div>
       </div>
 
+      <!-- Item 3: Earbuds -->
       <div class="card">
         <div class="card-img" id="earbud-container" onclick="openLightboxFromContainer('main-earbud', earbudImages, currentEarbudIndex)">
-          <img id="main-earbud" class="main-img" src="images/ANC ENC Earbud1.jpg" alt="ANC/ENC Touch Screen Wireless Earbuds">
-          <span class="card-tag">Special Offer</span>
+          <img id="main-earbud" class="main-img" src="images/ANC ENC Earbud1.jpg" alt="ANC/ENC Earbuds">
+          <span class="card-tag">Hot Deal</span>
         </div>
         
         <div class="thumb-bar" id="earbud-thumbs">
@@ -776,7 +752,7 @@
         <div class="card-body">
           <h3>ANC/ENC Touch Screen Wireless Earbuds</h3>
           <p>Smart display case, Active Noise Cancellation, Premium sound quality</p>
-          <div style="margin-top: 10px; margin-bottom: 12px;">
+          <div style="margin: 10px 0 12px 0;">
             <button onclick="openShareModal('ANC/ENC Touch Screen Wireless Earbuds', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
           </div>
           <div class="card-foot">
@@ -785,15 +761,16 @@
               <span class="price" style="color: #25D366; font-size: 18px;">Rs. 3,000</span>
             </div>
             <button onclick="addToCart('ANC/ENC Touch Screen Wireless Earbuds', 3000)" class="add-cart-btn">+ Cart</button>
-            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20ANC/ENC%20Touch%20Screen%20Wireless%20Earbuds%20at%20Special%20Offer%20Rs.%203000" target="_blank" class="order-link-btn">Buy Now</a>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20ANC/ENC%20Earbuds%20at%20Hot%20Deal%20Rs.%203000" target="_blank" class="order-link-btn">Buy Now</a>
           </div>
         </div>
       </div>
 
+      <!-- Item 4: AirPods Pro 2nd Gen -->
       <div class="card">
         <div class="card-img" id="airpods-container" onclick="openLightboxFromContainer('main-airpods', airpodsImages, currentAirpodsIndex)">
           <img id="main-airpods" class="main-img" src="images/AirPods Pro 2nd 01.jpg" alt="AirPods Pro 2nd Gen">
-          <span class="card-tag">Special Offer</span>
+          <span class="card-tag">Hot Deal</span>
         </div>
         
         <div class="thumb-bar" id="airpods-thumbs">
@@ -806,7 +783,7 @@
         <div class="card-body">
           <h3>AirPods Pro 2nd Gen</h3>
           <p>Designed by in california , Made in California (USA Version ) ANC Support</p>
-          <div style="margin-top: 10px; margin-bottom: 12px;">
+          <div style="margin: 10px 0 12px 0;">
             <button onclick="openShareModal('AirPods Pro 2nd Gen', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
           </div>
           <div class="card-foot">
@@ -815,12 +792,18 @@
               <span class="price" style="color: #25D366; font-size: 18px;">Rs. 3,490</span>
             </div>
             <button onclick="addToCart('AirPods Pro 2nd Gen', 3490)" class="add-cart-btn">+ Cart</button>
-            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20AirPods%20Pro%202nd%20Gen%20at%20Special%20Offer%20Rs.%203490" target="_blank" class="order-link-btn">Buy Now</a>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20AirPods%20Pro%202nd%20Gen%20at%20Hot%20Deal%20Rs.%203490" target="_blank" class="order-link-btn">Buy Now</a>
           </div>
         </div>
       </div>
 
     </div>
+
+    <!-- View All Products Button Container -->
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="products.html" class="glass-btn" style="text-decoration: none; display: inline-block;">View All Products →</a>
+    </div>
+
   </div>
 </section>
 
@@ -831,7 +814,6 @@
     <p class="section-desc">Real reviews from people across Sri Lanka who shop with SwiftMart.</p>
     
     <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;" id="reviewsGrid">
-      
       <div class="review-card">
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -886,13 +868,11 @@
         </div>
         <div style="font-size: 12px; color: #25D366; font-weight: 600;">⭐ Verified Buyer</div>
       </div>
-
     </div>
 
     <div style="text-align: center; margin-top: 30px;" id="showMoreContainer">
       <button onclick="toggleMoreReviews()" id="showMoreBtn" class="glass-btn">Show More Reviews ↓</button>
     </div>
-
   </div>
 </section>
 
@@ -914,7 +894,6 @@
     <div style="margin-top: 30px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); height: 400px; background: #121810;">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d320.3430775183844!2d81.05117933911423!3d6.993193341477941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae46321a0bab985%3A0x6abe489e54181c65!2sSwiftMart!5e1!3m2!1sen!2slk!4v1788463587495!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
-
   </div>
 </section>
 
@@ -931,7 +910,7 @@
         <h4>Quick Links</h4>
         <ul>
           <li><a href="#special-offers">Special Offers</a></li>
-          <li><a href="#products">Products</a></li>
+          <li><a href="products.html">Products</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#reviews">Customer Reviews</a></li>
           <li><a href="#contact">Contact Us</a></li>
@@ -952,7 +931,6 @@
   </div>
 </footer>
 
-<!-- Share Modal Popup -->
 <div class="share-modal-backdrop" id="shareModalBackdrop">
   <div class="share-modal-box">
     <h3 id="shareModalTitle">Share Product</h3>
@@ -974,9 +952,6 @@
 </div>
 
 <script>
-  // ----------------------------------------------------
-  // Hero Background Auto-Slider (Switching Web & Mobile Images based on screen size)
-  // ----------------------------------------------------
   function getHeroImages() {
     if (window.innerWidth <= 768) {
       return [
@@ -1002,17 +977,13 @@
     }
   }
 
-  // Set interval to 10 seconds (10000 ms)
   setInterval(rotateHeroBackground, 10000);
 
-
-  // Toggle WhatsApp Chat Box Popup
   function toggleWaChat() {
     const box = document.getElementById('waChatBox');
     box.classList.toggle('open');
   }
 
-  // Toggle More Reviews
   function toggleMoreReviews() {
     const hiddenReviews = document.querySelectorAll('.extra-review');
     const btn = document.getElementById('showMoreBtn');
@@ -1032,7 +1003,6 @@
     }
   }
 
-  // Active Nav Link Highlighter on Scroll
   window.addEventListener('scroll', () => {
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.navlinks a[href^="#"]');
@@ -1053,7 +1023,6 @@
     });
   });
 
-  // Share Modal Logic
   let activeShareUrl = '';
 
   function openShareModal(productName, productUrl) {
@@ -1083,7 +1052,6 @@
     });
   }
 
-  // JBL R05 Headphone Images
   const jblImages = [
     "images/JBL R05 01.jpg",
     "images/JBL R05 02.jpg",
@@ -1093,7 +1061,6 @@
   ];
   let currentJblIndex = 0;
 
-  // Power Bank Images
   const pbImages = [
     "images/powerbank1.jpg",
     "images/powerbank2.jpg",
@@ -1107,7 +1074,6 @@
   ];
   let currentImageIndex = 0;
 
-  // Earbud Images
   const earbudImages = [
     "images/ANC ENC Earbud1.jpg",
     "images/ANC ENC Earbud2.jpg",
@@ -1116,7 +1082,6 @@
   ];
   let currentEarbudIndex = 0;
 
-  // AirPods Pro 2nd Gen Images
   const airpodsImages = [
     "images/AirPods Pro 2nd 01.jpg",
     "images/AirPods Pro 2nd 02.jpg",
@@ -1125,7 +1090,6 @@
   ];
   let currentAirpodsIndex = 0;
 
-  // Active gallery tracking for Lightbox
   let activeGalleryImages = jblImages;
   let activeIndexRef = 0;
   let activeMainImgId = 'main-jbl';
@@ -1206,99 +1170,6 @@
     });
   }
 
-  // Touch Swipe Logic for JBL Mobile Container
-  let jblTouchStartX = 0;
-  let jblTouchEndX = 0;
-  const jblContainer = document.getElementById('jbl-container');
-
-  if(jblContainer) {
-    jblContainer.addEventListener('touchstart', e => {
-      jblTouchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-
-    jblContainer.addEventListener('touchend', e => {
-      jblTouchEndX = e.changedTouches[0].screenX;
-      if (jblTouchEndX < jblTouchStartX - 40) {
-        currentJblIndex = (currentJblIndex + 1) % jblImages.length;
-        changeImage('main-jbl', jblImages[currentJblIndex], document.querySelectorAll('#jbl-thumbs img')[currentJblIndex], currentJblIndex, 'jbl');
-      }
-      if (jblTouchEndX > jblTouchStartX + 40) {
-        currentJblIndex = (currentJblIndex - 1 + jblImages.length) % jblImages.length;
-        changeImage('main-jbl', jblImages[currentJblIndex], document.querySelectorAll('#jbl-thumbs img')[currentJblIndex], currentJblIndex, 'jbl');
-      }
-    }, {passive: true});
-  }
-
-  // Touch Swipe Logic for Power Bank Mobile Container
-  let pbTouchStartX = 0;
-  let pbTouchEndX = 0;
-  const pbContainer = document.getElementById('pb1-container');
-
-  if(pbContainer) {
-    pbContainer.addEventListener('touchstart', e => {
-      pbTouchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-
-    pbContainer.addEventListener('touchend', e => {
-      pbTouchEndX = e.changedTouches[0].screenX;
-      if (pbTouchEndX < pbTouchStartX - 40) {
-        currentImageIndex = (currentImageIndex + 1) % pbImages.length;
-        changeImage('main-pb1', pbImages[currentImageIndex], document.querySelectorAll('#pb1-thumbs img')[currentImageIndex], currentImageIndex, 'pb1');
-      }
-      if (pbTouchEndX > pbTouchStartX + 40) {
-        currentImageIndex = (currentImageIndex - 1 + pbImages.length) % pbImages.length;
-        changeImage('main-pb1', pbImages[currentImageIndex], document.querySelectorAll('#pb1-thumbs img')[currentImageIndex], currentImageIndex, 'pb1');
-      }
-    }, {passive: true});
-  }
-
-  // Touch Swipe Logic for Earbud Mobile Container
-  let earbudTouchStartX = 0;
-  let earbudTouchEndX = 0;
-  const earbudContainer = document.getElementById('earbud-container');
-
-  if(earbudContainer) {
-    earbudContainer.addEventListener('touchstart', e => {
-      earbudTouchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-
-    earbudContainer.addEventListener('touchend', e => {
-      earbudTouchEndX = e.changedTouches[0].screenX;
-      if (earbudTouchEndX < earbudTouchStartX - 40) {
-        currentEarbudIndex = (currentEarbudIndex + 1) % earbudImages.length;
-        changeImage('main-earbud', earbudImages[currentEarbudIndex], document.querySelectorAll('#earbud-thumbs img')[currentEarbudIndex], currentEarbudIndex, 'earbud');
-      }
-      if (earbudTouchEndX > earbudTouchStartX + 40) {
-        currentEarbudIndex = (currentEarbudIndex - 1 + earbudImages.length) % earbudImages.length;
-        changeImage('main-earbud', earbudImages[currentEarbudIndex], document.querySelectorAll('#earbud-thumbs img')[currentEarbudIndex], currentEarbudIndex, 'earbud');
-      }
-    }, {passive: true});
-  }
-
-  // Touch Swipe Logic for AirPods Mobile Container
-  let airpodsTouchStartX = 0;
-  let airpodsTouchEndX = 0;
-  const airpodsContainer = document.getElementById('airpods-container');
-
-  if(airpodsContainer) {
-    airpodsContainer.addEventListener('touchstart', e => {
-      airpodsTouchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-
-    airpodsContainer.addEventListener('touchend', e => {
-      airpodsTouchEndX = e.changedTouches[0].screenX;
-      if (airpodsTouchEndX < airpodsTouchStartX - 40) {
-        currentAirpodsIndex = (currentAirpodsIndex + 1) % airpodsImages.length;
-        changeImage('main-airpods', airpodsImages[currentAirpodsIndex], document.querySelectorAll('#airpods-thumbs img')[currentAirpodsIndex], currentAirpodsIndex, 'airpods');
-      }
-      if (airpodsTouchEndX > airpodsTouchStartX + 40) {
-        currentAirpodsIndex = (currentAirpodsIndex - 1 + airpodsImages.length) % airpodsImages.length;
-        changeImage('main-airpods', airpodsImages[currentAirpodsIndex], document.querySelectorAll('#airpods-thumbs img')[currentAirpodsIndex], currentAirpodsIndex, 'airpods');
-      }
-    }, {passive: true});
-  }
-
-  // Simple Cart State & Functions
   let cart = [];
 
   function toggleCart() {
