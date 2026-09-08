@@ -119,10 +119,20 @@
   .stat b{display:block; font-family:'Archivo Expanded'; font-size:28px; color:var(--copper);}
   .stat span{color:var(--slate); font-size:13px;}
 
-  /* products */
-  .products-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  @media(max-width:800px){ .products-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:520px){ .products-grid{grid-template-columns:1fr;} }
+  /* products & hot deals container */
+  .products-grid, .hot-deals-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+  }
+  @media(max-width:800px){ 
+    .products-grid, .hot-deals-container { grid-template-columns: 1fr 1fr; } 
+  }
+  @media(max-width:520px){ 
+    .products-grid, .hot-deals-container { grid-template-columns: 1fr; } 
+  }
+
   .card{
     background:var(--bg-alt); border:1px solid var(--line); border-radius:6px; overflow:hidden;
     transition:border-color 0.2s, transform 0.2s;
@@ -133,6 +143,7 @@
     display:flex; align-items:center; justify-content:center; font-size:40px; color:var(--copper);
     position:relative;
   }
+  .card-img img.main-img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .card-tag{
     position:absolute; top:10px; left:10px; background:var(--copper); color:var(--bg);
     font-size:10px; font-weight:700; padding:3px 8px; border-radius:2px; letter-spacing:0.04em;
@@ -142,18 +153,7 @@
   .card-body p{color:var(--slate); font-size:13px; margin-bottom:12px;}
   .card-foot{display:flex; align-items:center; justify-content:space-between;}
   .price{font-weight:700; color:var(--cyan); font-size:15px;}
-  .order-link{font-size:12px; font-weight:700; color:var(--copper); border-bottom:1px solid var(--copper-dim);}
-
-  /* hot deals container */
-  .hot-deals-container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: stretch;
-    padding: 20px 0;
-    flex-wrap: wrap;
-    margin-top: 30px;
-  }
+  .order-link, .order-link-btn{font-size:12px; font-weight:700; color:var(--bg); background: #25D366; padding: 7px 14px; border-radius: 4px; text-decoration: none;}
 
   /* testimonials */
   .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
