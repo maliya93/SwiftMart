@@ -595,6 +595,35 @@
     <h2 class="section-title">Featured Products</h2>
     <div class="products-grid">
 
+      <!-- New Item: JBL R05 Wireless Headphone -->
+      <div class="card">
+        <div class="card-img" id="jbl-container" onclick="openLightboxFromContainer('main-jbl', jblImages, currentJblIndex)">
+          <img id="main-jbl" class="main-img" src="images/JBL R05 01.jpg" alt="JBL R05 Wireless Headphone">
+          <span class="card-tag">Special Offer</span>
+        </div>
+        
+        <div class="thumb-bar" id="jbl-thumbs">
+          <img src="images/JBL R05 01.jpg" class="active" onclick="changeImage('main-jbl', this.src, this, 0, 'jbl')">
+          <img src="images/JBL R05 02.jpg" onclick="changeImage('main-jbl', this.src, this, 1, 'jbl')">
+          <img src="images/JBL R05 03.jpg" onclick="changeImage('main-jbl', this.src, this, 2, 'jbl')">
+          <img src="images/JBL R05 04.jpg" onclick="changeImage('main-jbl', this.src, this, 3, 'jbl')">
+          <img src="images/JBL R05 05.jpg" onclick="changeImage('main-jbl', this.src, this, 4, 'jbl')">
+        </div>
+
+        <div class="card-body">
+          <h3>JBL R05 Wireless Headphone</h3>
+          <p>Free Silicone Case, Lanyard Hole, premium sound quality & deep bass</p>
+          <div class="card-foot">
+            <div class="price-box">
+              <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 2,490</span>
+              <span class="price" style="color: #25D366; font-size: 18px;">Rs. 1,490</span>
+            </div>
+            <button onclick="addToCart('JBL R05 Wireless Headphone', 1490)" class="add-cart-btn">+ Cart</button>
+            <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20order%20JBL%20R05%20Wireless%20Headphone%20at%20Special%20Offer%20Rs.%201490" target="_blank" class="order-link-btn">Buy Now</a>
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-img" id="pb1-container" onclick="openLightboxFromContainer('main-pb1', pbImages, currentImageIndex)">
           <img id="main-pb1" class="main-img" src="images/powerbank1.jpg" alt="20000mAh Power Bank">
@@ -900,6 +929,16 @@
     });
   });
 
+  // JBL R05 Headphone Images
+  const jblImages = [
+    "images/JBL R05 01.jpg",
+    "images/JBL R05 02.jpg",
+    "images/JBL R05 03.jpg",
+    "images/JBL R05 04.jpg",
+    "images/JBL R05 05.jpg"
+  ];
+  let currentJblIndex = 0;
+
   // Power Bank Images
   const pbImages = [
     "images/powerbank1.jpg",
@@ -933,16 +972,18 @@
   let currentAirpodsIndex = 0;
 
   // Active gallery tracking for Lightbox
-  let activeGalleryImages = pbImages;
+  let activeGalleryImages = jblImages;
   let activeIndexRef = 0;
-  let activeMainImgId = 'main-pb1';
-  let activeThumbContainerId = 'pb1-thumbs';
+  let activeMainImgId = 'main-jbl';
+  let activeThumbContainerId = 'jbl-thumbs';
 
   function changeImage(mainImgId, src, thumbElement, index, type) {
     const mainImg = document.getElementById(mainImgId);
     mainImg.src = src;
     
-    if(type === 'pb1') {
+    if(type === 'jbl') {
+      currentJblIndex = index;
+    } else if(type === 'pb1') {
       currentImageIndex = index;
     } else if(type === 'earbud') {
       currentEarbudIndex = index;
@@ -965,7 +1006,10 @@
     activeIndexRef = currentIndex;
     activeMainImgId = mainImgId;
     
-    if(mainImgId === 'main-pb1') {
+    if(mainImgId === 'main-jbl') {
+      activeThumbContainerId = 'jbl-thumbs';
+      activeIndexRef = currentJblIndex;
+    } else if(mainImgId === 'main-pb1') {
       activeThumbContainerId = 'pb1-thumbs';
       activeIndexRef = currentImageIndex;
     } else if(mainImgId === 'main-earbud') {
@@ -989,6 +1033,7 @@
     if (activeIndexRef < 0) activeIndexRef = activeGalleryImages.length - 1;
     if (activeIndexRef >= activeGalleryImages.length) activeIndexRef = 0;
 
+    if(activeMainImgId === 'main-jbl') currentJblIndex = activeIndexRef;
     if(activeMainImgId === 'main-pb1') currentImageIndex = activeIndexRef;
     if(activeMainImgId === 'main-earbud') currentEarbudIndex = activeIndexRef;
     if(activeMainImgId === 'main-airpods') currentAirpodsIndex = activeIndexRef;
@@ -1005,6 +1050,29 @@
         t.classList.remove('active');
       }
     });
+  }
+
+  // Touch Swipe Logic for JBL Mobile Container
+  let jblTouchStartX = 0;
+  let jblTouchEndX = 0;
+  const jblContainer = document.getElementById('jbl-container');
+
+  if(jblContainer) {
+    jblContainer.addEventListener('touchstart', e => {
+      jblTouchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    jblContainer.addEventListener('touchend', e => {
+      jblTouchEndX = e.changedTouches[0].screenX;
+      if (jblTouchEndX < jblTouchStartX - 40) {
+        currentJblIndex = (currentJblIndex + 1) % jblImages.length;
+        changeImage('main-jbl', jblImages[currentJblIndex], document.querySelectorAll('#jbl-thumbs img')[currentJblIndex], currentJblIndex, 'jbl');
+      }
+      if (jblTouchEndX > jblTouchStartX + 40) {
+        currentJblIndex = (currentJblIndex - 1 + jblImages.length) % jblImages.length;
+        changeImage('main-jbl', jblImages[currentJblIndex], document.querySelectorAll('#jbl-thumbs img')[currentJblIndex], currentJblIndex, 'jbl');
+      }
+    }, {passive: true});
   }
 
   // Touch Swipe Logic for Power Bank Mobile Container
