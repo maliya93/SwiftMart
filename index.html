@@ -416,6 +416,33 @@
     transform: translateY(-1px);
   }
 
+  /* Hot Deals Container & Deal Box Glass Styling */
+  .hot-deals-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  .deal-box {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    color: #fff;
+  }
+  .deal-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
   footer {
     background: #0d120a;
     border-top: 1px solid rgba(255,255,255,0.08);
@@ -630,13 +657,11 @@
   <div class="wrap">
     <div class="kicker">LIMITED TIME DEALS</div>
     <h2 class="section-title">Special Offers 🎁✨</h2>
-    <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts coming your way soon!</p>
+    <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below!</p>
     
-    <div style="margin-top: 40px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15); border-radius: 16px; padding: 60px 20px; text-align: center; backdrop-filter: blur(12px);">
-      <div style="font-size: 48px; margin-bottom: 15px;">🚀⏳</div>
-      <h3 style="color: #fff; font-size: 24px; font-weight: 700; margin-bottom: 10px;">Coming Soon!</h3>
-      <p style="color: var(--slate); font-size: 15px; max-width: 500px; margin: 0 auto 25px auto;">We are preparing some amazing special discounts and limited-edition bundles just for you. Stay tuned!</p>
-      <a href="https://wa.me/94776465923?text=Hi%20SwiftMart,%20I%20want%20to%20know%20about%20upcoming%20Special%20Offers!" target="_blank" class="btn btn-primary">Inquire via WhatsApp →</a>
+    <!-- Hot Deals Section Added Here -->
+    <div class="hot-deals-container" id="hotDealsContainer">
+        <!-- Dynamic 3 Products will load here -->
     </div>
   </div>
 </section>
@@ -952,6 +977,52 @@
 </div>
 
 <script>
+  // Total products list for Hot Deals section rotation
+  const allProducts = [
+    { id: 1, name: "Wireless Earbuds Pro", price: "Rs. 4,500", image: "images/earbuds.png" },
+    { id: 2, name: "Fast Charging Adapter 20W", price: "Rs. 2,200", image: "images/adapter.png" },
+    { id: 3, name: "Magnetic Phone Holder", price: "Rs. 1,500", image: "images/holder.png" },
+    { id: 4, name: "Transparent Back Cover", price: "Rs. 950", image: "images/cover.png" },
+    { id: 5, name: "Type-C Braided Cable", price: "Rs. 800", image: "images/cable.png" },
+    { id: 6, name: "Mini Power Bank 10000mAh", price: "Rs. 5,900", image: "images/powerbank.png" }
+  ];
+
+  // Function to get a weekly consistent random set from all products
+  function getWeeklyProducts() {
+    const weekNumber = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 24 * 7));
+    let seed = weekNumber;
+    
+    let shuffled = [...allProducts].sort(() => {
+        seed = (seed * 9301 + 49297) % 233280;
+        return (seed / 233280) - 0.5;
+    });
+    
+    return shuffled.slice(0, 3);
+  }
+
+  // Render the 3 products into the DOM with glass boxes
+  function renderHotDeals() {
+    const container = document.getElementById("hotDealsContainer");
+    if(!container) return;
+    const weeklyItems = getWeeklyProducts();
+    
+    let currentDisplay = [...weeklyItems].sort(() => Math.random() - 0.5);
+
+    container.innerHTML = currentDisplay.map(product => `
+        <div class="deal-box">
+            <img src="${product.image}" alt="${product.name}" style="width:100%; height:150px; object-fit:contain; border-radius:8px; margin-bottom: 10px;">
+            <h3>${product.name}</h3>
+            <p style="font-weight:bold; color:#00ff88; margin: 8px 0 15px 0; font-size: 16px;">${product.price}</p>
+            <button onclick="addToCart('${product.name}', ${parseInt(product.price.replace(/[^0-9]/g, ''))})" style="width:100%; padding:10px; background:#25D366; color:#000; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Buy Now</button>
+        </div>
+    `).join('');
+  }
+
+  // Initial load for Hot Deals
+  renderHotDeals();
+  // Change every 40 seconds (40000 milliseconds)
+  setInterval(renderHotDeals, 40000);
+
   function getHeroImages() {
     if (window.innerWidth <= 768) {
       return [
