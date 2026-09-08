@@ -652,7 +652,7 @@
     <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below!</p>
     
     <div class="hot-deals-container" id="hotDealsContainer">
-        <!-- Dynamic Products with Images will load here -->
+        <!-- Dynamic Products from allProducts will load here -->
     </div>
   </div>
 </section>
@@ -800,6 +800,7 @@
 </div>
 
 <script>
+  // Products list එක මෙතැනින් define කරලා තියෙනවා (අපේ සැබෑ products විතරයි)
   const allProducts = [
     { id: 1, name: "Wireless Earbuds Pro", price: "Rs. 4,500", image: "images/earbuds.png" },
     { id: 2, name: "Fast Charging Adapter 20W", price: "Rs. 2,200", image: "images/adapter.png" },
@@ -810,14 +811,7 @@
   ];
 
   function getWeeklyProducts() {
-    const weekNumber = Math.floor(new Date().getTime() / (1000 * 60 * 60 * 24 * 7));
-    let seed = weekNumber;
-    
-    let shuffled = [...allProducts].sort(() => {
-        seed = (seed * 9301 + 49297) % 233280;
-        return (seed / 233280) - 0.5;
-    });
-    
+    let shuffled = [...allProducts].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, 3);
   }
 
@@ -825,13 +819,11 @@
     const container = document.getElementById("hotDealsContainer");
     if(!container) return;
     const weeklyItems = getWeeklyProducts();
-    
-    let currentDisplay = [...weeklyItems].sort(() => Math.random() - 0.5);
 
-    container.innerHTML = currentDisplay.map(product => `
+    container.innerHTML = weeklyItems.map(product => `
         <div class="deal-box">
             <div class="card-img" onclick="openLightbox('${product.image}')" style="height: 180px; border-radius: 8px; margin-bottom: 12px;">
-                <img src="${product.image}" alt="${product.name}" class="main-img" style="object-fit: contain;">
+                <img src="${product.image}" alt="${product.name}" class="main-img" style="object-init: contain; object-fit: contain;">
             </div>
             <h3>${product.name}</h3>
             <p style="font-weight:bold; color:#00ff88; margin: 8px 0 15px 0; font-size: 16px;">${product.price}</p>
@@ -840,7 +832,12 @@
     `).join('');
   }
 
-  renderHotDeals();
+  // Page එක load වෙද්දිම function එක run වෙන්න දැම්මා
+  document.addEventListener("DOMContentLoaded", () => {
+    renderHotDeals();
+  });
+
+  // Change random products every 40 seconds from the product list
   setInterval(renderHotDeals, 40000);
 
   function getHeroImages() {
@@ -908,7 +905,7 @@
 
     navLinks.forEach(link => {
       link.classList.remove('active-nav');
-      if (link.getAttribute('href') === '#' + current) {
+      if (link.getAttribute('href'] === '#' + current) {
         link.classList.add('active-nav');
       }
     });
