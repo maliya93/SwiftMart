@@ -387,6 +387,49 @@
     transform: translateY(-1px);
   }
 
+  .view-all-products-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: min(760px, calc(100% - 40px));
+    margin: 18px auto 0;
+    padding: 14px 22px;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 25px rgba(0,0,0,0.18);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.25s ease;
+  }
+
+  .view-all-products-bar:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .view-all-arrow {
+    font-size: 18px;
+    transition: transform 0.25s ease;
+  }
+
+  .view-all-products-bar:hover .view-all-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .view-all-products-bar {
+      width: calc(100% - 20px);
+      margin-top: 12px;
+    }
+  }
+
   /* Hot Deals Section - Glass & Embossed CSS */
   .hot-deals-container {
     display: flex;
@@ -484,7 +527,7 @@
   <div class="wrap">
     <a href="#" onclick="event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});" class="logo-link"><div class="logo">Swift<span>Mart</span></div></a>
     <div class="navlinks">
-      <a id="nav-special-offers" style="cursor: pointer;" onclick="document.getElementById('special-offers').scrollIntoView({behavior: 'smooth'});">Special Offers 🔥</a>
+      <a id="nav-special-offers" style="cursor: pointer;" onclick="document.getElementById('special-offers').scrollIntoView({behavior: 'smooth'});">Hot Deals 🔥</a>
       <a href="products.html" id="nav-products">Products</a>
       <a id="nav-about" style="cursor: pointer;" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'});">About</a>
       <a id="nav-reviews" style="cursor: pointer;" onclick="document.getElementById('reviews').scrollIntoView({behavior: 'smooth'});">Reviews</a>
@@ -649,12 +692,16 @@
 <section class="section" id="special-offers">
   <div class="wrap">
     <div class="kicker">LIMITED TIME DEALS</div>
-    <h2 class="section-title">Special Offers 🎁 ✨</h2>
+    <h2 class="section-title">Hot Deals 🎁 ✨</h2>
     <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below!</p>
     
     <div class="hot-deals-container" id="hotDealsContainer">
         <!-- Dynamic Products from products.html list will load here -->
     </div>
+     <a href="products.html" class="view-all-products-bar">
+       <span>View All Products</span>
+       <span class="view-all-arrow">→</span>
+     </a>
   </div>
 </section>
 
@@ -760,7 +807,7 @@
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#special-offers">Special Offers</a></li>
+          <li><a href="#special-offers">Hot Deals</a></li>
           <li><a href="products.html">Products</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#reviews">Customer Reviews</a></li>
