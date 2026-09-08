@@ -649,10 +649,10 @@
   <div class="wrap">
     <div class="kicker">LIMITED TIME DEALS</div>
     <h2 class="section-title">Special Offers 🎁 ✨</h2>
-    <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below! Rotates automatically every hour.</p>
+    <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below! Rotates automatically every 30 seconds.</p>
     
     <div class="hot-deals-container" id="hotDealsContainer">
-        <!-- Dynamic Products from allProducts will load here -->
+        <!-- Dynamic Products from products.html list will load here -->
     </div>
   </div>
 </section>
@@ -811,61 +811,115 @@
     }
   });
 
-  // Products list pool (extended with special prices and old prices format)
+  // Products list synchronized with products.html
   const allProducts = [
-    { 
-      id: 1, 
-      name: "Wireless Earbuds Pro", 
-      desc: "Smart display case, Active Noise Cancellation, Premium sound",
-      oldPrice: "Rs. 5,500", 
-      price: "Rs. 4,500", 
+    {
+      id: 1,
+      name: "Wireless Earbuds Pro",
+      desc: "Active noise cancellation, crystal clear sound & smart LED touch display case.",
+      oldPrice: "Rs. 5,500",
+      price: "Rs. 4,500",
       numPrice: 4500,
-      image: "images/earbuds.png" 
+      image: "images/earbuds.png"
     },
-    { 
-      id: 2, 
-      name: "Fast Charging Adapter 20W", 
-      desc: "High-speed safety wall charger for devices",
-      oldPrice: "Rs. 2,800", 
-      price: "Rs. 2,200", 
+    {
+      id: 2,
+      name: "Fast Charging Adapter 20W",
+      desc: "High-speed Type-C wall charger with advanced over-voltage safety protection.",
+      oldPrice: "Rs. 2,800",
+      price: "Rs. 2,200",
       numPrice: 2200,
-      image: "images/adapter.png" 
+      image: "images/adapter.png"
     },
-    { 
-      id: 3, 
-      name: "Magnetic Phone Holder", 
-      desc: "Sturdy grip car and desk phone mount holder",
-      oldPrice: "Rs. 1,900", 
-      price: "Rs. 1,500", 
+    {
+      id: 3,
+      name: "Magnetic Phone Holder",
+      desc: "Sturdy 360-degree rotating car dash and desk magnetic phone mount grip.",
+      oldPrice: "Rs. 1,900",
+      price: "Rs. 1,500",
       numPrice: 1500,
-      image: "images/holder.png" 
+      image: "images/holder.png"
     },
-    { 
-      id: 4, 
-      name: "Transparent Back Cover", 
-      desc: "Crystal clear shockproof protective case",
-      oldPrice: "Rs. 1,300", 
-      price: "Rs. 950", 
+    {
+      id: 4,
+      name: "Transparent Back Cover",
+      desc: "Crystal clear anti-yellowing shockproof flexible protective bumper case.",
+      oldPrice: "Rs. 1,300",
+      price: "Rs. 950",
       numPrice: 950,
-      image: "images/cover.png" 
+      image: "images/cover.png"
     },
-    { 
-      id: 5, 
-      name: "Type-C Braided Cable", 
-      desc: "Durable fast sync and charge wire cable",
-      oldPrice: "Rs. 1,200", 
-      price: "Rs. 800", 
+    {
+      id: 5,
+      name: "Type-C Braided Cable",
+      desc: "Heavy-duty fast data sync and rapid charging reinforced nylon braided wire.",
+      oldPrice: "Rs. 1,200",
+      price: "Rs. 800",
       numPrice: 800,
-      image: "images/cable.png" 
+      image: "images/cable.png"
     },
-    { 
-      id: 6, 
-      name: "Mini Power Bank 10000mAh", 
-      desc: "Compact pocket-size high capacity power bank",
-      oldPrice: "Rs. 6,900", 
-      price: "Rs. 5,900", 
+    {
+      id: 6,
+      name: "Mini Power Bank 10000mAh",
+      desc: "Ultra-compact pocket-size high capacity portable charger power bank.",
+      oldPrice: "Rs. 6,900",
+      price: "Rs. 5,900",
       numPrice: 5900,
-      image: "images/powerbank.png" 
+      image: "images/powerbank.png"
+    },
+    {
+      id: 7,
+      name: "Bluetooth Neckband Earphones",
+      desc: "Deep bass, long battery life, magnetic earbuds for sports and workouts.",
+      oldPrice: "Rs. 3,500",
+      price: "Rs. 2,800",
+      numPrice: 2800,
+      image: "images/neckband.png"
+    },
+    {
+      id: 8,
+      name: "Smart Watch Ultra Series",
+      desc: "Bluetooth calling, fitness tracker, multiple sports modes, HD touch display.",
+      oldPrice: "Rs. 8,500",
+      price: "Rs. 6,900",
+      numPrice: 6900,
+      image: "images/smartwatch.png"
+    },
+    {
+      id: 9,
+      name: "Tempered Glass Screen Protector",
+      desc: "9H hardness scratch-resistant edge-to-edge transparent glass protection.",
+      oldPrice: "Rs. 950",
+      price: "Rs. 650",
+      numPrice: 650,
+      image: "images/tempered.png"
+    },
+    {
+      id: 10,
+      name: "Phone Ring Light Stand",
+      desc: "Adjustable LED ring light with phone holder for content creators and reels.",
+      oldPrice: "Rs. 4,200",
+      price: "Rs. 3,400",
+      numPrice: 3400,
+      image: "images/ringlight.png"
+    },
+    {
+      id: 11,
+      name: "OTG Adapter Type-C to USB",
+      desc: "High-speed data transfer connector plug for flash drives and accessories.",
+      oldPrice: "Rs. 600",
+      price: "Rs. 350",
+      numPrice: 350,
+      image: "images/otg.png"
+    },
+    {
+      id: 12,
+      name: "Car Charger Dual Port 38W",
+      desc: "Fast USB and Type-C vehicle power adapter with LED voltage indicator.",
+      oldPrice: "Rs. 2,500",
+      price: "Rs. 1,950",
+      numPrice: 1950,
+      image: "images/carcharger.png"
     }
   ];
 
@@ -903,7 +957,8 @@
     renderHotDeals();
   });
 
-  setInterval(renderHotDeals, 3600000); // Updates every 1 hour
+  // Changes items automatically every 30 seconds (30000 milliseconds)
+  setInterval(renderHotDeals, 30000);
 
   function getHeroImages() {
     if (window.innerWidth <= 768) {
