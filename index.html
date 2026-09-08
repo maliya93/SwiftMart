@@ -484,14 +484,14 @@
   <div class="wrap">
     <a href="#" onclick="event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});" class="logo-link"><div class="logo">Swift<span>Mart</span></div></a>
     <div class="navlinks">
-      <a href="#special-offers" id="nav-special-offers">Special Offers 🔥</a>
+      <a id="nav-special-offers" style="cursor: pointer;" onclick="document.getElementById('special-offers').scrollIntoView({behavior: 'smooth'});">Special Offers 🔥</a>
       <a href="products.html" id="nav-products">Products</a>
-      <a href="#about" id="nav-about">About</a>
-      <a href="#reviews" id="nav-reviews">Reviews</a>
-      <a href="#contact" id="nav-contact">Contact</a>
-      <a href="#" onclick="event.preventDefault(); toggleCart();" class="cart-nav-link">CART (<span id="cart-count-nav">0</span>)</a>
+      <a id="nav-about" style="cursor: pointer;" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'});">About</a>
+      <a id="nav-reviews" style="cursor: pointer;" onclick="document.getElementById('reviews').scrollIntoView({behavior: 'smooth'});">Reviews</a>
+      <a id="nav-contact" style="cursor: pointer;" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'});">Contact</a>
+      <a class="cart-nav-link" onclick="toggleCart(); return false;" style="cursor: pointer;">CART (<span id="cart-count-nav">0</span>)</a>
     </div>
-    <a href="#" onclick="event.preventDefault(); toggleCart();" class="nav-cta">🛒 Cart (<span id="cart-count-nav-top">0</span>)</a>
+    <a class="nav-cta" onclick="toggleCart(); return false;" style="cursor: pointer;">🛒 Cart (<span id="cart-count-nav-top">0</span>)</a>
   </div>
 </nav>
 
@@ -942,7 +942,7 @@
 
   window.addEventListener('scroll', () => {
     const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.navlinks a[href^="#"]');
+    const navLinks = document.querySelectorAll('.navlinks a[id^="nav-"]');
     
     let current = '';
     sections.forEach(section => {
