@@ -627,18 +627,6 @@
   </div>
 </header>
 
-<section class="section" id="special-offers">
-  <div class="wrap">
-    <div class="kicker">LIMITED TIME DEALS</div>
-    <h2 class="section-title">Special Offers 🎁 ✨</h2>
-    <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below!</p>
-    
-    <div class="hot-deals-container" id="hotDealsContainer">
-        <!-- Dynamic Products will load here -->
-    </div>
-  </div>
-</section>
-
 <section class="section" id="about">
   <div class="wrap about-grid">
     <div>
@@ -653,6 +641,18 @@
       <div class="stat"><b>1–5</b><span>Days delivery</span></div>
       <div class="stat"><b>24/7</b><span>Message support</span></div>
       <div class="stat"><b>COD</b><span>Cash on delivery</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="special-offers">
+  <div class="wrap">
+    <div class="kicker">LIMITED TIME DEALS</div>
+    <h2 class="section-title">Special Offers 🎁 ✨</h2>
+    <p class="section-desc">Exclusive promotions, bundle deals, and surprise discounts featured below!</p>
+    
+    <div class="hot-deals-container" id="hotDealsContainer">
+        <!-- Dynamic Products with Images will load here -->
     </div>
   </div>
 </section>
@@ -830,7 +830,9 @@
 
     container.innerHTML = currentDisplay.map(product => `
         <div class="deal-box">
-            <img src="${product.image}" alt="${product.name}" style="width:100%; height:150px; object-fit:contain; border-radius:8px; margin-bottom: 10px;">
+            <div class="card-img" onclick="openLightbox('${product.image}')" style="height: 180px; border-radius: 8px; margin-bottom: 12px;">
+                <img src="${product.image}" alt="${product.name}" class="main-img" style="object-fit: contain;">
+            </div>
             <h3>${product.name}</h3>
             <p style="font-weight:bold; color:#00ff88; margin: 8px 0 15px 0; font-size: 16px;">${product.price}</p>
             <button onclick="addToCart('${product.name}', ${parseInt(product.price.replace(/[^0-9]/g, ''))})" style="width:100%; padding:10px; background:#25D366; color:#000; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Buy Now</button>
@@ -1025,7 +1027,7 @@
   }
 
   function sendCartToWhatsApp() {
-    if (cart.length === `0`) {
+    if (cart.length === 0) {
       alert('Your cart is empty!');
       return;
     }
