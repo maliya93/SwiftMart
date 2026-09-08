@@ -110,6 +110,104 @@
     background: var(--copper-dim);
   }
 
+  /* Share Product Button Styling */
+  .share-product-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .share-product-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Share Modal 30% Transparent Glassmorphism */
+  .share-modal-backdrop {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+  }
+  .share-modal-backdrop.active {
+    display: flex;
+  }
+  .share-modal-box {
+    background: rgba(18, 24, 16, 0.30); /* 30% Transparent background */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 25px;
+    width: 90%;
+    max-width: 360px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    text-align: center;
+    color: #fff;
+    position: relative;
+  }
+  .share-modal-box h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #fff;
+  }
+  .share-modal-box p {
+    font-size: 13px;
+    color: #ddd;
+    margin-bottom: 20px;
+  }
+  .share-options-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .share-option-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .share-option-icon:hover {
+    transform: scale(1.1);
+  }
+  .share-whatsapp { background: #25D366; color: #000 !important; }
+  .share-facebook { background: #1877F2; }
+  .share-copy { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255,255,255,0.4); }
+  
+  .share-close-btn {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background 0.2s;
+  }
+  .share-close-btn:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
   /* 3. Multi-Image Gallery Styling */
   .card-img {
     position: relative;
@@ -613,6 +711,9 @@
         <div class="card-body">
           <h3>JBL R05 Wireless Headphone</h3>
           <p>Free Silicone Case, Lanyard Hole, premium sound quality & deep bass</p>
+          <div style="margin-top: 10px; margin-bottom: 12px;">
+            <button onclick="openShareModal('JBL R05 Wireless Headphone', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
+          </div>
           <div class="card-foot">
             <div class="price-box">
               <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 2,490</span>
@@ -645,6 +746,9 @@
         <div class="card-body">
           <h3>20000mAh 66W Power Bank</h3>
           <p>Transparent design, digital display, built-in cables</p>
+          <div style="margin-top: 10px; margin-bottom: 12px;">
+            <button onclick="openShareModal('20000mAh 66W Power Bank', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
+          </div>
           <div class="card-foot">
             <div class="price-box">
               <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 4,990</span>
@@ -672,6 +776,9 @@
         <div class="card-body">
           <h3>ANC/ENC Touch Screen Wireless Earbuds</h3>
           <p>Smart display case, Active Noise Cancellation, Premium sound quality</p>
+          <div style="margin-top: 10px; margin-bottom: 12px;">
+            <button onclick="openShareModal('ANC/ENC Touch Screen Wireless Earbuds', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
+          </div>
           <div class="card-foot">
             <div class="price-box">
               <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 3,500</span>
@@ -699,6 +806,9 @@
         <div class="card-body">
           <h3>AirPods Pro 2nd Gen</h3>
           <p>Designed by in california , Made in California (USA Version ) ANC Support</p>
+          <div style="margin-top: 10px; margin-bottom: 12px;">
+            <button onclick="openShareModal('AirPods Pro 2nd Gen', 'https://maliya93.github.io/SwiftMart/')" class="share-product-btn"><i class="fas fa-share-alt"></i> Share Product</button>
+          </div>
           <div class="card-foot">
             <div class="price-box">
               <span style="text-decoration: line-through; color: var(--slate); font-size: 13px; display: block;">Rs. 4,990</span>
@@ -842,6 +952,20 @@
   </div>
 </footer>
 
+<!-- Share Modal Popup -->
+<div class="share-modal-backdrop" id="shareModalBackdrop">
+  <div class="share-modal-box">
+    <h3 id="shareModalTitle">Share Product</h3>
+    <p>Choose your platform to share this item with friends:</p>
+    <div class="share-options-grid">
+      <a id="shareWaBtn" href="javascript:void(0)" target="_blank" class="share-option-icon share-whatsapp" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a id="shareFbBtn" href="javascript:void(0)" target="_blank" class="share-option-icon share-facebook" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="javascript:void(0)" onclick="copyCurrentShareLink(this)" class="share-option-icon share-copy" title="Copy Link"><i class="fas fa-link"></i></a>
+    </div>
+    <button onclick="closeShareModal()" class="share-close-btn">Close</button>
+  </div>
+</div>
+
 <div id="lightbox" class="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">×</span>
   <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImg(-1)">❮</button>
@@ -928,6 +1052,36 @@
       }
     });
   });
+
+  // Share Modal Logic
+  let activeShareUrl = '';
+
+  function openShareModal(productName, productUrl) {
+    activeShareUrl = productUrl;
+    document.getElementById('shareModalTitle').innerText = 'Share ' + productName;
+    
+    const waText = `Check out this amazing product at SwiftMart: *${productName}* - ${productUrl}`;
+    document.getElementById('shareWaBtn').setAttribute('href', `https://wa.me/?text=${encodeURIComponent(waText)}`);
+    
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}`;
+    document.getElementById('shareFbBtn').setAttribute('href', fbUrl);
+
+    document.getElementById('shareModalBackdrop').classList.add('active');
+  }
+
+  function closeShareModal() {
+    document.getElementById('shareModalBackdrop').classList.remove('active');
+  }
+
+  function copyCurrentShareLink(btnElement) {
+    navigator.clipboard.writeText(activeShareUrl).then(() => {
+      let origHtml = btnElement.innerHTML;
+      btnElement.innerHTML = '<i class="fas fa-check"></i>';
+      setTimeout(() => {
+        btnElement.innerHTML = origHtml;
+      }, 2000);
+    });
+  }
 
   // JBL R05 Headphone Images
   const jblImages = [
