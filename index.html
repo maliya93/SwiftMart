@@ -11,6 +11,7 @@
 </head>
 <body>
 
+<!-- Charge Bar -->
 <div id="chargebar"></div>
 
 <nav>
@@ -35,6 +36,18 @@
     <div class="hero-actions">
       <a href="products.html" class="btn btn-primary">Browse Products</a>
       <a href="#contact" class="btn btn-outline">Contact Us</a>
+    </div>
+    
+    <!-- Battery Strip Indicator -->
+    <div class="battery-strip">
+      <div class="cells">
+        <div class="cell on"></div>
+        <div class="cell on"></div>
+        <div class="cell on"></div>
+        <div class="cell on"></div>
+        <div class="cell"></div>
+      </div>
+      <span>Battery status: Fully charged for service</span>
     </div>
   </div>
 </header>
@@ -68,7 +81,33 @@
   </div>
 </section>
 
-<section id="contact" class="section section-alt">
+<section id="reviews" class="section section-alt">
+  <div class="wrap">
+    <div class="kicker">CUSTOMER FEEDBACK</div>
+    <h2 class="section-title">Trusted By Customers</h2>
+    <p class="section-desc">See what our buyers have to say about our products and swift delivery service.</p>
+    
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>"Super fast delivery and very good quality wireless earbuds. Highly recommended!"</p>
+        <div class="testi-name">— Kasun P., Kandy</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>"The transparent power bank works great and charges my phone super fast."</p>
+        <div class="testi-name">— Dinusha M., Colombo</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>"Best customer service and genuine products. Will order again."</p>
+        <div class="testi-name">— Tharindu S., Galle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section">
   <div class="wrap">
     <div class="contact-box">
       <div>
@@ -94,6 +133,7 @@
 </footer>
 
 <script>
+  // Scroll progress charge bar
   window.addEventListener('scroll', () => {
     let winScroll = document.documentElement.scrollTop;
     let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -101,43 +141,35 @@
     document.getElementById('chargebar').style.width = scrolled + '%';
   });
 
-  // Real products database pool
+  // Real products database pool for Special Offers
   const allProducts = [
     {
       name: "JBL R05 Wireless Headphone",
       desc: "Free Silicone Case, Lanyard Hole, premium sound quality & deep bass",
       oldPrice: "Rs. 2,490",
       price: "Rs. 1,490",
-      numPrice: 1490,
-      img: "images/JBL R05 01.jpg",
-      link: "products.html"
+      img: "images/JBL R05 01.jpg"
     },
     {
       name: "20000mAh 66W Power Bank",
       desc: "Transparent design, digital display, built-in cables",
       oldPrice: "Rs. 4,990",
       price: "Rs. 4,500",
-      numPrice: 4500,
-      img: "images/powerbank1.jpg",
-      link: "products.html"
+      img: "images/powerbank1.jpg"
     },
     {
       name: "ANC/ENC Touch Screen Wireless Earbuds",
       desc: "Smart display case, Active Noise Cancellation, Premium sound",
       oldPrice: "Rs. 3,500",
       price: "Rs. 3,000",
-      numPrice: 3000,
-      img: "images/ANC ENC Earbud1.jpg",
-      link: "products.html"
+      img: "images/ANC ENC Earbud1.jpg"
     },
     {
       name: "AirPods Pro 2nd Gen",
       desc: "Designed in California (USA Version) ANC Support",
       oldPrice: "Rs. 4,990",
       price: "Rs. 3,490",
-      numPrice: 3490,
-      img: "images/AirPods Pro 2nd 01.jpg",
-      link: "products.html"
+      img: "images/AirPods Pro 2nd 01.jpg"
     }
   ];
 
