@@ -800,7 +800,7 @@
 </div>
 
 <script>
-  // Products list එක මෙතැනින් define කරලා තියෙනවා (අපේ සැබෑ products විතරයි)
+  // Products list එක මෙතැනින් define කරලා තියෙනවා
   const allProducts = [
     { id: 1, name: "Wireless Earbuds Pro", price: "Rs. 4,500", image: "images/earbuds.png" },
     { id: 2, name: "Fast Charging Adapter 20W", price: "Rs. 2,200", image: "images/adapter.png" },
@@ -823,21 +823,19 @@
     container.innerHTML = weeklyItems.map(product => `
         <div class="deal-box">
             <div class="card-img" onclick="openLightbox('${product.image}')" style="height: 180px; border-radius: 8px; margin-bottom: 12px;">
-                <img src="${product.image}" alt="${product.name}" class="main-img" style="object-init: contain; object-fit: contain;">
+                <img src="${product.image}" alt="${product.name}" class="main-img" style="object-fit: contain;">
             </div>
-            <h3>${product.name}</h3>
+            <h3 style="font-size: 16px; margin-bottom: 8px; color: #fff;">${product.name}</h3>
             <p style="font-weight:bold; color:#00ff88; margin: 8px 0 15px 0; font-size: 16px;">${product.price}</p>
             <button onclick="addToCart('${product.name}', ${parseInt(product.price.replace(/[^0-9]/g, ''))})" style="width:100%; padding:10px; background:#25D366; color:#000; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Buy Now</button>
         </div>
     `).join('');
   }
 
-  // Page එක load වෙද්දිම function එක run වෙන්න දැම්මා
   document.addEventListener("DOMContentLoaded", () => {
     renderHotDeals();
   });
 
-  // Change random products every 40 seconds from the product list
   setInterval(renderHotDeals, 40000);
 
   function getHeroImages() {
@@ -905,7 +903,7 @@
 
     navLinks.forEach(link => {
       link.classList.remove('active-nav');
-      if (link.getAttribute('href'] === '#' + current) {
+      if (link.getAttribute('href') === '#' + current) {
         link.classList.add('active-nav');
       }
     });
