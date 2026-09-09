@@ -191,7 +191,7 @@
             cursor: pointer;
         }
 
-        /* ===== INVOICE STYLES (COMPACT HEADER MATCHED) ===== */
+        /* ===== INVOICE STYLES ===== */
         .invoice-wrap {
             max-width: 900px;
             margin: 0 auto;
@@ -400,7 +400,7 @@
             line-height: 1.5;
         }
 
-        /* ===== PRINT SETTINGS (LEGAL SIZE) ===== */
+        /* ===== PRINT SETTINGS ===== */
         @page {
             size: legal portrait;
             margin: 10mm;
@@ -469,19 +469,28 @@
                     <label>Address / City</label>
                     <input type="text" id="custAddress" value="" placeholder="location">
                 </div>
+                
+                <!-- PRODUCT SELECTION WITH DATALIST FOR MANUAL TYPING & AUTO-SAVE -->
                 <div class="field">
-                    <label>Product Select</label>
-                    <select id="productSelect" onchange="updateProductInfo()">
-                        <option value="20000mAh 66W Super Fast Charging Power Bank" data-price="4000" data-specs="Transparent Design | Digital Display | Built-in 4 Cables">20000mAh 66W Super Fast Charging Power Bank</option>
-                        <option value="10000mAh 22.5W Fast Charging Power Bank" data-price="2500" data-specs="Slim Design | LED Indicator | Dual Output">10000mAh 22.5W Fast Charging Power Bank</option>
-                        <option value="TWS Wireless Bluetooth Earbuds" data-price="3500" data-specs="Touch Control | Noise Cancellation | 30H Battery">TWS Wireless Bluetooth Earbuds</option>
-                        <option value="Premium Silicone Phone Case" data-price="1500" data-specs="Shockproof | Camera Protection | Matte Finish">Premium Silicone Phone Case</option>
-                        <option value="Braided USB-C Fast Charging Cable (1M)" data-price="800" data-specs="Nylon Braided | 3A Fast Charge | Data Sync">Braided USB-C Fast Charging Cable (1M)</option>
-                        <option value="Dual Port Car Charger 48W" data-price="1200" data-specs="QC 3.0 | PD 30W | LED Indicator">Dual Port Car Charger 48W</option>
-                        <option value="Portable Bluetooth Speaker 20W" data-price="5500" data-specs="Waterproof IPX7 | 12H Playtime | TWS Pairing">Portable Bluetooth Speaker 20W</option>
-                        <option value="Tempered Glass Screen Protector" data-price="600" data-specs="9H Hardness | Anti-Fingerprint | Easy Install">Tempered Glass Screen Protector</option>
-                    </select>
+                    <label>Product Select / Type Custom Item</label>
+                    <input type="text" id="productInput" list="productList" placeholder="Select or type item name..." oninput="handleProductInput()">
+                    <datalist id="productList">
+                        <option value="20000mAh 66W Super Fast Charging Power Bank" data-price="4000" data-specs="Transparent Design | Digital Display | Built-in 4 Cables">
+                        <option value="10000mAh 22.5W Fast Charging Power Bank" data-price="2500" data-specs="Slim Design | LED Indicator | Dual Output">
+                        <option value="TWS Wireless Bluetooth Earbuds" data-price="3500" data-specs="Touch Control | Noise Cancellation | 30H Battery">
+                        <option value="Premium Silicone Phone Case" data-price="1500" data-specs="Shockproof | Camera Protection | Matte Finish">
+                        <option value="Braided USB-C Fast Charging Cable (1M)" data-price="800" data-specs="Nylon Braided | 3A Fast Charge | Data Sync">
+                        <option value="Dual Port Car Charger 48W" data-price="1200" data-specs="QC 3.0 | PD 30W | LED Indicator">
+                        <option value="Portable Bluetooth Speaker 20W" data-price="5500" data-specs="Waterproof IPX7 | 12H Playtime | TWS Pairing">
+                        <option value="Tempered Glass Screen Protector" data-price="600" data-specs="9H Hardness | Anti-Fingerprint | Easy Install">
+                    </datalist>
                 </div>
+
+                <div class="field">
+                    <label>Item Specs / Description</label>
+                    <input type="text" id="productSpecs" placeholder="Type specifications...">
+                </div>
+
                 <div class="field">
                     <label>Selling Price (LKR)</label>
                     <input type="number" id="sellPrice" value="4000">
@@ -635,18 +644,67 @@
             if (e.key === 'Enter') handleLogin();
         }
 
-        // --- AUTO SET TODAY'S DATE ON LOAD ---
+        // --- LOAD CUSTOM PRODUCTS FROM LOCALSTORAGE ON STARTUP ---
         window.onload = function() {
             checkLoginStatus();
+            loadCustomProducts();
+            
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('purchaseDate').value = today;
+            
+            // Set default product if empty
+            const productInput = document.getElementById('productInput');
+            if(!productInput.value) {
+                productInput.value = "20000mAh 66W Super Fast Charging Power Bank";
+                document.getElementById('productSpecs').value = "Transparent Design | Digital Display | Built-in 4 Cables";
+            }
             generateInvoice();
         };
 
-        function updateProductInfo() {
-            const select = document.getElementById('productSelect');
-            const opt = select.options[select.selectedIndex];
-            document.getElementById('sellPrice').value = opt.getAttribute('data-price');
+        function loadCustomProducts() {
+            const savedCustoms = JSON.parse(localStorage.getItem('swiftmart_custom_products') || '[]');
+            const datalist = document.getElementById('productList');
+            
+            savedCustoms.forEach(item => {
+                // Check if already exists in datalist to avoid duplication
+                let exists = false;
+                for (let opt of datalist.options) {
+                    if (opt.value === item.name) { exists = true; break; }
+                }
+                if (!exists) {
+                    const opt = document.createElement('option');
+                    opt.value = item.name;
+                    opt.setAttribute('data-price', item.price);
+                    opt.setAttribute('data-specs', item.specs);
+                    datalist.appendChild(opt);
+                }
+            });
+        }
+
+        function handleProductInput() {
+            const val = document.getElementById('productInput').value;
+            const datalist = document.getElementById('productList');
+            
+            for (let opt of datalist.options) {
+                if (opt.value === val) {
+                    document.getElementById('sellPrice').value = opt.getAttribute('data-price') || '';
+                    document.getElementById('productSpecs').value = opt.getAttribute('data-specs') || '';
+                    break;
+                }
+            }
+        }
+
+        function saveNewProductToLocal(name, price, specs) {
+            if (!name) return;
+            let savedCustoms = JSON.parse(localStorage.getItem('swiftmart_custom_products') || '[]');
+            
+            // Check if already exists
+            const exists = savedCustoms.some(item => item.name === name);
+            if (!exists) {
+                savedCustoms.push({ name, price, specs });
+                localStorage.setItem('swiftmart_custom_products', JSON.stringify(savedCustoms));
+                loadCustomProducts(); // Reload options list
+            }
         }
 
         function formatDate(dateObj) {
@@ -691,12 +749,16 @@
             document.getElementById('outPhone').innerText = document.getElementById('custPhone').value || '07* ** ***';
             document.getElementById('outAddress').innerText = document.getElementById('custAddress').value || 'location';
 
-            const select = document.getElementById('productSelect');
-            const opt = select.options[select.selectedIndex];
-            document.getElementById('outProduct').innerText = opt.value;
-            document.getElementById('outSpecs').innerText = opt.getAttribute('data-specs');
-
+            const productName = document.getElementById('productInput').value.trim() || 'Custom Item';
+            const productSpecs = document.getElementById('productSpecs').value.trim();
             const price = parseFloat(document.getElementById('sellPrice').value) || 0;
+
+            // Auto-save new custom item to browser storage so it appears next time
+            saveNewProductToLocal(productName, price, productSpecs);
+
+            document.getElementById('outProduct').innerText = productName;
+            document.getElementById('outSpecs').innerText = productSpecs;
+
             document.getElementById('outPrice').innerText = price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             document.getElementById('outTotal').innerText = price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
@@ -780,7 +842,7 @@
                         <li><strong>Warranty Period:</strong> This product comes with a ${months}-month warranty from the date of purchase covering manufacturing defects.</li>
                         <li><strong>Covered Under Warranty:</strong> Covers internal circuitry and core functional defects by the manufacturer.</li>
                         <li><strong>Warranty Claim Procedure:</strong> Please present this digital bill (PDF/Image) to claim warranty services.</li>
-                        <li><strong>Void Warranty:</strong>
+                        <li><strong>VoidWarranty:</strong>
                             <ul>
                                 <li>Physical damage caused by drops, impacts, or mishandling.</li>
                                 <li>Water or liquid damage.</li>
@@ -788,7 +850,7 @@
                                 <li>Unauthorized repairs or modifications.</li>
                             </ul>
                         </li>
-                        <li><strong>Replacement Policy:</strong> Defective items within the warranty period will be repaired or replaced subject to stock availability.</li>
+                        <li><strong>Replacement Product Replacement:</strong> Defective items within the warranty period will be repaired or replaced subject to stock availability.</li>
                     </ol>
                 `;
             }
