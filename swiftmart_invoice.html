@@ -470,6 +470,12 @@
                     <input type="text" id="custAddress" value="" placeholder="location">
                 </div>
                 
+                <!-- MANUAL INVOICE NO EDIT FIELD -->
+                <div class="field">
+                    <label>Invoice Number (Auto / Editable)</label>
+                    <input type="text" id="manualInvNo" value="#SM-2026-001">
+                </div>
+
                 <!-- PRODUCT SELECTION WITH DATALIST FOR MANUAL TYPING & AUTO-SAVE -->
                 <div class="field">
                     <label>Product Select / Type Custom Item</label>
@@ -519,7 +525,7 @@
                 </div>
             </div>
             <button class="btn-generate" onclick="generateInvoice()">🚀 Update Invoice View</button>
-            <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF (Legal Size)</button>
+            <button class="btn-print" onclick="handlePrintWithAutoIncrement()">🖨️ Print / Save as PDF & Next Invoice</button>
             <button class="btn-export-jpg" onclick="exportAsJPG()">📷 Download as JPG</button>
         </div>
     </div>
@@ -644,7 +650,32 @@
             if (e.key === 'Enter') handleLogin();
         }
 
-        // --- LOAD CUSTOM PRODUCTS FROM LOCALSTORAGE ON STARTUP ---
+        // --- AUTO GENERATE & INCREMENT INVOICE NUMBER ---
+        function getNextInvoiceNumber() {
+            let lastNo = localStorage.getItem('swiftmart_last_inv_seq');
+            let nextSeq = 1;
+            
+            if (lastNo) {
+                nextSeq = parseInt(lastNo) + 1;
+            } else {
+                nextSeq = 1; // Default starting sequence if none stored
+            }
+            
+            // Format as #SM-2026-001, 002 etc.
+            let formattedSeq = String(nextSeq).padStart(3, '0');
+            return `#SM-2026-${formattedSeq}`;
+        }
+
+        function saveInvoiceNumberSequence(invNoStr) {
+            // Extract numeric part from string like #SM-2026-005 -> 5
+            const parts = invNoStr.split('-');
+            const seqNum = parseInt(parts[parts.length - 1]);
+            if (!isNaN(seqNum)) {
+                localStorage.setItem('swiftmart_last_inv_seq', seqNum);
+            }
+        }
+
+        // --- LOAD ON STARTUP ---
         window.onload = function() {
             checkLoginStatus();
             loadCustomProducts();
@@ -652,6 +683,9 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('purchaseDate').value = today;
             
+            // Set auto invoice number if not already set
+            document.getElementById('manualInvNo').value = getNextInvoiceNumber();
+
             // Set default product if empty
             const productInput = document.getElementById('productInput');
             if(!productInput.value) {
@@ -666,7 +700,6 @@
             const datalist = document.getElementById('productList');
             
             savedCustoms.forEach(item => {
-                // Check if already exists in datalist to avoid duplication
                 let exists = false;
                 for (let opt of datalist.options) {
                     if (opt.value === item.name) { exists = true; break; }
@@ -697,13 +730,11 @@
         function saveNewProductToLocal(name, price, specs) {
             if (!name) return;
             let savedCustoms = JSON.parse(localStorage.getItem('swiftmart_custom_products') || '[]');
-            
-            // Check if already exists
             const exists = savedCustoms.some(item => item.name === name);
             if (!exists) {
                 savedCustoms.push({ name, price, specs });
                 localStorage.setItem('swiftmart_custom_products', JSON.stringify(savedCustoms));
-                loadCustomProducts(); // Reload options list
+                loadCustomProducts();
             }
         }
 
@@ -749,11 +780,14 @@
             document.getElementById('outPhone').innerText = document.getElementById('custPhone').value || '07* ** ***';
             document.getElementById('outAddress').innerText = document.getElementById('custAddress').value || 'location';
 
+            // Set Invoice Number from Input (Supports manual override if needed)
+            const currentInvNo = document.getElementById('manualInvNo').value.trim() || '#SM-2026-001';
+            document.getElementById('invNumber').innerText = currentInvNo;
+
             const productName = document.getElementById('productInput').value.trim() || 'Custom Item';
             const productSpecs = document.getElementById('productSpecs').value.trim();
             const price = parseFloat(document.getElementById('sellPrice').value) || 0;
 
-            // Auto-save new custom item to browser storage so it appears next time
             saveNewProductToLocal(productName, price, productSpecs);
 
             document.getElementById('outProduct').innerText = productName;
@@ -782,7 +816,6 @@
                 document.getElementById('outHeaderTitle').innerText = `INVOICE & 1-YEAR WARRANTY CERTIFICATE`;
             }
 
-            // T&C Language Translations
             const tcContainer = document.getElementById('tcBoxContainer');
             if (wPeriod === 'none') {
                 tcContainer.style.display = 'none';
@@ -842,7 +875,7 @@
                         <li><strong>Warranty Period:</strong> This product comes with a ${months}-month warranty from the date of purchase covering manufacturing defects.</li>
                         <li><strong>Covered Under Warranty:</strong> Covers internal circuitry and core functional defects by the manufacturer.</li>
                         <li><strong>Warranty Claim Procedure:</strong> Please present this digital bill (PDF/Image) to claim warranty services.</li>
-                        <li><strong>VoidWarranty:</strong>
+                        <li><strong>Void Warranty:</strong>
                             <ul>
                                 <li>Physical damage caused by drops, impacts, or mishandling.</li>
                                 <li>Water or liquid damage.</li>
@@ -850,13 +883,30 @@
                                 <li>Unauthorized repairs or modifications.</li>
                             </ul>
                         </li>
-                        <li><strong>Replacement Product Replacement:</strong> Defective items within the warranty period will be repaired or replaced subject to stock availability.</li>
+                        <li><strong>Replacement Policy:</strong> Defective items within the warranty period will be repaired or replaced subject to stock availability.</li>
                     </ol>
                 `;
             }
         }
 
+        // --- PRINT WITH AUTO INCREMENT TO NEXT INVOICE NUMBER ---
+        function handlePrintWithAutoIncrement() {
+            const currentNo = document.getElementById('manualInvNo').value.trim();
+            saveInvoiceNumberSequence(currentNo); // Save current as last used
+            
+            window.print(); // Open print dialog
+            
+            // Automatically set next invoice number for the following bill after printing
+            setTimeout(() => {
+                document.getElementById('manualInvNo').value = getNextInvoiceNumber();
+                generateInvoice();
+            }, 1000);
+        }
+
         function exportAsJPG() {
+            const currentNo = document.getElementById('manualInvNo').value.trim();
+            saveInvoiceNumberSequence(currentNo); // Save current as last used
+
             const formContainer = document.querySelector('.form-container');
             formContainer.style.display = 'none';
 
@@ -872,6 +922,12 @@
                 link.download = 'SwiftMart_Invoice_' + (document.getElementById('custName').value || 'invoice') + '.jpg';
                 link.href = canvas.toDataURL('image/jpeg', 0.95);
                 link.click();
+
+                // Move to next invoice number after download
+                setTimeout(() => {
+                    document.getElementById('manualInvNo').value = getNextInvoiceNumber();
+                    generateInvoice();
+                }, 500);
             }).catch(err => {
                 formContainer.style.display = 'block';
                 console.error('JPG Export fails:', err);
